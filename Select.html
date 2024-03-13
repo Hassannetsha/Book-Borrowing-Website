@@ -4,18 +4,42 @@
         <title>Select book</title>
     </head>
     <body>
-        <form action="Edit.html">
-            <label for="Id">Choose how you want to find your book:</label>
-            <br>
-            <input type="radio" value="Id" name="edit" id="Id" required>
-            <label for="Id">ID</label>
-            <input type="radio" value="BookName" name="edit" id="BookName">
-            <label for="BookName">Book Name</label>
-            <br>
-            <br>
-            <input type="reset" value="Reset">
-            <button type="submit"><a href="home_page_admin.html">Go back</a></button>
-            <button type="submit">Select</button>
-        </form>
+        <div>
+            <form action="Edit.html">
+                <label for="Id">Choose how you want to find your book:</label>
+                <br>
+                <br>
+                <label for="search">Select:</label>
+                <input type="search" placeholder="Enter ID or book name" id="search" required>
+                <button type="submit">Select</button>
+                <br>
+                <br>
+                <input type="radio" value="Id" name="edit" id="Id" required>
+                <label for="Id">ID</label>
+                <input type="radio" value="BookName" name="edit" id="BookName">
+                <label for="BookName">Book Name</label>
+                <br>
+                <br>
+                <div>
+                    <label>Fantasy</label>
+                    <ul>
+                        <li>Game of Thrones by George R.R. Martin</li>
+                        <li>Circe by Madeline Miller</li>
+                    </ul>
+                    <label>Science Fiction</label>
+                    <ul>
+                        <li>The Hitchhiker’s Guide to the Galaxy by Douglas Adams</li>
+                        <li>The Atlantis Gene by A.G. Riddle</li>
+                    </ul>
+                    <label>Mystery/Thriller</label>
+                    <ul>
+                    <li>Gone Girl by Gillian Flynn</li>
+                    <li>The Girl with the Dragon Tattoo by Stieg Larsson</li>
+                    </ul>
+                </div>
+                <input type="reset" value="Reset">
+                <button type="submit"><a href="home_page_admin.html">Go back</a></button>
+            </form>
+        </div>
     </body>
 </html>
