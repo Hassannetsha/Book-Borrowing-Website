@@ -9,9 +9,22 @@
   <div><h1>Welcome to e BookNest !</h1></div>
   <br>
     <div class="Form">
-      <form action="">
-        <input type="search" name="" id="" placeholder="Search by Title, Author, or Category" size="40px">
-        <button><i>Search</i></button>
+      <nav>
+        <label for="Search">Search:</label>
+        <input type="text" id = "SBar" name="Search Bar" placeholder="Search for a book title..." width="80px">
+          |
+          <a href="../User_Home_page/UserhomePage.html" title="User Homepage">Home</a>
+          |
+          <a href="../User_Home_page/UserhomePage.html#Borrow" title="Borrow a new book">Borrow Book</a>
+          |
+          <a href="../User_Home_page/UserhomePage.html" title="Books currently available">Available Books</a>
+          |
+          <a href="#ABOUTUS" title="Who are we?">About Us</a>
+          |
+          <a href="#CONTACTUS" title="Reach us out">Contact Us</a>
+          |
+          <a href="main-sign-page.html" title="log out">Sign Out</a>
+          |
         <br>
         <input type="radio" id="All" name="filter" value="All" checked="checked">
         <label for="All">All</label>
@@ -21,11 +34,10 @@
         <label for="Author">Author</label>
         <input type="radio" id="Category" name="filter" value="Category">
         <label for="Category">Category</label>
-      </form>
+    </nav>
+    <hr>
     </div>
-    <br>
-    <br>
-    <div class="buttonAvailable">
+    <div class="buttonAvailable" id="Available" >
       <button><a href="availavbleBooks.html">Available Books</a></button>
     </div>
     <br>
@@ -56,7 +68,7 @@
 
 <br>
 <br>
-<div class="buttonBorrow">
+<div class="buttonBorrow" id="Borrow">
   <button class="accordion"><a href="borrowedBooks.html">Borrowed Book</a></button>
 </div>
 <br>
