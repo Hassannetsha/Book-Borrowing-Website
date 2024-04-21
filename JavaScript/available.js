@@ -14,25 +14,8 @@ class book{
         this.BookCover = BookCover;
     }
 }
-var book1 = new book("Circe",1,"Madeline Miller","Fantasy","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing"
-,7,100,"../images/OIP.jpeg"
-)
-var book2 = new book("Game of Thrones",2,"George R.R. Martin","Fantasy","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing",
-10,200,"../images/x960.jpg"
-)
-var book3 = new book("The Hitchhiker’s Guide to the Galaxy",3,"Douglas Adams","Science Fiction","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing",
-10,200,"../images/13.jpg"
-)
-var book4 = new book("The Atlantis Gene",4,"A.G. Riddle","Science Fiction","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing",
-10,200,"../images/1940026016.jpg"
-)
-var book5 = new book("Gone Girl",5,"Gillian Flynn","Mystery / Thriller","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing",
-10,200,"../images/Gone-girl-pdf.jpg"
-)
-var book6 = new book("The Girl with the Dragon Tattoo",6,"Stieg Larsson","Mystery / Thriller","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing",
-10,200,"../images/OIP (1).jpeg"
-)
-let allbooks = JSON.parse(sessionStorage.getItem("books")) || [book1, book2, book3, book4, book5, book6];
+
+let allbooks = JSON.parse(sessionStorage.getItem("books"));
 // let allbooks = [book1, book2, book3, book4, book5, book6];
 // sessionStorage.setItem("books", JSON.stringify(allbooks));
 
@@ -42,8 +25,8 @@ let allbooks = JSON.parse(sessionStorage.getItem("books")) || [book1, book2, boo
 // }
 // renderBooks();
 
-let books4 = JSON.parse(sessionStorage.getItem("borrowedbooks")) || allbooks.slice(0, allbooks.length/2);
-let books5 = JSON.parse(sessionStorage.getItem("availablebooks")) || allbooks.slice(allbooks.length/2,allbooks.length);
+let books4 = JSON.parse(sessionStorage.getItem("borrowedbooks"));
+let books5 = JSON.parse(sessionStorage.getItem("availablebooks"));
 
 
 sessionStorage.setItem("availablebooks",JSON.stringify(books5));
@@ -153,8 +136,8 @@ function getnavbar(){
         <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
         <a href="../Adimn_Home_page/Select.html" class="quick" title="edit an existing book">Edit Book</a>
         <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
-        <a href="AboutUs.html" class="quick" title="Who are we?">About Us</a>
-        <a href="../LogIn/main-sign-page.html" class="quick" title="log out">Sign Out</a>
+        
+        <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
         <label for="Search" class="srch">Search:</label>
         <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
     </div>`;}
@@ -177,9 +160,9 @@ function getnavbar(){
         text-underline-offset: 15.25px;" title="Available books">Available books</a>
         <a href="../User_Home_page/borrowedBooks.html" class="quick" title="Borrow books">Borrow books</a>
 
-        <a href="AboutUs.html" class="quick" title="Who are we?">About Us</a>
+        
 
-        <a href="../LogIn/main-sign-page.html" class="quick" title="log out">Sign Out</a>
+        <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
         <label for="Search" class="srch">Search:</label>
         <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
     </div>`;}

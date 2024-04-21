@@ -11,39 +11,22 @@ class book{
         this.BookCover = BookCover;
     }
 }
-var book1 = new book("Circe",1,"Madeline Miller","Fantasy","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing"
-,7,100,"../images/OIP.jpeg"
-)
-var book2 = new book("Game of Thrones",2,"George R.R. Martin","Fantasy","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing",
-10,200,"../images/x960.jpg"
-)
-var book3 = new book("The Hitchhiker’s Guide to the Galaxy",3,"Douglas Adams","Science Fiction","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing",
-10,200,"../images/13.jpg"
-)
-var book4 = new book("The Atlantis Gene",4,"A.G. Riddle","Science Fiction","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing",
-10,200,"../images/1940026016.jpg"
-)
-var book5 = new book("Gone Girl",5,"Gillian Flynn","Mystery / Thriller","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing",
-10,200,"../images/Gone-girl-pdf.jpg"
-)
-var book6 = new book("The Girl with the Dragon Tattoo",6,"Stieg Larsson","Mystery / Thriller","Personal Finance, Parenting, and Investing.","Robert's story of growing up with two dads — his real father and the father of his best friend, his rich dad — and the ways in which both men shaped his thoughts about money and investing",
-10,200,"../images/OIP (1).jpeg"
-)
-let allbooks = JSON.parse(sessionStorage.getItem("books")) || [book1, book2, book3, book4, book5, book6];
+
+let allbooks = JSON.parse(sessionStorage.getItem("books"));
 sessionStorage.setItem("books",JSON.stringify(allbooks));
 function getnavbar(){
     var navbar = document.getElementById("navbar");
     console.log(navbar);
     navbar.innerHTML = `<div class="logoandsearch">
-    <a href="home_page_admin.html" class="LogoIcon">
+    <a href="../home_page/home.html" class="LogoIcon">
 <img src="../images/logopng-removebg.png" alt="can't display image">
 </a>
-<a href="home_page_admin.html" class="Logo">eBookNest</a>
+<a href="../home_page/home.html" class="Logo">eBookNest</a>
 
 </div>
 
 <div class="bottomline">
-   <a href="home_page_admin.html" class="quick" title="Admin Homepage">Home</a>
+   <a href="../home_page/home.html" class="quick" title="Admin Homepage">Home</a>
 <a href="add.html" class="quick" title="add a new book" style="
 color: #ffffff;
 text-decoration: underline;
@@ -57,10 +40,8 @@ text-underline-offset: 12.5px;">Add Book</a>
 
 <a href="delete.html" class="quick" title="remove a book from the list">Delete Book</a>
 
-<a href="AboutUs.html" class="quick" title="Who are we?">About Us</a>
 
-
-<a href="../LogIn/main-sign-page.html" class="quick" title="log out">Sign Out</a>
+<a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
 <label for="Search" class="srch">Search:</label>
 <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
 </div>
@@ -116,7 +97,7 @@ text-underline-offset: 12.5px;">Add Book</a>
        <br>
        <p class="invalidinput"></p>
        <div class="box"> <div class="wrap">
-           <button type="submit" id = "addbtn">
+           <button type="submit" id = "addbtn" >
                Submit
            </button>
        </div>

@@ -35,8 +35,8 @@ var book6 = new book("The Girl with the Dragon Tattoo",6,"Stieg Larsson","Myster
 let allbooks = JSON.parse(sessionStorage.getItem("books")) || [book1, book2, book3, book4, book5, book6];
 // let allbooks = [book1, book2, book3, book4, book5, book6];
 // sessionStorage.setItem("books", JSON.stringify(allbooks));
-let books4 = allbooks.slice(0, allbooks.length/2);
-let books5 = allbooks.slice(allbooks.length/2,allbooks.length);
+let books4 = JSON.parse(sessionStorage.getItem("borrowedbooks"));
+let books5 = JSON.parse(sessionStorage.getItem("availablebooks"));
 
 
 sessionStorage.setItem("availablebooks",JSON.stringify(books5));
@@ -126,7 +126,7 @@ function check(parentid,ctn) {
 
 function deletebook(button){
     var bookDiv = button.parentElement.parentElement;
-    // console.log(bookDiv.id);
+    console.log(bookDiv.id);
     bookDiv.style.transition = 'opacity 0.5s, height 0.5s';
     bookDiv.style.opacity = '0';
     bookDiv.style.height = '0';
@@ -321,8 +321,8 @@ function getnavbar(){
         <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
         <a href="../Adimn_Home_page/Select.html" class="quick" title="edit an existing book">Edit Book</a>
         <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
-        <a href="AboutUs.html" class="quick" title="Who are we?">About Us</a>
-        <a href="../LogIn/main-sign-page.html" class="quick" title="log out">Sign Out</a>
+        
+        <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
         <label for="Search" class="srch">Search:</label>
         <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
     </div>`;
@@ -346,7 +346,7 @@ function getnavbar(){
         <a href="../User_Home_page/availavbleBooks.html" class="quick" title="Available books">Available books</a>
         <a href="../User_Home_page/availavbleBooks.html" class="quick" title="Borrow books">Borrow books</a>
 
-        <a href="AboutUs.html" class="quick" title="Who are we?">About Us</a>
+        
 
         <a href="../LogIn/main-sign-page.html" class="quick" title="log out">Sign Out</a>
         <label for="Search" class="srch">Search:</label>

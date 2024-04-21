@@ -17,15 +17,15 @@ sessionStorage.setItem("books",JSON.stringify(allbooks));
 function getnavbar(){
     var navbar = document.getElementById("navbar");
     navbar.innerHTML = `<div class="logoandsearch">
-    <a href="home_page_admin.html" class="LogoIcon">
+    <a href="../home_page/home.html" class="LogoIcon">
 <img src="../images/logopng-removebg.png" alt="can't display image">
 </a>
-<a href="home_page_admin.html" class="Logo">eBookNest</a>
+<a href="../home_page/home.html" class="Logo">eBookNest</a>
 
 </div>
 
 <div class="bottomline">
-   <a href="home_page_admin.html" class="quick" title="Admin Homepage">Home</a>
+   <a href="../home_page/home.html" class="quick" title="Admin Homepage">Home</a>
 <a href="add.html" class="quick" title="add a new book">Add Book</a>
 
 <a href="Edit.html" class="quick" title="edit an existing book">Edit Book</a>
@@ -39,11 +39,11 @@ padding-bottom: 0px;
 text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 text-underline-offset: 12.5px;">Delete Book</a>
 
-<a href="AboutUs.html" class="quick" title="Who are we?">About Us</a>
 
 
 
-<a href="../LogIn/main-sign-page.html" class="quick" title="log out">Sign Out</a>
+
+<a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
 <label for="Search" class="srch">Search:</label>
 <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
 </div>

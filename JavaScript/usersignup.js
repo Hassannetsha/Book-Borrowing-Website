@@ -1,4 +1,4 @@
-localStorage.clear()
+
 document.getElementsByTagName("form")[0].innerHTML= `<div class="input">
 <label for="Fname">
   First name:
