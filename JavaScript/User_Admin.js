@@ -36,10 +36,7 @@ let allbooks = JSON.parse(sessionStorage.getItem("books")) || [book1, book2, boo
 // let allbooks = [book1, book2, book3, book4, book5, book6];
 sessionStorage.setItem("books", JSON.stringify(allbooks));
 // console.log(allbooks);
-let books6 = allbooks.slice(allbooks.length / 2);
-let books7 = allbooks.slice(0, allbooks.length / 2);
-sessionStorage.setItem("availablebooks",JSON.stringify(books6));
-sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
+
 let books4 = JSON.parse(sessionStorage.getItem("borrowedbooks")) ;
 let books5 = JSON.parse(sessionStorage.getItem("availablebooks"));
 // console.log(books4);
@@ -191,6 +188,10 @@ function deletebook(button){
 }
 
 function getborrowbooks(){
+    let books6 = allbooks.slice(allbooks.length / 2);
+    let books7 = allbooks.slice(0, allbooks.length / 2);
+    sessionStorage.setItem("availablebooks",JSON.stringify(books6));
+    sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
     let booksHtml = books4.map((book) => {
         return (
             `<div class="card" id="book${book.Id}">
@@ -218,6 +219,10 @@ function getborrowbooks(){
 }
 
 function getavailablebooks(){
+    let books6 = allbooks.slice(allbooks.length / 2);
+    let books7 = allbooks.slice(0, allbooks.length / 2);
+    sessionStorage.setItem("availablebooks",JSON.stringify(books6));
+    sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
     let booksHtml = books5.map((book) => {
         return (
             `<div class="card" id="book${book.Id}">
