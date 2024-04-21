@@ -34,13 +34,18 @@ var book6 = new book("The Girl with the Dragon Tattoo",6,"Stieg Larsson","Myster
 )
 let allbooks = JSON.parse(sessionStorage.getItem("books")) || [book1, book2, book3, book4, book5, book6];
 // let allbooks = [book1, book2, book3, book4, book5, book6];
-// sessionStorage.setItem("books", JSON.stringify(allbooks));
-let books4 = JSON.parse(sessionStorage.getItem("borrowedbooks"));
+sessionStorage.setItem("books", JSON.stringify(allbooks));
+// console.log(allbooks);
+let books6 = allbooks.slice(allbooks.length / 2);
+let books7 = allbooks.slice(0, allbooks.length / 2);
+sessionStorage.setItem("availablebooks",JSON.stringify(books6));
+sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
+let books4 = JSON.parse(sessionStorage.getItem("borrowedbooks")) ;
 let books5 = JSON.parse(sessionStorage.getItem("availablebooks"));
+// console.log(books4);
+// console.log(books5);
 
 
-sessionStorage.setItem("availablebooks",JSON.stringify(books5));
-sessionStorage.setItem("borrowedbooks",JSON.stringify(books4));
 function getBooks(category){
     for (let j = 0; j < allbooks.length; j++) {
         const book = allbooks.filter(book => book.categoreys.includes(category));
@@ -124,9 +129,42 @@ function check(parentid,ctn) {
     } 
 }
 
+function checkFantasy(){
+    if(booklistPart1.innerHTML===""){
+        var books1Elements = document.getElementsByClassName("books1");
+        
+        for (var i = 0; i < books1Elements.length; i++) {
+            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+            books1Elements[i].style.opacity = '0';
+            books1Elements[i].style.height = '0';
+        }
+        document.getElementById("Fantasy").style.display = "none";
+    }
+    if(booklistPart2.innerHTML===""){
+        var books1Elements = document.getElementsByClassName("books2");
+        
+        for (var i = 0; i < books1Elements.length; i++) {
+            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+            books1Elements[i].style.opacity = '0';
+            books1Elements[i].style.height = '0';
+        }
+        document.getElementById("Science Fiction").style.display = "none";
+    }
+    if(booklistPart3.innerHTML===""){
+        var books1Elements = document.getElementsByClassName("books3");
+        
+        for (var i = 0; i < books1Elements.length; i++) {
+            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+            books1Elements[i].style.opacity = '0';
+            books1Elements[i].style.height = '0';
+        }
+        document.getElementById("Mystery / Thriller").style.display = "none";
+    }
+}
+checkFantasy();
 function deletebook(button){
     var bookDiv = button.parentElement.parentElement;
-    console.log(bookDiv.id);
+    // console.log(bookDiv.id);
     bookDiv.style.transition = 'opacity 0.5s, height 0.5s';
     bookDiv.style.opacity = '0';
     bookDiv.style.height = '0';
@@ -424,5 +462,6 @@ function checkavailablehead(){
         document.getElementById("Borrow").style.marginTop = "0px";
     }
 }
+
 checkBorrowhead();
 checkavailablehead();

@@ -70,8 +70,6 @@ function getnavbar(){
         text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
         text-underline-offset: 15.25px;" title="Borrow books">Borrow books</a>
 
-        <a href="AboutUs.html" class="quick" title="Who are we?">About Us</a>
-
         <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
         <label for="Search" class="srch">Search:</label>
         <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">

@@ -97,7 +97,7 @@ function form (PASS,CPASS,EMAIL){
             para.innerText = "*Invalid Email"
             return false
         }
-        else if(Object.keys(localStorage).includes(email.value))
+        else if(Object.keys(sessionStorage).includes(email.value))
         {
             para.innerText = "*Email Already In Use"
             return false

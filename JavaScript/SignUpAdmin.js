@@ -113,7 +113,7 @@ function form (PASS,CPASS,EMAIL){
             para.innerText = "*Invalid Email"
             return false
         }
-        else if(Object.keys(sessionStorage).includes(email.value))
+        else if(Object.keys(localStorage).includes(email.value))
         {
             para.innerText = "*Email Already In Use"
             return false
@@ -132,6 +132,6 @@ btn.addEventListener("click", function (event) {
     }
     else
     {
-        sessionStorage.setItem(email.value,pass.value)
+        localStorage.setItem(email.value,pass.value)
     }
 });
