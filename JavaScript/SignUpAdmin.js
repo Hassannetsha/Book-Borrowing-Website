@@ -125,7 +125,6 @@ function form (PASS,CPASS,EMAIL){
     };
     this.eval = [this.checkPass(),this.checkConfirmPass(),this.checkEmail()].includes(false);
 }
-var data
 btn.addEventListener("click", function (event) {
     const formValidity = new form(pass.value,confirmpass.value,email.value)
     if (formValidity.eval) {
