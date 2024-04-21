@@ -172,7 +172,7 @@ function getborrowbooks(){
                     </div>
                 </div>
                 <p>${book.Bookname}</p>
-                <button onclick="DeleteBorrowBook(this)">Reback</button>
+                <button onclick="DeleteBorrowBook(this)">Return</button>
             </div>`
         );
     }).join('');

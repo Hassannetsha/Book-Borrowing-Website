@@ -1,6 +1,6 @@
 document.getElementsByTagName("form")[0].innerHTML = `<div class="input">
 <i class="fa-solid fa-user"></i>
-<input id="email" type="text" placeholder="Enter your e-mail" required>
+<input id="email" type="text" placeholder="Enter your Email" required>
 </div>
 <div class="input">
 <i class="fa-solid fa-lock"></i>

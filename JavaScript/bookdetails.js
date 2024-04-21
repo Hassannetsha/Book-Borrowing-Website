@@ -65,7 +65,7 @@ function getbookAndbutton(selectedBook) {
         <div class="heart" name="x"><i class="fa fa-heart" name="x"id = "fa"  onclick = "changeColor()"></i></div>`;}
         else if (booktype === "borrowBooks"){
             buttonHtml.innerHTML = `<button class="b" onclick = "Go_back()">Back</button>
-        <button class="b" onclick = "DeleteBorrowBook()">Reback</button>
+        <button class="b" onclick = "DeleteBorrowBook()">Return</button>
         <div class="heart" name="x"><i class="fa fa-heart" name="x"id = "fa"  onclick = "changeColor()"></i></div>`;
         }
     }
