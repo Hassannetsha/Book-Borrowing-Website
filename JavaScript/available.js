@@ -249,5 +249,7 @@ function details(button){
     // console.log("Last Character:", lastCharInt);
     // console.log("Book:", selectedBook);
     // Save the book details to sessionStorage
-    sessionStorage.setItem("details", JSON.stringify(selectedBook));
+    if(userType === "user"){var booktype = bookDiv.parentElement.id;
+        sessionStorage.setItem("booktype", JSON.stringify(booktype));}
+        sessionStorage.setItem("details", JSON.stringify(selectedBook));
 }
