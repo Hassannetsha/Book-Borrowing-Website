@@ -84,7 +84,6 @@ var confirmpass = signup.children[1].children[6].children[1]
 var email = signup.children[1].children[2].children[1]
 var btn = document.getElementsByClassName("wrap")[0]
 var number = document.getElementById("phonenumber")
-var btn = document.getElementById("userbtn")
 
 function form (PASS,CPASS,EMAIL,NUMBER){
     this.checkPass = () => {
