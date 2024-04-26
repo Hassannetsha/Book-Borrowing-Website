@@ -66,9 +66,10 @@ const emailRegex= /(?=\w+[@]+)(?=.+\.(com$|edu$|info$))/
 var pass = document.getElementById("password")
 var cpass = document.getElementById("passwordconfirmation")
 var email = document.getElementById("e-mail")
+var number = document.getElementById("phonenumber")
 var btn = document.getElementById("userbtn")
 
-function form (PASS,CPASS,EMAIL){
+function form (PASS,CPASS,EMAIL,NUMBER){
     this.checkPass = () => {
         let para = document.getElementsByClassName("invalidinput")[1]
         if (!(password_regex.test(PASS))) {
@@ -107,7 +108,20 @@ function form (PASS,CPASS,EMAIL){
             return true
         }
     };
-    this.eval = [this.checkPass(),this.checkConfirmPass(),this.checkEmail()].includes(false);
+    this.checkNum = () => {
+      let para = document.getElementsByClassName("invalidinput")[0]
+      if(!((/[0-9]{11}/)).test(number.value))
+      {
+        para.innerText = "*Invalid Phone Number"
+        return false
+      }
+      else
+      {
+        para.innerText = ""
+        return true
+      }
+    };
+    this.eval = [this.checkPass(),this.checkConfirmPass(),this.checkEmail(),this.checkNum()].includes(false);
 }
 btn.addEventListener("click", function (event) {
     const formValidity = new form(pass.value,cpass.value,email.value)
