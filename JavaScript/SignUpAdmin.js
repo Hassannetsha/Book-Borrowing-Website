@@ -30,7 +30,7 @@ divSignup.appendChild(document.createElement('h3'))
 divSignup.children[0].innerText = 'Please Enter your personal information'
 
 divSignup.appendChild(document.createElement('form'))
-
+// divSignup.children[1].setAttribute('target','_blank')
 
 divSignup.children[1].appendChild(document.createElement('div'))
 divSignup.children[1].children[0].className = 'input'
@@ -68,22 +68,25 @@ divSignup.children[1].children[8].innerHTML = "<label for='address'>\nAddress:\n
 
 divSignup.children[1].appendChild(document.createElement('div'))
 divSignup.children[1].children[9].className = 'input'
-divSignup.children[1].children[9].innerHTML = "<label for='phoneNum'>\nPhone number:\n</label>\n<input id='phoneNum' type='tel' placeholder='01123456789' pattern='[0-9]{11}' name='PhoneNumber' required>\n<br> <br>"
+divSignup.children[1].children[9].innerHTML = "<label for='phoneNum'>\nPhone number:\n</label>\n<input id='phoneNum' type='tel' placeholder='01123456789' name='PhoneNumber' required>\n<br> <br>"
+
+divSignup.children[1].appendChild(document.createElement('p'))
+divSignup.children[1].children[10].className = 'invalidinput'
 
 divSignup.children[1].appendChild(document.createElement('div'))
-divSignup.children[1].children[10].className = 'input'
-divSignup.children[1].children[10].innerHTML = "<label for='LibraryID'>\nLibrary ID:\n</label>\n<input id='LibraryID' type='text' placeholder='Library ID' name='LibId' required>\n<br> <br>"
+divSignup.children[1].children[11].className = 'input'
+divSignup.children[1].children[11].innerHTML = `<label for='LibraryID'>\nLibrary ID:\n</label>\n<input id='LibraryID' type='text' placeholder='Library ID' name='LibId' required>\n<br> <br>`
 
 divSignup.children[1].appendChild(document.createElement('div'))
-divSignup.children[1].children[11].className = 'wrap'
-divSignup.children[1].children[11].innerHTML = "<button type='submit' formaction='signinadmin.html'>\nSign up\n</button>"
+divSignup.children[1].children[12].className = 'wrap'
+divSignup.children[1].children[12].innerHTML = "<button type='submit' formaction='signinadmin.html'>\nSign up\n</button>"
 
 var signup = document.getElementsByClassName("signup")[0]
 var pass = signup.children[1].children[4].children[1]
 var confirmpass = signup.children[1].children[6].children[1]
 var email = signup.children[1].children[2].children[1]
-var btn = document.getElementsByClassName("wrap")[0]
-var number = document.getElementById("phonenumber")
+var btn = document.getElementsByClassName("wrap")[0].firstChild
+var number = document.getElementById("phoneNum")
 
 function form (PASS,CPASS,EMAIL,NUMBER){
     this.checkPass = () => {
@@ -125,7 +128,7 @@ function form (PASS,CPASS,EMAIL,NUMBER){
         }
     };
     this.checkNum = () => {
-      let para = document.getElementsByClassName("invalidinput")[0]
+      let para = document.getElementsByClassName("invalidinput")[3]
       if(!((/[0-9]{11}/)).test(number.value))
       {
         para.innerText = "*Invalid Phone Number"

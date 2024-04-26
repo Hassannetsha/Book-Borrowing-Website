@@ -49,11 +49,11 @@ document.getElementsByTagName("form")[0].innerHTML= `<div class="input">
 <label for="phonenumber">
   Phone number:
 </label>
-<input id="phonenumber" input type="tel" placeholder="01123456789" pattern="[0-9]{11}" required>
+<input id="phonenumber" input type="tel" placeholder="01123456789"  required>
 
 <br> <br>
 </div>
-
+<p class="invalidinput"></p>
 <div class="wrap">
 <button type="submit" id="userbtn" formaction='signin-user.html'>
   Sign up
@@ -109,7 +109,7 @@ function form (PASS,CPASS,EMAIL,NUMBER){
         }
     };
     this.checkNum = () => {
-      let para = document.getElementsByClassName("invalidinput")[0]
+      let para = document.getElementsByClassName("invalidinput")[3]
       if(!((/[0-9]{11}/)).test(number.value))
       {
         para.innerText = "*Invalid Phone Number"

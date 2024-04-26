@@ -391,7 +391,7 @@ function getnavbar(){
 
         
 
-        <a href="../LogIn/main-sign-page.html" class="quick" title="log out">Sign Out</a>
+        <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
         <label for="Search" class="srch">Search:</label>
         <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
     </div>`;
