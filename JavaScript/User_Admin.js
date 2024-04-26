@@ -183,13 +183,17 @@ function deletebook(button){
                 ctn++;
             }
         }
+        let books6 =allbooks.slice(allbooks.length / 2);
+        let books7 =allbooks.slice(0, allbooks.length / 2);
+        sessionStorage.setItem("availablebooks",JSON.stringify(books6));
+        sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
         check(category,ctn);
     }, 500);
 }
 
 function getborrowbooks(){
-    let books6 = allbooks.slice(allbooks.length / 2);
-    let books7 = allbooks.slice(0, allbooks.length / 2);
+    let books6 = JSON.parse(sessionStorage.getItem("availablebooks"))||allbooks.slice(allbooks.length / 2);
+    let books7 = JSON.parse(sessionStorage.getItem("borrowedbooks"))|| allbooks.slice(0, allbooks.length / 2);
     sessionStorage.setItem("availablebooks",JSON.stringify(books6));
     sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
     let booksHtml = books4.map((book) => {
@@ -219,8 +223,8 @@ function getborrowbooks(){
 }
 
 function getavailablebooks(){
-    let books6 = allbooks.slice(allbooks.length / 2);
-    let books7 = allbooks.slice(0, allbooks.length / 2);
+    let books6 = JSON.parse(sessionStorage.getItem("availablebooks"))||allbooks.slice(allbooks.length / 2);
+    let books7 = JSON.parse(sessionStorage.getItem("borrowedbooks"))|| allbooks.slice(0, allbooks.length / 2);
     sessionStorage.setItem("availablebooks",JSON.stringify(books6));
     sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
     let booksHtml = books5.map((book) => {
