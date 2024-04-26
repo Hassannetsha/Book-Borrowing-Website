@@ -68,15 +68,25 @@ var editbtn = document.getElementById("editbtn")
 var bookid = JSON.parse(sessionStorage.getItem("redirectid"));
 var para = document.getElementsByClassName("invalidinput")[0]
 
-editbtn.setAttribute('click', (event) => {
+editbtn.addEventListener('click', (event) => {
     for (let i = 0; i < allbooks.length; i++) {
         if (allbooks[i].Id == bookid) {
-                allbooks[i].Bookname = document.getElementById("BookName").value//book name
-                allbooks[i].author = document.getElementById("author").value,// authour
-                allbooks[i].categoreys = document.getElementById("BookCategory").value,// category
-                allbooks[i].description1 = document.getElementById("BookDescription").value,//description1
-                allbooks[i].document.getElementById("BookCover").value//bookcover
-                sessionStorage.setItem("books",JSON.stringify(allbooks))
+            console.log(document.getElementById("BookName").value)
+            allbooks[i].Bookname = document.getElementById("BookName").value//book name
+            console.log(document.getElementById("author").value)
+            allbooks[i].author = document.getElementById("author").value// authour
+            console.log(document.getElementById("BookCategory").value)
+            allbooks[i].categoreys = document.getElementById("BookCategory").value// category
+            console.log(document.getElementById("BookDescription").value)
+            allbooks[i].description1 = document.getElementById("BookDescription").value//description1
+            console.log(document.getElementById("BookCover").value)
+            allbooks[i].BookCover = document.getElementById("BookCover").value//bookcover
+
+            sessionStorage.setItem("books",JSON.stringify(allbooks))
+            let books6 =allbooks.slice(allbooks.length / 2);
+            let books7 =allbooks.slice(0, allbooks.length / 2);
+            sessionStorage.setItem("availablebooks",JSON.stringify(books6));
+            sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
             return
         }
     }

@@ -26,7 +26,7 @@ function getnavbar(){
 </div>
 
 <div class="bottomline">
-   <a href="../home_page/home.html" class="quick" title="Admin Homepage">Home</a>
+<a href="../home_page/home.html" class="quick" title="Admin Homepage">Home</a>
 <a href="add.html" class="quick" title="add a new book" style="
 color: #ffffff;
 text-decoration: underline;
@@ -49,64 +49,64 @@ text-underline-offset: 12.5px;">Add Book</a>
     navbar = document.getElementById("form");
     navbar.innerHTML = `<div class="input">
     <label for="BookId"> Book Id:</label>
-       <input type="text" required name="BookId" placeholder="enter book id" id="BookIdinp" name="bookid" autofocus>
-   </div>
-      
-       <br>
-       <br>
-       
-<div class="input"> 
-   <label for="BookName"> Book Name:</label>
-       <input type="text" required name="BookName" placeholder="enter book name" id="BookName">
-   </div>
-      
-       <br>
-       <br>
-       
-<div class="input">
-   <label for="author"> Book's author:</label>
-       <input type="text" required name="author" placeholder="enter book's author" id="author">
-   </div>
-       
-       <br>
-       <br>
-       
-<div class="input">
-   <label for="BookCategory"> Book Category:</label>
-       <input type="text" required name="BookCategory" placeholder="enter book's category" id="BookCategory">
-   </div>
-       
-       <br>
-       <br>
-       
-<div class="input">
-   <label for="BookDescription"> Book Description:</label>
-       <textarea name="comment--" id="BookDescription" cols="30" rows="10"
-           placeholder="write book description"></textarea>
-       </div>
-       
-       <br>
-       <br>
-       
-<div class="input"> 
-   <label for="BookCover">Put book's cover image: </label>
-       <input type="file" id="BookCover"  accept="image/jpg, image/png, image/jpeg">
-   </div>
-      
-       <br>
-       <br>
-       <p class="invalidinput"></p>
-       <div class="box"> <div class="wrap">
-           <button type="submit" id = "addbtn" >
-               Submit
-           </button>
-       </div>
-       <div class="wrap">
-           <button type="submit">
-               Reset
-           </button>
-       </div>
-   </div>`;
+        <input type="text" required name="BookId" placeholder="enter book id" id="BookIdinp" name="bookid" autofocus>
+    </div>
+        
+        <br>
+        <br>
+        
+    <div class="input"> 
+    <label for="BookName"> Book Name:</label>
+        <input type="text" required name="BookName" placeholder="enter book name" id="BookName">
+    </div>
+        
+        <br>
+        <br>
+        
+    <div class="input">
+    <label for="author"> Book's author:</label>
+        <input type="text" required name="author" placeholder="enter book's author" id="author">
+    </div>
+        
+        <br>
+        <br>
+        
+    <div class="input">
+    <label for="BookCategory"> Book Category:</label>
+        <input type="text" required name="BookCategory" placeholder="enter book's category" id="BookCategory">
+    </div>
+        
+        <br>
+        <br>
+        
+    <div class="input">
+    <label for="BookDescription"> Book Description:</label>
+        <textarea name="comment--" id="BookDescription" cols="30" rows="10"
+            placeholder="write book description"></textarea>
+        </div>
+        
+        <br>
+        <br>
+        
+    <div class="input"> 
+    <label for="BookCover">Put book's cover image: </label>
+        <input type="file" id="BookCover"  accept="image/jpg, image/png, image/jpeg">
+    </div>
+        
+        <br>
+        <br>
+        <p class="invalidinput"></p>
+        <div class="box"> <div class="wrap">
+            <button type="submit" id = "addbtn" >
+                Submit
+            </button>
+        </div>
+        <div class="wrap">
+            <button type="submit">
+                Reset
+            </button>
+        </div>
+    </div>`;
 }
 getnavbar();
 
@@ -135,16 +135,20 @@ btn.addEventListener('click',(event) => {
         }
     }
     var bookelems = new book(document.getElementById("BookName").value,//book name
-     document.getElementById(`BookIdinp`).value,// book id
-      document.getElementById("author").value,// authour
-     document.getElementById("BookCategory").value,// category
-     document.getElementById("BookDescription").value,//description1
-     ``,//description1
-     5,//rating
-     100,//no_page
-     document.getElementById("BookCover").value)//bookcover
+    document.getElementById(`BookIdinp`).value,// book id
+    document.getElementById("author").value,// authour
+    document.getElementById("BookCategory").value,// category
+    document.getElementById("BookDescription").value,//description1
+    ``,//description1
+    5,//rating
+    100,//no_page
+    document.getElementById("BookCover").value)//bookcover
     console.log(bookelems)
     allbooks.push(bookelems);
     sessionStorage.setItem("books",JSON.stringify(allbooks));
+    let books6 =allbooks.slice(allbooks.length / 2);
+    let books7 =allbooks.slice(0, allbooks.length / 2);
+    sessionStorage.setItem("availablebooks",JSON.stringify(books6));
+    sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
 })
 

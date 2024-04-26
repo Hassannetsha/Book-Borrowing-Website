@@ -92,6 +92,10 @@ btn.addEventListener('click', (event) => {
                 return book.Id != idElem.value;
             })
             sessionStorage.setItem("books",JSON.stringify(allbooks));
+            let books6 =allbooks.slice(allbooks.length / 2);
+            let books7 =allbooks.slice(0, allbooks.length / 2);
+            sessionStorage.setItem("availablebooks",JSON.stringify(books6));
+            sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
             return
         }
     }
