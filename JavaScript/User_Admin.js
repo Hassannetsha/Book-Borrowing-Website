@@ -37,7 +37,12 @@ let allbooks = JSON.parse(sessionStorage.getItem("books")) || [book1, book2, boo
 sessionStorage.setItem("books", JSON.stringify(allbooks));
 // console.log(allbooks);
 
-let books4 = JSON.parse(sessionStorage.getItem("borrowedbooks")) ;
+let books9 = JSON.parse(sessionStorage.getItem("availablebooks"))||allbooks.slice(allbooks.length / 2);
+let books8 = JSON.parse(sessionStorage.getItem("borrowedbooks"))|| allbooks.slice(0, allbooks.length / 2);
+sessionStorage.setItem("availablebooks",JSON.stringify(books9));
+sessionStorage.setItem("borrowedbooks",JSON.stringify(books8));
+
+let books4 = JSON.parse(sessionStorage.getItem("borrowedbooks"));
 let books5 = JSON.parse(sessionStorage.getItem("availablebooks"));
 // console.log(books4);
 // console.log(books5);
@@ -191,7 +196,7 @@ function deletebook(button){
     }, 500);
 }
 
-function getborrowbooks(){
+if(userType=="user"){function getborrowbooks(){
     let books6 = JSON.parse(sessionStorage.getItem("availablebooks"))||allbooks.slice(allbooks.length / 2);
     let books7 = JSON.parse(sessionStorage.getItem("borrowedbooks"))|| allbooks.slice(0, allbooks.length / 2);
     sessionStorage.setItem("availablebooks",JSON.stringify(books6));
@@ -348,6 +353,29 @@ function DeleteavailableBook(button){
     }, 500);
 
 }
+function checkBorrowhead(){
+    var div = document.getElementById("borrowBooks");
+    if(div.innerHTML===""){
+        document.getElementById("Borrow").style.display = "none";
+        document.getElementById("hide").style.display = "none";
+    }
+}
+
+function checkavailablehead(){
+    var div = document.getElementById("availablebooks");
+    if(div.innerHTML===""){
+        document.getElementById("Available").style.display = "none";
+        document.getElementById("availablebooks").style.display = "none";
+        document.getElementById("hide1").style.display = "none";
+        document.getElementById("Borrow").style.marginTop = "0px";
+    }
+}
+
+checkBorrowhead();
+checkavailablehead();
+function Search(){
+
+}}
 function getnavbar(){
     var navbar = document.getElementById("navbaradmin");
     navbar.innerHTML = `<div class="logoandsearch">
@@ -410,9 +438,8 @@ function check_empty(){
             books1Elements[i].style.height = '0';
         }
         document.getElementById("Fantasy").style.display = "none";
-        return;
     }
-    else if(booklistPart2.innerHTML===""){
+    if(booklistPart2.innerHTML===""){
         var books1Elements = document.getElementsByClassName("books2");
         
         for (var i = 0; i < books1Elements.length; i++) {
@@ -422,7 +449,7 @@ function check_empty(){
         }
         document.getElementById("Science Fiction").style.display = "none";
     }
-    else if(booklistPart3.innerHTML===""){
+    if(booklistPart3.innerHTML===""){
         var books1Elements = document.getElementsByClassName("books3");
         
         for (var i = 0; i < books1Elements.length; i++) {
@@ -435,17 +462,17 @@ function check_empty(){
 }
 check_empty();
 function details(button){
-    // Get the parent element of the button, which should be the div containing book details
+    
     var bookDiv = button.parentElement.parentElement.parentElement.parentElement;
 
-    // Extract the id of the parent div
+    
     var parentId = bookDiv.id;
 
-    // Extract the last character of the parentId and convert it to an integer
+    
     var lastChar = parentId.charAt(parentId.length - 1);
     var lastCharInt = parseInt(lastChar);
 
-    // Find the book with the matching id in the allbooks array
+    
     var selectedBook = allbooks.find(function (book) {
         return book.Id === lastCharInt;
     });
@@ -453,24 +480,197 @@ function details(button){
     sessionStorage.setItem("booktype", JSON.stringify(booktype));}
     sessionStorage.setItem("details", JSON.stringify(selectedBook));
 }
+const Categoryes = ['Fantasy', 'Science Fiction', 'Mystery / Thriller']
+function searchItems(query) {
+    const filteredCategoryesItems = Categoryes.filter(item => item.toLowerCase().includes(query.toLowerCase()));
+    const filteredBooksesItems = allbooks.filter(book => {
+        return book.Bookname.toLowerCase().includes(query.toLowerCase());
+    });
 
-function checkBorrowhead(){
-    var div = document.getElementById("borrowBooks");
-    if(div.innerHTML===""){
-        document.getElementById("Borrow").style.display = "none";
-        document.getElementById("hide").style.display = "none";
+    if(filteredCategoryesItems != ""){
+        if(filteredCategoryesItems[0].toLowerCase()==Categoryes[0].toLowerCase()){
+        var books1Elements = document.getElementsByClassName("books2");
+        
+        for (var i = 0; i < books1Elements.length; i++) {
+            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+            books1Elements[i].style.opacity = '0';
+            books1Elements[i].style.height = '0';
+        }
+        document.getElementById("Science Fiction").style.display = "none";
+        var books1Elements = document.getElementsByClassName("books3");
+        
+        for (var i = 0; i < books1Elements.length; i++) {
+            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+            books1Elements[i].style.opacity = '0';
+            books1Elements[i].style.height = '0';
+        }
+        document.getElementById("Mystery / Thriller").style.display = "none";
+        }
+        else if(filteredCategoryesItems[0].toLowerCase()==Categoryes[1].toLowerCase()){
+            var books1Elements = document.getElementsByClassName("books1");
+            
+            for (var i = 0; i < books1Elements.length; i++) {
+                books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+                books1Elements[i].style.opacity = '0';
+                books1Elements[i].style.height = '0';
+            }
+            document.getElementById("Fantasy").style.display = "none";
+            var books1Elements = document.getElementsByClassName("books3");
+            
+            for (var i = 0; i < books1Elements.length; i++) {
+                books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+                books1Elements[i].style.opacity = '0';
+                books1Elements[i].style.height = '0';
+            }
+            document.getElementById("Mystery / Thriller").style.display = "none";
+        }
+        else if(filteredCategoryesItems[0].toLowerCase()==Categoryes[2].toLowerCase()){
+            var books1Elements = document.getElementsByClassName("books1");
+            
+            for (var i = 0; i < books1Elements.length; i++) {
+                books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+                books1Elements[i].style.opacity = '0';
+                books1Elements[i].style.height = '0';
+            }
+            document.getElementById("Fantasy").style.display = "none";
+            var books1Elements = document.getElementsByClassName("books2");
+            
+            for (var i = 0; i < books1Elements.length; i++) {
+                books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+                books1Elements[i].style.opacity = '0';
+                books1Elements[i].style.height = '0';
+            }
+            document.getElementById("Science Fiction").style.display = "none";
+        }
+    }
+    else if(filteredBooksesItems!=""){
+        booklistPart1.innerHTML = ``;
+        booklistPart2.innerHTML = ``;
+        booklistPart3.innerHTML = ``;
+        for (let i = 0; i < filteredBooksesItems.length; i++) {
+            if(filteredBooksesItems[i].categoreys.toLowerCase()==Categoryes[0].toLowerCase()){
+                booklistPart1.innerHTML+=  `<div class="cards" id="book${filteredBooksesItems[i].Id}">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                            <img src="${filteredBooksesItems[i].BookCover}" alt="Avatar" style="width:300px;height:300px;">
+                            </div>
+                            <div class="flip-card-back">
+                                <h1>${filteredBooksesItems[i].Bookname}</h1>
+                                <p>${filteredBooksesItems[i].description1}</p>
+                                <p>${filteredBooksesItems[i].description2}</p>
+                                <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                        See More..
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <p>${filteredBooksesItems[i].Bookname}</p>
+                    <div class="Edit_Delete_buttns">
+                        <button class="buttns" onclick="go_to_bookDescription()">Edit</button>
+                        <button class="buttns" onclick="deletebook(this)"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
+                    </div>
+                </div>`;
+                check_empty();
+                
+            }
+            else if(filteredBooksesItems[i].categoreys.toLowerCase()==Categoryes[1].toLowerCase()){
+                booklistPart2.innerHTML+=  `<div class="cards" id="book${filteredBooksesItems[i].Id}">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                            <img src="${filteredBooksesItems[i].BookCover}" alt="Avatar" style="width:300px;height:300px;">
+                            </div>
+                            <div class="flip-card-back">
+                                <h1>${filteredBooksesItems[i].Bookname}</h1>
+                                <p>${filteredBooksesItems[i].description1}</p>
+                                <p>${filteredBooksesItems[i].description2}</p>
+                                <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                        See More..
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <p>${filteredBooksesItems[i].Bookname}</p>
+                    <div class="Edit_Delete_buttns">
+                        <button class="buttns" onclick="go_to_bookDescription()">Edit</button>
+                        <button class="buttns" onclick="deletebook(this)"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
+                    </div>
+                </div>`;
+                check_empty();
+            }
+            else if(filteredBooksesItems[i].categoreys.toLowerCase()==Categoryes[2].toLowerCase()){
+                booklistPart3.innerHTML+=  `<div class="cards" id="book${filteredBooksesItems[i].Id}">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                            <img src="${filteredBooksesItems[i].BookCover}" alt="Avatar" style="width:300px;height:300px;">
+                            </div>
+                            <div class="flip-card-back">
+                                <h1>${filteredBooksesItems[i].Bookname}</h1>
+                                <p>${filteredBooksesItems[i].description1}</p>
+                                <p>${filteredBooksesItems[i].description2}</p>
+                                <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                        See More..
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <p>${filteredBooksesItems[i].Bookname}</p>
+                    <div class="Edit_Delete_buttns">
+                        <button class="buttns" onclick="go_to_bookDescription()">Edit</button>
+                        <button class="buttns" onclick="deletebook(this)"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
+                    </div>
+                </div>`;
+                check_empty();
+            }
+        }
     }
 }
-
-function checkavailablehead(){
-    var div = document.getElementById("availablebooks");
-    if(div.innerHTML===""){
-        document.getElementById("Available").style.display = "none";
-        document.getElementById("availablebooks").style.display = "none";
-        document.getElementById("hide1").style.display = "none";
-        document.getElementById("Borrow").style.marginTop = "0px";
+var hasTyped = false;
+document.querySelector('#SBar').addEventListener('keypress', function(event) {
+    if (document.getElementById('SBar').value.trim() !== "") {
+        hasTyped = true;
+    } else {
+        hasTyped = false;
     }
-}
-
-checkBorrowhead();
-checkavailablehead();
+    if (event.keyCode === 13&&hasTyped) {
+        
+        const query = this.value.trim();
+        searchItems(query);
+    }
+});
+document.getElementById('SBar').addEventListener("input", function() {
+    hasTyped = document.querySelector('#SBar').value.trim() !== "";
+    if(document.querySelector('#SBar').value.trim() === ""){
+        renderBooks();
+        var see = document.getElementsByClassName("see");
+        for (var i = 0; i < see.length; i++) {
+            see[i].style.marginTop = "1.5%";
+        }
+        var books1Elements = document.getElementsByClassName("books3");
+        
+        for (var i = 0; i < books1Elements.length; i++) {
+            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+            books1Elements[i].style.opacity = '1';
+            books1Elements[i].style.height = '1';
+        }
+        document.getElementById("Mystery / Thriller").style.display = "flex";
+        books1Elements = document.getElementsByClassName("books2");
+        
+        for (var i = 0; i < books1Elements.length; i++) {
+            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+            books1Elements[i].style.opacity = '1';
+            books1Elements[i].style.height = '1';
+        }
+        document.getElementById("Science Fiction").style.display = "flex";
+        books1Elements = document.getElementsByClassName("books1");
+        
+        for (var i = 0; i < books1Elements.length; i++) {
+            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+            books1Elements[i].style.opacity = '1';
+            books1Elements[i].style.height = '1';
+        }
+        document.getElementById("Fantasy").style.display = "flex";
+    }
+});
