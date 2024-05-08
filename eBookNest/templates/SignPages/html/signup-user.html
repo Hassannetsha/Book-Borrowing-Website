@@ -3,14 +3,15 @@
 <html lang="en">
 
 <head>
-  <link rel="icon" type="image/x-icon" href="../images/logopng-removebg.ico">
-  <link rel="stylesheet" href="../css/signup.css">
+  {% load static %}
+  <link rel="icon" type="image/x-icon" href="{% static 'image/logopng-removebg.ico' %}">
+  <link rel="stylesheet" href="{% static 'css/signup.css' %}">
 </head>
 
 <body>
   <div class="container">
     <div class="form">
-      <img src="../images/logopng-removebg.png">
+      <img src="{% static 'image/logopng-removebg.png' %}">
       <h1>eBook nest</h1>
       <h2>User SignUp</h2>
       <div class="singup">
@@ -23,8 +24,8 @@
     </div>
 
   </div>
-
-  <script src="../JavaScript/usersignup.js"></script>
+  {% load static %}
+  <script src="{% static 'js/usersignup.js' %}"></script>
 </body>
 
 </html>

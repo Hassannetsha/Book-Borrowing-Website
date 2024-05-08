@@ -3,20 +3,22 @@
 <html lang="en">
 
 <head>
+    {% load static %}
     <title>SignIn</title>
-    <link rel="icon" type="image/x-icon" href="../images/logopng-removebg.ico">
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/x-icon" href="{% static 'image/logopng-removebg.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 
 <body>
     <div class="container">
         <div class="form">
-            <img src="../images/logopng-removebg.png">
+            <img src="{% static 'image/logopng-removebg.png' %}">
+            
             <h1>eBook nest</h1>
             <h2>Sign In</h2>
             <br>
             <div class="box">
-                <a href="signin-user.html">
+                <a href="SignPages/html/signin-user.html">
                     <div class="wrap">
                         <button type="submit">
                             User Sign In

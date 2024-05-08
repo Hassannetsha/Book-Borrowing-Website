@@ -4,15 +4,15 @@ from django.template import loader
 from django.urls import reverse
 
 # Create your views here.
-def index(request):
-    return render(request,'pages/index.html')
-def add(request):
-    return render(request,'Admin_Home_page/add.html')
-def delete(request):
-    return render(request,'Admin_Home_page/delete.html')
-def edit(request):
-    return render(request,'Admin_Home_page/Edit.html')
-def select(request):
-    return render(request,'Admin_Home_page/Select.html')
+def main(request):
+    return render(request,'SignPages/html/main-sign-page.html')
+def signinUser(request):
+    return render(request,'SignPages/html/signin-user.html')
+def signupUser(request):
+    return render(request,'SignPages/html/signup-user.html')
+def signupAdmin(request):
+    return render(request,'SignPages/html/signinadmin.html')
+def signinAdmin(request):
+    return render(request,'SignPages/html/signup-user.html')
 def home(request):
     return render(request,'home_page/home.html')
