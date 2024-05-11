@@ -10,9 +10,9 @@ def signinUser(request):
     return render(request,'SignPages/html/signin-user.html')
 def signupUser(request):
     return render(request,'SignPages/html/signup-user.html')
-def signupAdmin(request):
-    return render(request,'SignPages/html/signinadmin.html')
 def signinAdmin(request):
-    return render(request,'SignPages/html/signup-user.html')
+    return render(request,'SignPages/html/signinadmin.html')
+def signupAdmin(request):
+    return render(request,'SignPages/html/signup-admin.html')
 def home(request):
     return render(request,'home_page/home.html')
