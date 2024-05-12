@@ -16,3 +16,9 @@ def signupAdmin(request):
     return render(request,'SignPages/html/signup-admin.html')
 def home(request):
     return render(request,'home_page/home.html')
+def available(request):
+    return render(request,'User_Home_page/availavbleBooks.html')
+def borrowed(request):
+    return render(request,'User_Home_page/borrowedBooks.html')
+def signout(request):
+    return render(request,'SignPages/html/main-sign-page.html')

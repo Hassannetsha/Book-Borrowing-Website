@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>e BookNest | Book</title>
-<link rel="icon" type="image/x-icon"  href="../images/favicon.ico">
-<link rel="stylesheet" href="../Style/available.css">
-<link rel="stylesheet" href="../Style/nav.css">
+{% load static %}
+<link rel="icon" type="image/x-icon"  href="{% static 'image/logopng-removebg.ico' %}">
+<link rel="stylesheet" href="{% static 'css/available.css' %}">
+<link rel="stylesheet" href="{% static 'css/nav.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -19,6 +20,6 @@
             
       </div>
         <br>
-    <script src="../JavaScript/available.js"></script>
+    <script src="{% static 'js/available.js' %}"></script>
 </body>
 </html>

@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+{% load static %}
 <title>e BookNest | Book</title>
-<link rel="icon" type="image/x-icon"  href="../images/favicon.ico">
-<link rel="stylesheet" href="../Style/available.css">
-<link rel="stylesheet" href="../Style/nav.css">
+<link rel="icon" type="image/x-icon"  href="{% static 'image/logopng-removebg.ico' %}">
+<link rel="stylesheet" href="{% static 'css/available.css' %}">
+<link rel="stylesheet" href="{% static 'css/nav.css' %}">
 
 </head>
 <body>
@@ -19,6 +20,6 @@
             
       </div>
         <br>
-    <script src="../JavaScript/borrowed.js"></script>
+    <script src="{% static 'js/borrowed.js' %}"></script>
 </body>
 </html>
