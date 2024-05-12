@@ -18,6 +18,29 @@
     <body >
       <div id="Admin_page">
         <nav class="navbar" id="navbaradmin">
+          <div class="logoandsearch">
+            <a href="../home_page/home.html" class="LogoIcon" onclick="AdminHomeuser()">
+            <img src="../images/logopng-removebg.png" alt="can't display image">
+            </a>
+            <a href="../home_page/home.html" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
+          </div>
+          <div class="bottomline">
+              <a href="../home_page/home.html" class="quick" title="Admin Homepage" style="
+                  color: #ffffff;
+                  text-decoration: underline;
+                  font-size: 35px;
+                  color: burlywood;
+                  padding-bottom: 0px;
+                  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+                  text-underline-offset: 15.25px;" onclick="AdminHomeuser()">Home</a>
+              <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
+              <a href="../Adimn_Home_page/Select.html" class="quick" title="edit an existing book">Edit Book</a>
+              <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
+              
+              <a href="{% url 'index' %}" class="quick" title="log out">Sign Out</a>
+              <label for="Search" class="srch">Search:</label>
+              <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
+          </div>
         </nav>
         <!-- <hr style="border: 1px solid burlywood;border-radius: 5px;"> -->
         <div class="img">
@@ -78,7 +101,31 @@
       </div>
       <div id="user_page">
         <nav class="navbar" id="navbaruser">
-          
+          <div class="logoandsearch">
+            <a href="../home_page/home.html" class="LogoIcon" onclick="UserHomeuser()">
+            <img src="../images/logopng-removebg.png" alt="can't display image">
+            </a>
+            <a href="../home_page/home.html" class="Logo" onclick="UserHomeuser()">eBookNest</a>
+          </div>
+          <div class="bottomline">
+              <a href="../home_page/home.html" class="quick" title="Admin Homepage" style="
+                  color: #ffffff;
+                  text-decoration: underline;
+                  font-size: 35px;
+                  color: burlywood;
+                  padding-bottom: 0px;
+                  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+                  text-underline-offset: 15.25px;" onclick="UserHomeuser()">Home</a>
+                  
+              <a href="../User_Home_page/availavbleBooks.html" class="quick" title="Available books">Available books</a>
+              <a href="../User_Home_page/availavbleBooks.html" class="quick" title="Borrow books">Borrow books</a>
+      
+              
+      
+              <a href="{% url 'index' %}" class="quick" title="log out">Sign Out</a>
+              <label for="Search" class="srch">Search:</label>
+              <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
+          </div>
         </nav>
           <div class="img" id="img">
             <p class="Welcome" id="Welcome">Welcome to eBooknest</p>
