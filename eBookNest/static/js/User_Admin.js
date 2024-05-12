@@ -88,7 +88,7 @@ function renderBooks(){
 }
 renderBooks();
 var userType = JSON.parse(sessionStorage.getItem("userType"));
-getnavbar();
+// !getnavbar();
 if (userType === "admin") {
     document.getElementById("Admin_page").style.display = "block";
 } else if (userType === "user") {
@@ -378,55 +378,9 @@ function Search(){
 }}
 function getnavbar(){
     var navbar = document.getElementById("navbaradmin");
-    navbar.innerHTML = `<div class="logoandsearch">
-        <a href="../home_page/home.html" class="LogoIcon" onclick="AdminHomeuser()">
-        <img src="../images/logopng-removebg.png" alt="can't display image">
-        </a>
-        <a href="../home_page/home.html" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
-    </div>
-    <div class="bottomline">
-        <a href="../home_page/home.html" class="quick" title="Admin Homepage" style="
-            color: #ffffff;
-            text-decoration: underline;
-            font-size: 35px;
-            color: burlywood;
-            padding-bottom: 0px;
-            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-            text-underline-offset: 15.25px;" onclick="AdminHomeuser()">Home</a>
-        <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
-        <a href="../Adimn_Home_page/Select.html" class="quick" title="edit an existing book">Edit Book</a>
-        <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
-        
-        <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
-        <label for="Search" class="srch">Search:</label>
-        <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
-    </div>`;
+    navbar.innerHTML = ``;
     navbar = document.getElementById("navbaruser");
-    navbar.innerHTML = `<div class="logoandsearch">
-        <a href="../home_page/home.html" class="LogoIcon" onclick="UserHomeuser()">
-        <img src="../images/logopng-removebg.png" alt="can't display image">
-        </a>
-        <a href="../home_page/home.html" class="Logo" onclick="UserHomeuser()">eBookNest</a>
-    </div>
-    <div class="bottomline">
-        <a href="../home_page/home.html" class="quick" title="Admin Homepage" style="
-            color: #ffffff;
-            text-decoration: underline;
-            font-size: 35px;
-            color: burlywood;
-            padding-bottom: 0px;
-            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-            text-underline-offset: 15.25px;" onclick="UserHomeuser()">Home</a>
-            
-        <a href="../User_Home_page/availavbleBooks.html" class="quick" title="Available books">Available books</a>
-        <a href="../User_Home_page/availavbleBooks.html" class="quick" title="Borrow books">Borrow books</a>
-
-        
-
-        <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
-        <label for="Search" class="srch">Search:</label>
-        <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
-    </div>`;
+    navbar.innerHTML = ``;
 }
 function check_empty(){
     if(booklistPart1.innerHTML===""){
