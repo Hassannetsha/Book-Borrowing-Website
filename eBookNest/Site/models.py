@@ -12,5 +12,6 @@ class Book(models.Model):
     Category = models.ForeignKey(Categorys, on_delete=models.CASCADE, related_name="Books")
     Book_Id = models.IntegerField(primary_key=True)
     description = models.TextField()
+    Available = models.BooleanField(default=True)
     def __str__(self):
         return self.Book_name
