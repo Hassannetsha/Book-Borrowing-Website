@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>e BookNest | Select book</title>
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+        <link rel="stylesheet" href="../Style/Select.css">
+        <link rel="stylesheet" href="../Style/nav.css">
+    </head>
+    <body>
+        <nav class="navbar" id="navbar">
+            
+        </nav>
+        <div class="img" >
+            <p class="Welcome">eBook Nest</p>
+        </div>
+        <div>
+            <form action="../Adimn_Home_page/Edit.html">
+                <div class="moving_div">
+                    <label for="Id" class="Choose">Choose how you want to find your book:</label>
+                    <div class="Select">
+                        <input type="search" placeholder="Enter ID or book name" id="search"  class="field">
+                        <button type="submit" class="buttn_Search" id="buttn_Search" >Select</button>
+                    </div>
+                    <div class="Select">
+                        <div class="Radio">
+                            <input type="radio" value="Id" name="edit" id="Id" class="Circle" >
+                            <label for="Id" class="lab">ID</label>
+                        </div>
+                        <div class="Radio">
+                            <input type="radio" value="BookName" name="edit" id="BookName"class="Circle">
+                            <label for="BookName" class="lab">Book Name</label>
+                        </div>
+                    </div>
+                </div>
+                <div class ="mix">
+                    <div class="Books books1" id="Books">
+                        <div class="Rigth"></div>
+                        <a href="">Fantasy</a>
+                        <div class="Left"></div>
+                    </div>
+                    <div class="see books1" >
+                        <a href="../User_Home_page/availavbleBooks.html">
+                        See All
+                        </a>
+                    </div>
+                    <div class="Categoreys" id="Fantasy">
+                    </div>
+                    <div class="Books books2" id="Books">
+                        <div class="Rigth"></div>
+                        <a href="">Science Fiction</a>
+                        <div class="Left"></div>
+                    </div>
+                    <div class="see books2">
+                        <a href="../User_Home_page/availavbleBooks.html">
+                        See All
+                        </a>
+                    </div>
+                    <div class="Categoreys" id="Science Fiction">
+                    </div>
+                    <div class="Books books3" id="Books">
+                        <div class="Rigth"></div>
+                        <a href="">Mystery / Thriller</a>
+                        <div class="Left"></div>
+                    </div>
+                    <div class="see books3">
+                        <a href="../User_Home_page/availavbleBooks.html">
+                        See All
+                        </a>
+                    </div>
+                    <div class="Categoreys" id="Mystery / Thriller">
+                    </div>
+                    <div><br><br><br></div>
+                </div>
+                <div class="Options">
+                    <input type="reset" value="Reset" class="Reset">
+                    <button type="submit" class="butt_Go_back"><a href="../home_page/home.html" class="Go_back">Go back</a></button>
+                </div>
+                <br><br>
+            </form>
+        </div>
+        <script src="../JavaScript/Select.js"></script>
+    </body>
+</html
