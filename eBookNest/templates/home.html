@@ -140,8 +140,33 @@
           </div>
           <br>
           <div class="availablebooks" id="availablebooks">
-            
-          </div>
+            {% block content %}
+                {% for book in books %}
+                {% if book.active == True %}
+                <div class="card" id="book{{ book.id }}">
+                  <div class="flip-card">
+                      <div class="flip-card-inner">
+                          <div class="flip-card-front">
+                            {{book.BookCover}}
+                              <!-- <img src="{{ book.BookCover.url }}" alt="Book Cover" style="width:300px;height:300px;"> -->
+                          </div>
+                          <div class="flip-card-back">
+                              <h1>{{ book.author }}</h1>
+                              <p>{{ book.description }}</p>
+                              <a href="{% url 'bookdetails' book.id %}" class="see">
+                                  See More..
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+                  <p>{{ book.Bookname }}</p>
+                  <button onclick="DeleteBorrowBook(this)">Return</button>
+              </div>
+                {% endif %}
+                {% endfor %}
+            {% endblock content %}
+        </div>
+        
           <br>
           <br>
           <!-- <hr> -->
