@@ -1,0 +1,30 @@
+{% load static %}
+<head>
+    <link rel="icon" type="image/x-icon" href="{% static 'image/logopng-removebg.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/styleHome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<div class="availablebooks" id="availablebooks">
+    {% block content %}
+        {% for book in books %}
+            {% if book.Available %}
+                <div class="card" id="book{{ book.Book_Id }}">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="{{ book.BookCover.url }}" alt="Book Cover" style="width:300px;height:300px;">
+                            </div>
+                            <div class="flip-card-back">
+                                <h1>{{ book.Book_author }}</h1>
+                                <p>{{ book.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p>{{ book.Book_name }}</p>
+                    <button onclick="DeleteBorrowBook(this)">Return</button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endblock content %}
+</div>

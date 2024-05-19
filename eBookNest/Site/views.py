@@ -6,15 +6,16 @@ def index(request):
 
 def signinAdmin(request):
     return render(request,'signinadmin.html')
-def home(request):
-    books = Book.objects.all() 
-    return render(request,'home.html', {'Book': books})
+def test(request):
+    books = Book.objects.all().values()
+    return render(request, 'test.html', {'books': books})
 def signUpAdmin(request):
     return render(request,'signup-admin.html')
 def signinUser(request):
     return render(request,'signin-user.html')
 def signUpUser(request):
     return render(request,'signup-user.html')
-def available_books_view(request):
+def test(request):
     books = Book.objects.all()  # or any other queryset
-    return render(request, 'your_template.html', {'Book': books})
+    return render(request, 'test.html', {'books': books})
+
