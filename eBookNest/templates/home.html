@@ -169,7 +169,7 @@
           <div class="availablebooks" id="availablebooks">
             {% for book in books %}
                   {% if book.Available %}
-                      <div class="card" id="book{{ book.Book_Id }}">
+                      <div class="card" id="book{{ book.id }}">
                           <div class="flip-card">
                               <div class="flip-card-inner">
                                   <div class="flip-card-front">
@@ -185,7 +185,7 @@
                               </div>
                           </div>
                           <p>{{ book.Book_name }}</p>
-                          <button onclick="DeleteBorrowBook(this)">Return</button>
+                          <button><a style = "color : white; font-family: sans-serif;font-style: normal;" href="{% url 'Convert' book.id %}">Borrow</a></button>
                       </div>
                   {% endif %}
               {% endfor %}
@@ -209,7 +209,7 @@
             
               {% for book in books %}
                   {% if not book.Available %}
-                      <div class="card" id="book{{ book.Book_Id }}">
+                      <div class="card" id="book{{ book.id }}">
                           <div class="flip-card">
                               <div class="flip-card-inner">
                                   <div class="flip-card-front">
@@ -222,7 +222,7 @@
                               </div>
                           </div>
                           <p>{{ book.Book_name }}</p>
-                          <button onclick="DeleteBorrowBook(this)">Return</button>
+                          <button><a style = "color : white; font-family: sans-serif;font-style: normal;" href="{% url 'Convert' book.id %}">Return</a></button>
                       </div>
                   {% endif %}
               {% endfor %}

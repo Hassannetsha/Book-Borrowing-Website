@@ -110,6 +110,9 @@ document.addEventListener("DOMContentLoaded", function() {
         books = booksData;
         categories = categoriesData;
         check();
+        checkBorrow();
+        checkavailble();
+        
         // console.log(books[1].Category_id);
         // useCategories(books);
         // useCategories(categories);
@@ -286,10 +289,18 @@ function renderavailablebooks(){
 // renderavailablebooks();
 
 function checkBorrow() {
-    if (books4.length === 0) {
-        document.getElementById("Borrow").style.display = "none";
-        document.getElementById("hide").style.display = "none";
-    } 
+        var ctn = 0;
+        for (let i = 0; i < books.length; i++) {
+            if(books[i].Available == false){
+                ctn++;
+            }
+        }
+       
+        if (ctn==0) {
+            document.getElementById("Borrow").style.display = "none";
+            document.getElementById("hide").style.display = "none";
+        }
+    
 
 }
 function DeleteBorrowBook(button){
@@ -328,12 +339,20 @@ function DeleteBorrowBook(button){
     }, 500);
 }
 function checkavailble(){
-    if (books5.length === 0) {
-        document.getElementById("Available").style.display = "none";
-        document.getElementById("availablebooks").style.display = "none";
-        document.getElementById("hide1").style.display = "none";
-        document.getElementById("Borrow").style.marginTop = "0px";
-    } 
+    
+        var ctn = 0;
+        for (let i = 0; i < books.length; i++) {
+            if(books[i].Available === true){
+                ctn++;
+            }
+        }
+        if (ctn==0) {
+            document.getElementById("Available").style.display = "none";
+            document.getElementById("availablebooks").style.display = "none";
+            document.getElementById("hide1").style.display = "none";
+            document.getElementById("Borrow").style.marginTop = "0px";
+        }
+    
 }
 function DeleteavailableBook(button){
     var bookDiv = button.parentElement;
@@ -386,8 +405,8 @@ function checkavailablehead(){
     }
 }
 
-checkBorrowhead();
-checkavailablehead();
+// checkBorrowhead();
+// checkavailablehead();
 function Search(){
 
 }}

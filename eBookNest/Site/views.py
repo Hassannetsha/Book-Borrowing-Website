@@ -31,4 +31,12 @@ def delete(request,Id):
     book = get_object_or_404(Book, pk=Id)
     book.delete()
     return redirect('home')
+def Convert(request,Id):
+    book = get_object_or_404(Book, pk=Id)
+    if book.Available:
+        book.Available = False
+    else:
+        book.Available = True
+    book.save()
+    return redirect('home')
 
