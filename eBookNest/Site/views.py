@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.http import JsonResponse,HttpResponseRedirect
+from django.urls import reverse
 from .models import Book,Categorys
 def index(request):
     return render(request,'main-sign-page.html')
@@ -26,4 +27,8 @@ def category_data(request):
 def book_data(request):
     books = list(Book.objects.values())
     return JsonResponse(books, safe=False)
+def delete(request,Id):
+    book = get_object_or_404(Book, pk=Id)
+    book.delete()
+    return redirect('home')
 

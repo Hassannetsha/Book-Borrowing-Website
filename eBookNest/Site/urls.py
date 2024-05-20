@@ -12,4 +12,5 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('api/categories/', views.category_data, name='category_data'),
     path('api/books/', views.book_data, name='book_data'),
+    path('delete/<int:Id>',views.delete,name='delete'),
 ]

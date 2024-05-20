@@ -53,7 +53,7 @@
               <a href="">{{category.Category_name}}</a>
               <div class="Left"></div>
             </div>
-            <div class="see books1" >
+            <div class="see books{{category.id}}" >
               <a href="../User_Home_page/availavbleBooks.html" id = "see">
                 See All
               </a>
@@ -61,7 +61,7 @@
             <div class="Categoreys" id="{{category.Category_name}}">
               {% for book in books %}
                 {% if category == book.Category %}
-                  <div class="cards" id="book{{book.Book_Id}}">
+                  <div class="cards" id="book{{book.id}}">
                     <div class="flip-card">
                       <div class="flip-card-inner">
                         <div class="flip-card-front">
@@ -78,8 +78,8 @@
                     </div>
                     <p>{{book.Book_name}}</p>
                     <div class="Edit_Delete_buttns">
-                      <button class="buttns" onclick="go_to_bookDescription()">Edit</button>
-                      <button class="buttns" onclick="deletebook(this)" Category = "{{category}}"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
+                      <button class="buttns"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
+                      <button class="buttns" Category = "{{category}}"><a href = "{% url 'delete' book.id %}" style = "color : white;"><i class="fa fa-trash-o" style="font-size:25px"></a></i></button>
                     </div>
                   </div>
                 {% endif %}
@@ -231,7 +231,6 @@
         </div>
             </div>
             <script src = "{% static 'Js/index.js'%}"></script>
-
       <!-- <script src="../JavaScript/Role.js"></script> -->
     </body>
 </html>

@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Assign the fetched data to the global variables
         books = booksData;
         categories = categoriesData;
+        check();
         // console.log(books[1].Category_id);
         // useCategories(books);
         // useCategories(categories);
@@ -120,16 +121,15 @@ function useCategories(categories) {
     // Your logic to handle the categories data
     console.log('Using categories:', categories);
 }
-function check(ctn) {
+function check() {
     for (let index = 0; index < categories.length; index++){
         var ctn = 0;
         for (let i = 0; i < books.length; i++) {
-            if(categories[i].Category_name == books[i].Category_id){
+            if(categories[index].id == books[i].Category_id){
                 ctn++;
             }
-            
         }
-        var clas = "books" + index + 1;
+        var clas = "books" + (index + 1);
         if (ctn==0) {
             var books1Elements = document.getElementsByClassName(clas);
             
@@ -138,73 +138,76 @@ function check(ctn) {
                 books1Elements[i].style.opacity = '0';
                 books1Elements[i].style.height = '0';
             }
-            document.getElementById(categories[i].Category_name).style.display = "none";
+            document.getElementById(categories[index].Category_name).style.display = "none";
         }
     }
 }
 
-function checkFantasy(){
-    if(booklistPart1.innerHTML===""){
-        var books1Elements = document.getElementsByClassName("books1");
+// function checkFantasy(){
+//     if(booklistPart1.innerHTML===""){
+//         var books1Elements = document.getElementsByClassName("books1");
         
-        for (var i = 0; i < books1Elements.length; i++) {
-            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
-            books1Elements[i].style.opacity = '0';
-            books1Elements[i].style.height = '0';
-        }
-        document.getElementById("Fantasy").style.display = "none";
-    }
-    if(booklistPart2.innerHTML===""){
-        var books1Elements = document.getElementsByClassName("books2");
+//         for (var i = 0; i < books1Elements.length; i++) {
+//             books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+//             books1Elements[i].style.opacity = '0';
+//             books1Elements[i].style.height = '0';
+//         }
+//         document.getElementById("Fantasy").style.display = "none";
+//     }
+//     if(booklistPart2.innerHTML===""){
+//         var books1Elements = document.getElementsByClassName("books2");
         
-        for (var i = 0; i < books1Elements.length; i++) {
-            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
-            books1Elements[i].style.opacity = '0';
-            books1Elements[i].style.height = '0';
-        }
-        document.getElementById("Science Fiction").style.display = "none";
-    }
-    if(booklistPart3.innerHTML===""){
-        var books1Elements = document.getElementsByClassName("books3");
+//         for (var i = 0; i < books1Elements.length; i++) {
+//             books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+//             books1Elements[i].style.opacity = '0';
+//             books1Elements[i].style.height = '0';
+//         }
+//         document.getElementById("Science Fiction").style.display = "none";
+//     }
+//     if(booklistPart3.innerHTML===""){
+//         var books1Elements = document.getElementsByClassName("books3");
         
-        for (var i = 0; i < books1Elements.length; i++) {
-            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
-            books1Elements[i].style.opacity = '0';
-            books1Elements[i].style.height = '0';
-        }
-        document.getElementById("Mystery / Thriller").style.display = "none";
-    }
-}
+//         for (var i = 0; i < books1Elements.length; i++) {
+//             books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+//             books1Elements[i].style.opacity = '0';
+//             books1Elements[i].style.height = '0';
+//         }
+//         document.getElementById("Mystery / Thriller").style.display = "none";
+//     }
+// }
 // checkFantasy();
-function deletebook(button){
+function deletebook(button,id){
     var bookDiv = button.parentElement.parentElement;
     // console.log(bookDiv.id);
     bookDiv.style.transition = 'opacity 0.5s, height 0.5s';
     bookDiv.style.opacity = '0';
     bookDiv.style.height = '0';
-    var category = button.getAttribute("Category");
+    // var category = button.getAttribute("Category");
+    window.location.href = (window.location.href + "delete/"+ id) ;
+    check();
     setTimeout(function() {
-        bookDiv.remove();
-        // console.log(parentid);
-        var parentId = bookDiv.id;
-        var lastChar = parentId.charAt(parentId.length - 1);
-        var lastCharInt = parseInt(lastChar);
-        allbooks = allbooks.filter(function (book) {
-            return book.Id !== lastCharInt;
-        });
-        var ctn = 0;
-        sessionStorage.setItem("books",JSON.stringify(allbooks));
-        for (let i = 0; i < allbooks.length; i++) {
-            const book = allbooks[i];
-            if(book.categoreys.includes(category)){
-                ctn++;
-            }
-        }
-        let books6 =allbooks.slice(allbooks.length / 2);
-        let books7 =allbooks.slice(0, allbooks.length / 2);
-        sessionStorage.setItem("availablebooks",JSON.stringify(books6));
-        sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
-        check(category,ctn);
+
+        // bookDiv.remove();
+        // // console.log(parentid);
+        // var parentId = bookDiv.id;
+        // var lastChar = parentId.charAt(parentId.length - 1);
+        // var lastCharInt = parseInt(lastChar);
+        // allbooks = allbooks.filter(function (book) {
+        //     return book.Id !== lastCharInt;
+        // });
+        // var ctn = 0;
+        // sessionStorage.setItem("books",JSON.stringify(allbooks));
+        // for (let i = 0; i < allbooks.length; i++) {
+        //     const book = allbooks[i];
+        //     if(book.categoreys.includes(category)){
+        //         ctn++;
+        //     }
+        // }
+        // let books6 =allbooks.slice(allbooks.length / 2);
+        // let books7 =allbooks.slice(0, allbooks.length / 2);
+        // sessionStorage.setItem("availablebooks",JSON.stringify(books6));
+        // sessionStorage.setItem("borrowedbooks",JSON.stringify(books7));
+        // check();
     }, 500);
 }
 
