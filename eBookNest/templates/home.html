@@ -47,19 +47,46 @@
           <p class="Welcome">Welcome to eBooknest</p>
         </div>
         <div class ="mix">
-          <div class="Books books1" id="Books">
-            <div class="Rigth"></div>
-            <a href="">Fantasy</a>
-            <div class="Left"></div>
-          </div>
-          <div class="see books1" >
-            <a href="../User_Home_page/availavbleBooks.html" id = "see">
-              See All
-            </a>
-          </div>
-          <div class="Categoreys" id="Fantasy">
-          </div>
-          <div class="Books books2" id="Books">
+          {% for category in categories %}
+            <div class="Books books1" id="Books">
+              <div class="Rigth"></div>
+              <a href="">{{category.Category_name}}</a>
+              <div class="Left"></div>
+            </div>
+            <div class="see books1" >
+              <a href="../User_Home_page/availavbleBooks.html" id = "see">
+                See All
+              </a>
+            </div>
+            <div class="Categoreys" id="{{category.Category_name}}">
+              {% for book in books %}
+                {% if category == book.Category %}
+                  <div class="cards" id="book{{book.Book_Id}}">
+                    <div class="flip-card">
+                      <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                          <img src="{{book.BookCover.url}}" alt="Avatar" style="width:300px;height:300px;">
+                        </div>
+                        <div class="flip-card-back">
+                          <h1>{{book.Book_name}}</h1>
+                          <p>{{book.description}}</p>
+                          <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                            See More..
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <p>{{book.Book_name}}</p>
+                    <div class="Edit_Delete_buttns">
+                      <button class="buttns" onclick="go_to_bookDescription()">Edit</button>
+                      <button class="buttns" onclick="deletebook(this)" Category = "{{category}}"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
+                    </div>
+                  </div>
+                {% endif %}
+              {%endfor%}
+            </div>
+          {% endfor %}
+          {% comment %} <div class="Books books2" id="Books">
             <div class="Rigth"></div>
             <a href="">Science Fiction</a>
             <div class="Left"></div>
@@ -82,7 +109,7 @@
             </a>
           </div>
           <div class="Categoreys" id="Mystery / Thriller">
-          </div>
+          </div> {% endcomment %}
           <div class="middle">
             <div id="ADD" class ="ADD">
               <a href="../Adimn_Home_page/add.html"id="AddBook" class="Options">Add books</a>
@@ -140,31 +167,29 @@
           </div>
           <br>
           <div class="availablebooks" id="availablebooks">
-            {% block content %}
-                {% for book in books %}
-                    {% if book.Available %}
-                        <div class="card" id="book{{ book.Book_Id }}">
-                            <div class="flip-card">
-                                <div class="flip-card-inner">
-                                    <div class="flip-card-front">
-                                        <img src="{{ book.BookCover.url }}" alt="Book Cover" style="width:300px;height:300px;">
-                                    </div>
-                                    <div class="flip-card-back">
-                                        <h1>{{ book.Book_author }}</h1>
-                                        <p>{{ book.description }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <p>{{ book.Book_name }}</p>
-                            <button onclick="DeleteBorrowBook(this)">Borrow</button>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            
-        </div>
-        
-        
-        
+            {% for book in books %}
+                  {% if book.Available %}
+                      <div class="card" id="book{{ book.Book_Id }}">
+                          <div class="flip-card">
+                              <div class="flip-card-inner">
+                                  <div class="flip-card-front">
+                                      <img src="{{ book.BookCover.url }}" alt="Book Cover" style="width:300px;height:300px;">
+                                  </div>
+                                  <div class="flip-card-back">
+                                      <h1>{{ book.Book_author }}</h1>
+                                      <p>{{ book.description }}</p>
+                                      <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                        See More..
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>
+                          <p>{{ book.Book_name }}</p>
+                          <button onclick="DeleteBorrowBook(this)">Return</button>
+                      </div>
+                  {% endif %}
+              {% endfor %}
+          </div>
           <br>
           <br>
           <!-- <hr> -->
@@ -182,26 +207,25 @@
         
           <div class="borrowBooks" id="borrowBooks">
             
-                {% for book in books %}
-                    {% if not book.Available %}
-                        <div class="card" id="book{{ book.Book_Id }}">
-                            <div class="flip-card">
-                                <div class="flip-card-inner">
-                                    <div class="flip-card-front">
-                                        <img src="{{ book.BookCover.url }}" alt="Book Cover" style="width:300px;height:300px;">
-                                    </div>
-                                    <div class="flip-card-back">
-                                        <h1>{{ book.Book_author }}</h1>
-                                        <p>{{ book.description }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <p>{{ book.Book_name }}</p>
-                            <button onclick="DeleteBorrowBook(this)">Return</button>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            {% endblock content %}
+              {% for book in books %}
+                  {% if not book.Available %}
+                      <div class="card" id="book{{ book.Book_Id }}">
+                          <div class="flip-card">
+                              <div class="flip-card-inner">
+                                  <div class="flip-card-front">
+                                      <img src="{{ book.BookCover.url }}" alt="Book Cover" style="width:300px;height:300px;">
+                                  </div>
+                                  <div class="flip-card-back">
+                                      <h1>{{ book.Book_author }}</h1>
+                                      <p>{{ book.description }}</p>
+                                  </div>
+                              </div>
+                          </div>
+                          <p>{{ book.Book_name }}</p>
+                          <button onclick="DeleteBorrowBook(this)">Return</button>
+                      </div>
+                  {% endif %}
+              {% endfor %}
         </div>
         
         </div>
