@@ -31,7 +31,8 @@
                 <h1>eBook nest</h1>
                 <h2>Admin Sign In</h2>
                 <div class="singup">
-                    <form>
+                    <form method="post">
+                        {% csrf_token %}
                         <div class="input">
                             <i class="fa-solid fa-user-tie"></i>
                             <input id="email" type="text" placeholder="Enter your Email" name="Email" required>

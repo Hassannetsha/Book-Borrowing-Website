@@ -8,6 +8,8 @@
       <link rel="stylesheet" href="{% static 'css/styleHome.css' %}">
       <link rel="stylesheet" href="{% static 'css/nav.css' %}">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
       <style>
         .img{
           background-image: url("{% static 'image/People sitting at bookshelves and reading books in bookstore (2).jpg' %}");
@@ -20,7 +22,7 @@
         <nav class="navbar" id="navbaradmin">
           <div class="logoandsearch">
             <a href="../home_page/home.html" class="LogoIcon" onclick="AdminHomeuser()">
-            <img src="../images/logopng-removebg.png" alt="can't display image">
+            {% comment %} <img src="../images/logopng-removebg.png" alt="can't display image"> {% endcomment %}
             </a>
             <a href="../home_page/home.html" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
           </div>
@@ -79,7 +81,7 @@
                     <p>{{book.Book_name}}</p>
                     <div class="Edit_Delete_buttns">
                       <button class="buttns"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
-                      <button class="buttns" Category = "{{category}}"><a href = "{% url 'delete' book.id %}" style = "color : white;"><i class="fa fa-trash-o" style="font-size:25px"></a></i></button>
+                      <button class="buttns" Category = "{{category}}" onclick="deleteBook({{ book.id }})" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
                     </div>
                   </div>
                 {% endif %}
@@ -130,7 +132,7 @@
         <nav class="navbar" id="navbaruser">
           <div class="logoandsearch">
             <a href="../home_page/home.html" class="LogoIcon" onclick="UserHomeuser()">
-            <img src="../images/logopng-removebg.png" alt="can't display image">
+            {% comment %} <img src="../images/logopng-removebg.png" alt="can't display image"> {% endcomment %}
             </a>
             <a href="../home_page/home.html" class="Logo" onclick="UserHomeuser()">eBookNest</a>
           </div>
@@ -185,7 +187,7 @@
                               </div>
                           </div>
                           <p>{{ book.Book_name }}</p>
-                          <button><a style = "color : white; font-family: sans-serif;font-style: normal;" href="{% url 'Convert' book.id %}">Borrow</a></button>
+                          <button onclick = "toggleAvailability({{book.id}})">Borrow</button>
                       </div>
                   {% endif %}
               {% endfor %}
@@ -222,7 +224,7 @@
                               </div>
                           </div>
                           <p>{{ book.Book_name }}</p>
-                          <button><a style = "color : white; font-family: sans-serif;font-style: normal;" href="{% url 'Convert' book.id %}">Return</a></button>
+                          <button onclick = "toggleAvailability({{book.id}})">Return</button>
                       </div>
                   {% endif %}
               {% endfor %}
@@ -230,7 +232,282 @@
         
         </div>
             </div>
-            <script src = "{% static 'Js/index.js'%}"></script>
-      <!-- <script src="../JavaScript/Role.js"></script> -->
+            <script>
+              var userType = JSON.parse(sessionStorage.getItem("userType"));
+              // !getnavbar();
+              if (userType === "admin") {
+                  document.getElementById("Admin_page").style.display = "block";
+              } else if (userType === "user") {
+                  document.getElementById("user_page").style.display = "block";
+              } else {
+                  alert("Invalid user type in URL!");
+              }
+              var categories = [],books = [];
+              document.addEventListener("DOMContentLoaded", function() {
+                Promise.all([
+                    fetch('/api/books/').then(response => response.json()),
+                    fetch('/api/categories/').then(response => response.json())
+                ])
+                .then(([booksData, categoriesData]) => {
+                    // Assign the fetched data to the global variables
+                    books = booksData;
+                    categories = categoriesData;
+                    check();
+                    checkBorrow();
+                    checkavailble();
+                    
+                    
+
+                })
+                .catch(error => console.log('Error fetching data:'));
+              });
+              function checkBorrow() {
+                var ctn = 0;
+                for (let i = 0; i < books.length; i++) {
+                    if(books[i].Available == false){
+                        ctn++;
+                    }
+                }
+                if (ctn==0) {
+                    document.getElementById("Borrow").style.display = "none";
+                    document.getElementById("hide").style.display = "none";
+                }
+            
+        
+              }
+              function checkavailble(){
+    
+                var ctn = 0;
+                for (let i = 0; i < books.length; i++) {
+                    if(books[i].Available === true){
+                        ctn++;
+                    }
+                }
+                if (ctn==0) {
+                    document.getElementById("Available").style.display = "none";
+                    document.getElementById("availablebooks").style.display = "none";
+                    document.getElementById("hide1").style.display = "none";
+                    document.getElementById("Borrow").style.marginTop = "0px";
+                }
+            
+              }
+              function check() {
+                for (let index = 0; index < categories.length; index++){
+                    var ctn = 0;
+                    for (let i = 0; i < books.length; i++) {
+                        if(categories[index].id == books[i].Category_id){
+                            ctn++;
+                        }
+                    }
+                    var clas = "books" + (index + 1);
+                    if (ctn==0) {
+                        var books1Elements = document.getElementsByClassName(clas);
+                        
+                        for (var i = 0; i < books1Elements.length; i++) {
+                            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+                            books1Elements[i].style.opacity = '0';
+                            books1Elements[i].style.height = '0';
+                        }
+                        document.getElementById(categories[index].Category_name).style.display = "none";
+                    }
+                }
+                
+              }
+              function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+              }
+              function toggleAvailability(bookId){
+                fetch(`/Convert/${bookId}`, {
+                  method: 'PATCH',
+                  headers: {
+                      'X-CSRFToken': getCookie('csrftoken'),
+                      'Content-Type': 'application/json' // Ensure the content type is set if sending JSON data
+                  },
+                  // If you need to send any data, include it in the body
+                  // body: JSON.stringify({ key: 'value' }) // Uncomment if needed
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                  $(document).ready(function(){
+                    $.ajax({
+                        type: 'GET',
+                        url : "/getbooks/",
+                        success: function(response){
+                          var available_div = document.getElementById("availablebooks");
+                          var not_available_div = document.getElementById("borrowBooks");
+                          //for (var category in response.categories){
+                            //var category_div = document.getElementById(response.categories[category].Category_name);
+                            //category_div.innerHTML = ``;
+                            available_div.innerHTML =``;
+                            not_available_div.innerHTML =``;
+                            for(var book in response.books){
+                              if(response.books[book].Available){
+                                available_div.innerHTML += `<div class="card" id="book${ response.books[book].id }">
+                                  <div class="flip-card">
+                                      <div class="flip-card-inner">
+                                          <div class="flip-card-front">
+                                              <img src="../media/${response.books[book].BookCover}" alt="Book Cover" style="width:300px;height:300px;">
+                                          </div>
+                                          <div class="flip-card-back">
+                                              <h1>${ response.books[book].Book_author }</h1>
+                                              <p>${ response.books[book].description }</p>
+                                              <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                                See More..
+                                            </a>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <p>${ response.books[book].Book_name }</p>
+                                  <button onclick = "toggleAvailability(${response.books[book].id})">Borrow</button>
+                                </div>`
+                              }
+                              else{
+                                not_available_div.innerHTML += `<div class="card" id="book${ response.books[book].id }">
+                                  <div class="flip-card">
+                                      <div class="flip-card-inner">
+                                          <div class="flip-card-front">
+                                              <img src="../media/${response.books[book].BookCover}" alt="Book Cover" style="width:300px;height:300px;">
+                                          </div>
+                                          <div class="flip-card-back">
+                                              <h1>${ response.books[book].Book_author }</h1>
+                                              <p>${ response.books[book].description }</p>
+                                              <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                                See More..
+                                            </a>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <p>${ response.books[book].Book_name }</p>
+                                  <button onclick = "toggleAvailability(${response.books[book].id})">Return</button>
+                                </div>`
+                              }
+                              //console.log(response.books[book].Category_id)
+                              //console.log(response.categories[category].id)
+                          //}
+                            }
+                        },
+                        error:function(response){
+                          alert("Failed")
+                        }
+                      }
+                    );
+                    //check();
+                    //checkBorrow();
+                    //checkavailble();
+                  })
+                    // Perform any additional actions with the data if needed
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                    alert('Failed to update availability');
+                });
+
+              }
+              
+              function deleteBook(bookId) {
+                fetch(`/delete-book/${bookId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                  $(document).ready(function(){
+                      $.ajax({
+                          type: 'GET',
+                          url : "/getbooks/",
+                          success: function(response){
+                            for (var category in response.categories){
+                              var category_div = document.getElementById(response.categories[category].Category_name);
+                              category_div.innerHTML = ``;
+                              for(var book in response.books){
+                                //console.log(response.books[book].Category_id)
+                                //console.log(response.categories[category].id)
+                                if(response.books[book].Category_id ==  response.categories[category].id){
+                                  category_div.innerHTML += `<div class="cards" id="book${response.books[book].id}">
+                                    <div class="flip-card">
+                                      <div class="flip-card-inner">
+                                        <div class="flip-card-front">
+                                          <img src="../media/${response.books[book].BookCover}" alt="Avatar" style="width:300px;height:300px;">
+                                        </div>
+                                        <div class="flip-card-back">
+                                          <h1>${response.books[book].Book_name}</h1>
+                                          <p>${response.books[book].description}$</p>
+                                          <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                            See More..
+                                          </a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <p>${response.books[book].Book_name}</p>
+                                    <div class="Edit_Delete_buttns">
+                                      <button class="buttns"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
+                                      <button class="buttns" Category = "${response.categories[category].Category_name}" onclick="deleteBook(${ response.books[book].id })" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
+                                    </div>
+                                  </div>`;
+                                }
+                              }
+                            }
+                          },
+                          error:function(response){
+                            alert("Failed")
+                          }
+                        }
+                      );
+                    //check();
+                    //checkBorrow();
+                    //checkavailble();
+                  })
+                });
+                
+              }
+      
+              
+              
+              {% comment %} $(document).ready(function() {
+                console.log("Document ready");
+            
+                // Use event delegation for dynamic content
+                $(document).on('click', '.delete-button', function(event) {
+                    event.preventDefault();
+                    var bookId = $(this).data('id');
+                    var url = "/ajax/delete/" + bookId + "/";
+                    console.log("Deleting book with ID:", bookId);
+                    $.ajax({
+                      type: 'POST',
+                        url: url,
+                        success: function(response) {
+                            if (response.success) {
+                                console.log("Successfully deleted book with ID:", bookId);
+                                $('#book-' + bookId).remove();
+                            } else {
+                                console.log("Error deleting book with ID:", bookId);
+                                alert('Error deleting book');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("AJAX Error:", error);
+                        }
+                    });
+                });
+            }); {% endcomment %}
+            </script>
     </body>
 </html>

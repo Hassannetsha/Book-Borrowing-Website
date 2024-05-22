@@ -295,7 +295,6 @@ function checkBorrow() {
                 ctn++;
             }
         }
-       
         if (ctn==0) {
             document.getElementById("Borrow").style.display = "none";
             document.getElementById("hide").style.display = "none";
