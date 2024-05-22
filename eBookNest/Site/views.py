@@ -19,8 +19,7 @@ def signUpUser(request):
 def home(request):
     books = Book.objects.all()  # or any other queryset
     categories = Categorys.objects.all()
-    categories_length = len(categories)
-    return render(request, 'Home.html', {'books': books,'categories': categories,'categories_length':categories_length})
+    return render(request, 'Home.html', {'books': books,'categories': categories})
 def category_data(request):
     categories = list(Categorys.objects.values())  # Converts queryset to list of dictionaries
     return JsonResponse(categories, safe=False)
@@ -49,3 +48,11 @@ def getbooks(request):
 def Availableallbooks(request):
     books = Book.objects.all()
     return render(request, 'availavbleBooks.html', {'books': books})
+def selectBook(request):
+    books = Book.objects.all()
+    categories = Categorys.objects.all()
+    return render(request, 'Home.html', {'books': books,'categories': categories})
+def details(request,Id):
+    book = get_object_or_404(Book, pk=Id)
+    category = book.Category
+    return render(request, 'bookdetails.html', {"book": book, "category": category})

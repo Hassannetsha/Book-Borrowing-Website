@@ -127,72 +127,12 @@ function details(button){
     });
     sessionStorage.setItem("details", JSON.stringify(selectedBook));
 }
-function getnavbar(){
-    var navbar = document.getElementById("navbar");
-    navbar.innerHTML = `<div class="logoandsearch">
-    <a href="../home_page/home.html" class="LogoIcon">
-        <img src="../images/logopng-removebg.png" alt="can't display image">
-    </a>
-    <a href="../home_page/home.html" class="Logo">eBookNest</a>
-</div>
-<div class="bottomline">
-    <a href="../home_page/home.html" class="quick" title="Admin Homepage">Home</a>
-    <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
-    <a href="../Adimn_Home_page/Select.html" class="quick" title="edit an existing book" style="
-    color: #ffffff;
-    text-decoration: underline;
-    font-size: 35px;
-    color: burlywood;
-    padding-bottom: 0px;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    text-underline-offset: 15.25px;">Edit Book</a>
-    <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
-    
-    <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
-    <label for="Search" class="srch">Search:</label>
-    <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
-</div>            `;
-}
-getnavbar();
-var radio = "";
-var radio1 = document.getElementById("Id");
-var radio2 = document.getElementById("BookName");
-radio1.addEventListener("click", function (event) {
-    radio = "Id";
-});
-radio2.addEventListener("click",function (event) {
-    radio = "bookname";
-})
+// function getnavbar(){
+//     var navbar = document.getElementById("navbar");
+//     navbar.innerHTML = `            `;
+// }
+// getnavbar();
 
 
-var button = document.getElementById("buttn_Search");
-button.addEventListener("click",function (event){
-    var inputElement = document.getElementById("search");
-    var inputValue = inputElement.value;
-    var onlyIntegers = /^\d+$/;
-    if(radio==="Id"){
-        if(!onlyIntegers.test(inputValue)){
-            alert("Please enter a valid Id");
-            event.preventDefault();
-        }
-        else{
-            
-            sessionStorage.setItem("redirectid",JSON.stringify(inputElement.value));
-        }
-    }
-    else if(radio==="bookname"){
-        var hasPunctuationExceptComma = /[!\"#$%&'()*+\-./:;<=>?@\[\\\]^_`{|}~]/.test(inputValue);
-        if (hasPunctuationExceptComma) {
-            alert("Please enter a valid Book Name");
-            event.preventDefault();
-        }
-        else{
-            
-            sessionStorage.setItem("redirectBookName",JSON.stringify(inputElement.value));
-        }
-    }
-    else{
-        alert("Please enter a valid Book Name");
-        event.preventDefault();
-    }
-});
+
+

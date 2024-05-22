@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+  {% load static %}
 <head>
 <meta charset="UTF-8">
 <title>e BookNest | Book</title>
 <link rel="icon" type="image/x-icon"  href="../images/favicon.ico">
-<link rel="stylesheet" href="../Style/bookdetails.css">
+<link rel="stylesheet" href="{% static 'css/bookdetails.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="../Style/nav.css">
+<link rel="stylesheet" href="{% static 'css/nav.css' %}">
+<style>
+  .button .heart .fa {
+    color: rgb(8 88 66);
+}
+</style>
 
 </head>
 <body>
@@ -19,15 +25,78 @@
   </div>
   <div class="content">
   <div class="image" id="image">
-    
+    <img src="{{book.BookCover.url}}" alt="" height="200px" width="200px">
   </div>
     <div class="book" id="book">
-
+      <p>Book Name:</p> {{book.Book_name}}
+        <br><br>
+        <p id = "bookID">Book Id:</p> {{book.id}}
+        <br><br>
+        <p>Author:</p> {{book.Book_author}}
+        <br><br>
+        <p>Category:</p> {{category.Category_name}}
+        <br><br>
+        <p>Descreption:</p> {{book.description}}
+        <br><br>
     </div>
     </div>
     <div class="button" id="button">
       
     </div>
-    <script src="../JavaScript/bookdetails.js"></script>
+    <script>
+      var userType = JSON.parse(sessionStorage.getItem("userType"));
+      var buttonHtml = document.getElementById("button");
+      function getnavbar(){
+        var navbar = document.getElementById("navbar");
+        if(userType === "admin"){navbar.innerHTML = `<div class="logoandsearch">
+            <a href="../home_page/home.html" class="LogoIcon" onclick="AdminHomeuser()">
+            <img src="../images/logopng-removebg.png" alt="can't display image">
+            </a>
+            <a href="../home_page/home.html" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
+        </div>
+        <div class="bottomline">
+            <a href="../home_page/home.html" class="quick" title="Admin Homepage"  onclick="AdminHomeuser()">Home</a>
+            <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
+            <a href="../Adimn_Home_page/Select.html" class="quick" title="edit an existing book">Edit Book</a>
+            <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
+            
+            <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
+            <label for="Search" class="srch">Search:</label>
+            <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
+        </div>`;
+        buttonHtml.innerHTML = `<button class="b" onclick = "Go_back()">Back</button>
+        <button class="b" onclick = "go_to_Edit()">Edit</button>
+        <div class="heart" name="x"><i class="fa fa-trash-o" name="x" style="font-size:40px; padding-left: 21px;" onclick = "deletebook()"></i></div>`;
+        }
+        if(userType === "user"){navbar.innerHTML = `<div class="logoandsearch">
+            <a href="../home_page/home.html" class="LogoIcon" onclick="UserHomeuser()">
+            <img src="../images/logopng-removebg.png" alt="can't display image">
+            </a>
+            <a href="../home_page/home.html" class="Logo" onclick="UserHomeuser()">eBookNest</a>
+        </div>
+        <div class="bottomline">
+            <a href="../home_page/home.html" class="quick" title="Admin Homepage"  onclick="UserHomeuser()">Home</a>
+                
+            <a href="../User_Home_page/availavbleBooks.html" class="quick" title="Available books">Available books</a>
+            <a href="../User_Home_page/borrrowedBooks.html" class="quick" title="Borrow books">Borrow books</a>
+    
+            
+    
+            <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
+            <label for="Search" class="srch">Search:</label>
+            <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
+        </div>`;
+        if(book.Available){buttonHtml.innerHTML = `<button class="b" onclick = "Go_back()">Back</button>
+        <button class="b" onclick = "DeleteavailableBook()">Borrow</button>
+        <div class="heart" name="x"><i class="fa fa-heart" name="x"id = "fa"  onclick = "changeColor()"></i></div>`;}
+        else if (!book.Available){
+            buttonHtml.innerHTML = `<button class="b" onclick = "Go_back()">Back</button>
+        <button class="b" onclick = "DeleteBorrowBook()">Return</button>
+        <div class="heart" name="x"><i class="fa fa-heart" name="x"id = "fa"  onclick = "changeColor()"></i></div>`;
+        }
+      }
+    }
+    getnavbar();
+    </script>
 </body>
 </html>

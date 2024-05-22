@@ -83,7 +83,7 @@ body {
 .button .heart .fa {
     font-size: xxx-large;
     margin-left: 90%;
-    color: white;
+    color: rgb(64, 60, 60);
 }
 .button .heart .fa:hover{
     color: red;

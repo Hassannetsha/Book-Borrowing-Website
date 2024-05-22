@@ -17,7 +17,7 @@
         }
       </style>
     </head>
-    <body >
+    <body>
       <div id="Admin_page">
         <nav class="navbar" id="navbaradmin">
           <div class="logoandsearch">
@@ -36,7 +36,7 @@
                 text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
                 text-underline-offset: 15.25px;" onclick="AdminHomeuser()">Home</a>
             <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
-            <a href="../Adimn_Home_page/Select.html" class="quick" title="edit an existing book">Edit Book</a>
+            <a href="{% url 'selectBook' %}" class="quick" title="edit an existing book">Edit Book</a>
             <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
             
             <a href="{% url 'index' %}" class="quick" title="log out">Sign Out</a>
@@ -72,7 +72,7 @@
                         <div class="flip-card-back">
                           <h1>{{book.Book_name}}</h1>
                           <p>{{book.description}}</p>
-                          <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                          <a href="{% url 'bookdetails' book.id %}" class="see">
                             See More..
                           </a>
                         </div>
@@ -94,7 +94,7 @@
             </div>
             <br><br>
             <div id = "SELECT" class="SELECT">
-              <a href="../Adimn_Home_page/Select.html" class="Options">Edit Book Details</a>
+              <a href="{% url 'selectBook' %}" class="Options">Edit Book Details</a>
             </div>
             <br><br>
             <div id = "DELETE" class="DELETE">
@@ -156,7 +156,7 @@
                                   <div class="flip-card-back">
                                       <h1>{{ book.Book_author }}</h1>
                                       <p>{{ book.description }}</p>
-                                      <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                      <a href="{% url 'bookdetails' book.id %}" class="see">
                                         See More..
                                     </a>
                                   </div>
@@ -196,6 +196,9 @@
                                   <div class="flip-card-back">
                                       <h1>{{ book.Book_author }}</h1>
                                       <p>{{ book.description }}</p>
+                                      <a href="{% url 'bookdetails' book.id %}" class="see">
+                                        See More..
+                                    </a>
                                   </div>
                               </div>
                           </div>
@@ -208,239 +211,266 @@
         
         </div>
             </div>
-            <script>
-              var userType = JSON.parse(sessionStorage.getItem("userType"));
-              if (userType === "admin") {
-                  document.getElementById("Admin_page").style.display = "block";
-              } else if (userType === "user") {
-                  document.getElementById("user_page").style.display = "block";
-              } else {
-                  alert("Invalid user type in URL!");
+      <script>
+        var userType = JSON.parse(sessionStorage.getItem("userType"));
+        if (userType === "admin") {
+            document.getElementById("Admin_page").style.display = "block";
+        } else if (userType === "user") {
+            document.getElementById("user_page").style.display = "block";
+        } else {
+            alert("Invalid user type in URL!");
+        }
+        var categories = [],books = [];
+        document.addEventListener("DOMContentLoaded", function() {
+          Promise.all([
+              fetch('/api/books/').then(response => response.json()),
+              fetch('/api/categories/').then(response => response.json())
+          ])
+          .then(([booksData, categoriesData]) => {
+              books = booksData;
+              categories = categoriesData;
+              check();
+              checkBorrow();
+              checkavailble();
+          })
+          .catch(error => console.log('Error fetching data:'));
+        });
+        function checkBorrow() {
+          var ctn = 0;
+          for (let i = 0; i < books.length; i++) {
+              if(books[i].Available == false){
+                  ctn++;
               }
-              var categories = [],books = [];
-              document.addEventListener("DOMContentLoaded", function() {
-                Promise.all([
-                    fetch('/api/books/').then(response => response.json()),
-                    fetch('/api/categories/').then(response => response.json())
-                ])
-                .then(([booksData, categoriesData]) => {
-                    books = booksData;
-                    categories = categoriesData;
-                    check();
-                    checkBorrow();
-                    checkavailble();
-                    
-                    
+          }
+          if (ctn==0) {
+              document.getElementById("Borrow").style.display = "none";
+              document.getElementById("hide").style.display = "none";
+          }
+          else{
+            document.getElementById("Borrow").style.display = "flex";
+              document.getElementById("hide").style.display = "block";
+          }
+      
+  
+        }
+        function checkavailble(){
 
-                })
-                .catch(error => console.log('Error fetching data:'));
-              });
-              function checkBorrow() {
-                var ctn = 0;
-                for (let i = 0; i < books.length; i++) {
-                    if(books[i].Available == false){
-                        ctn++;
-                    }
-                }
-                if (ctn==0) {
-                    document.getElementById("Borrow").style.display = "none";
-                    document.getElementById("hide").style.display = "none";
-                }
-            
-        
+          var ctn = 0;
+          for (let i = 0; i < books.length; i++) {
+              if(books[i].Available === true){
+                  ctn++;
               }
-              function checkavailble(){
-    
-                var ctn = 0;
-                for (let i = 0; i < books.length; i++) {
-                    if(books[i].Available === true){
-                        ctn++;
-                    }
-                }
-                if (ctn==0) {
-                    document.getElementById("Available").style.display = "none";
-                    document.getElementById("availablebooks").style.display = "none";
-                    document.getElementById("hide1").style.display = "none";
-                    document.getElementById("Borrow").style.marginTop = "0px";
-                }
-            
+          }
+          if (ctn==0) {
+              document.getElementById("Available").style.display = "none";
+              document.getElementById("availablebooks").style.display = "none";
+              document.getElementById("hide1").style.display = "none";
+              document.getElementById("Borrow").style.marginTop = "0px";
+          }
+          else{
+            document.getElementById("Available").style.display = "flex";
+            document.getElementById("availablebooks").style.display = "flex";
+            document.getElementById("hide1").style.display = "block";
+            document.getElementById("Borrow").style.marginTop = "112px";
+          }
+      
+        }
+        function check() {
+          for (let index = 0; index < categories.length; index++){
+              var ctn = 0;
+              for (let i = 0; i < books.length; i++) {
+                  if(categories[index].id == books[i].Category_id){
+                      ctn++;
+                  }
               }
-              function check() {
-                for (let index = 0; index < categories.length; index++){
-                    var ctn = 0;
-                    for (let i = 0; i < books.length; i++) {
-                        if(categories[index].id == books[i].Category_id){
-                            ctn++;
+              var clas = "books" + (index + 1);
+              if (ctn==0) {
+                  var books1Elements = document.getElementsByClassName(clas);
+                  
+                  for (var i = 0; i < books1Elements.length; i++) {
+                      books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
+                      books1Elements[i].style.opacity = '0';
+                      books1Elements[i].style.height = '0';
+                  }
+                  document.getElementById(categories[index].Category_name).style.display = "none";
+              }
+          }
+          
+        }
+        function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              const cookies = document.cookie.split(';');
+              for (let i = 0; i < cookies.length; i++) {
+                  const cookie = cookies[i].trim();
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+        }
+        function toggleAvailability(bookId){
+          fetch(`/Convert/${bookId}`, {
+            method: 'PATCH',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json' // Ensure the content type is set if sending JSON data
+            },
+          })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok ' + response.statusText);
+              }
+              return response.json();
+          })
+          .then(data => {
+            $(document).ready(function(){
+              $.ajax({
+                  type: 'GET',
+                  url : "/getbooks/",
+                  success: function(response){
+                    var available_div = document.getElementById("availablebooks");
+                    var not_available_div = document.getElementById("borrowBooks");
+                      available_div.innerHTML =``;
+                      not_available_div.innerHTML =``;
+                      for(var book in response.books){
+                        if(response.books[book].Available){
+                          available_div.innerHTML += `<div class="card" id="book${ response.books[book].id }">
+                            <div class="flip-card">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <img src="../media/${response.books[book].BookCover}" alt="Book Cover" style="width:300px;height:300px;">
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <h1>${ response.books[book].Book_author }</h1>
+                                        <p>${ response.books[book].description }</p>
+                                        <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                          See More..
+                                      </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>${ response.books[book].Book_name }</p>
+                            <button onclick = "toggleAvailability(${response.books[book].id})">Borrow</button>
+                          </div>`
                         }
-                    }
-                    var clas = "books" + (index + 1);
-                    if (ctn==0) {
-                        var books1Elements = document.getElementsByClassName(clas);
-                        
-                        for (var i = 0; i < books1Elements.length; i++) {
-                            books1Elements[i].style.transition = 'opacity 0.5s, height 0.5s';
-                            books1Elements[i].style.opacity = '0';
-                            books1Elements[i].style.height = '0';
-                        }
-                        document.getElementById(categories[index].Category_name).style.display = "none";
-                    }
-                }
-                
-              }
-              function getCookie(name) {
-                let cookieValue = null;
-                if (document.cookie && document.cookie !== '') {
-                    const cookies = document.cookie.split(';');
-                    for (let i = 0; i < cookies.length; i++) {
-                        const cookie = cookies[i].trim();
-                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
-                    }
-                }
-                return cookieValue;
-              }
-              function toggleAvailability(bookId){
-                fetch(`/Convert/${bookId}`, {
-                  method: 'PATCH',
-                  headers: {
-                      'X-CSRFToken': getCookie('csrftoken'),
-                      'Content-Type': 'application/json' // Ensure the content type is set if sending JSON data
-                  },
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                  $(document).ready(function(){
-                    $.ajax({
-                        type: 'GET',
-                        url : "/getbooks/",
-                        success: function(response){
-                          var available_div = document.getElementById("availablebooks");
-                          var not_available_div = document.getElementById("borrowBooks");
-                            available_div.innerHTML =``;
-                            not_available_div.innerHTML =``;
-                            for(var book in response.books){
-                              if(response.books[book].Available){
-                                available_div.innerHTML += `<div class="card" id="book${ response.books[book].id }">
-                                  <div class="flip-card">
-                                      <div class="flip-card-inner">
-                                          <div class="flip-card-front">
-                                              <img src="../media/${response.books[book].BookCover}" alt="Book Cover" style="width:300px;height:300px;">
-                                          </div>
-                                          <div class="flip-card-back">
-                                              <h1>${ response.books[book].Book_author }</h1>
-                                              <p>${ response.books[book].description }</p>
-                                              <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
-                                                See More..
-                                            </a>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <p>${ response.books[book].Book_name }</p>
-                                  <button onclick = "toggleAvailability(${response.books[book].id})">Borrow</button>
-                                </div>`
-                              }
-                              else{
-                                not_available_div.innerHTML += `<div class="card" id="book${ response.books[book].id }">
-                                  <div class="flip-card">
-                                      <div class="flip-card-inner">
-                                          <div class="flip-card-front">
-                                              <img src="../media/${response.books[book].BookCover}" alt="Book Cover" style="width:300px;height:300px;">
-                                          </div>
-                                          <div class="flip-card-back">
-                                              <h1>${ response.books[book].Book_author }</h1>
-                                              <p>${ response.books[book].description }</p>
-                                              <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
-                                                See More..
-                                            </a>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <p>${ response.books[book].Book_name }</p>
-                                  <button onclick = "toggleAvailability(${response.books[book].id})">Return</button>
-                                </div>`
-                              }
-                            }
-                        },
-                        error:function(response){
-                          alert("Failed")
+                        else{
+                          not_available_div.innerHTML += `<div class="card" id="book${ response.books[book].id }">
+                            <div class="flip-card">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <img src="../media/${response.books[book].BookCover}" alt="Book Cover" style="width:300px;height:300px;">
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <h1>${ response.books[book].Book_author }</h1>
+                                        <p>${ response.books[book].description }</p>
+                                        <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                          See More..
+                                      </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>${ response.books[book].Book_name }</p>
+                            <button onclick = "toggleAvailability(${response.books[book].id})">Return</button>
+                          </div>`
                         }
                       }
-                    );
-                    //check();
-                    //checkBorrow();
-                    //checkavailble();
-                  })
-                })
-                .catch(error => {
-                    console.error('There has been a problem with your fetch operation:', error);
-                    alert('Failed to update availability');
-                });
+                      Promise.all([
+                      fetch('/api/books/').then(response => response.json()),
+                      fetch('/api/categories/').then(response => response.json())
+                    ])
+                    .then(([booksData, categoriesData]) => {
+                      books = booksData;
+                      categories = categoriesData;
+                      check();
+                      checkBorrow();
+                      checkavailble();
+                    })
+                    .catch(error => console.log('Error fetching data:'));
+                  },
+                  error:function(response){
+                    alert("Failed")
+                  }
+                }
+              );
+              //check();
+              //checkBorrow();
+              //checkavailble();
+            })
+          })
+          .catch(error => {
+              console.error('There has been a problem with your fetch operation:', error);
+              alert('Failed to update availability');
+          });
 
-              }
-              
-              function deleteBook(bookId) {
-                fetch(`/delete-book/${bookId}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken'),
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                  $(document).ready(function(){
-                      $.ajax({
-                          type: 'GET',
-                          url : "/getbooks/",
-                          success: function(response){
-                            for (var category in response.categories){
-                              var category_div = document.getElementById(response.categories[category].Category_name);
-                              category_div.innerHTML = ``;
-                              for(var book in response.books){
-                                if(response.books[book].Category_id ==  response.categories[category].id){
-                                  category_div.innerHTML += `<div class="cards" id="book${response.books[book].id}">
-                                    <div class="flip-card">
-                                      <div class="flip-card-inner">
-                                        <div class="flip-card-front">
-                                          <img src="../media/${response.books[book].BookCover}" alt="Avatar" style="width:300px;height:300px;">
-                                        </div>
-                                        <div class="flip-card-back">
-                                          <h1>${response.books[book].Book_name}</h1>
-                                          <p>${response.books[book].description}$</p>
-                                          <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
-                                            See More..
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <p>${response.books[book].Book_name}</p>
-                                    <div class="Edit_Delete_buttns">
-                                      <button class="buttns"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
-                                      <button class="buttns" Category = "${response.categories[category].Category_name}" onclick="deleteBook(${ response.books[book].id })" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
-                                    </div>
-                                  </div>`;
-                                }
-                              }
-                            }
-                          },
-                          error:function(response){
-                            alert("Failed")
+        }
+        
+        function deleteBook(bookId) {
+          fetch(`/delete-book/${bookId}/`, {
+              method: 'DELETE',
+              headers: {
+                  'X-CSRFToken': getCookie('csrftoken'),
+              },
+          })
+          .then(response => response.json())
+          .then(data => {
+            $(document).ready(function(){
+                $.ajax({
+                    type: 'GET',
+                    url : "/getbooks/",
+                    success: function(response){
+                      for (var category in response.categories){
+                        var category_div = document.getElementById(response.categories[category].Category_name);
+                        category_div.innerHTML = ``;
+                        for(var book in response.books){
+                          if(response.books[book].Category_id ==  response.categories[category].id){
+                            category_div.innerHTML += `<div class="cards" id="book${response.books[book].id}">
+                              <div class="flip-card">
+                                <div class="flip-card-inner">
+                                  <div class="flip-card-front">
+                                    <img src="../media/${response.books[book].BookCover}" alt="Avatar" style="width:300px;height:300px;">
+                                  </div>
+                                  <div class="flip-card-back">
+                                    <h1>${response.books[book].Book_name}</h1>
+                                    <p>${response.books[book].description}$</p>
+                                    <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                      See More..
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                              <p>${response.books[book].Book_name}</p>
+                              <div class="Edit_Delete_buttns">
+                                <button class="buttns"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
+                                <button class="buttns" Category = "${response.categories[category].Category_name}" onclick="deleteBook(${ response.books[book].id })" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
+                              </div>
+                            </div>`;
                           }
                         }
-                      );
-                    //check();
-                    //checkBorrow();
-                    //checkavailble();
-                  })
-                });
-                
-              }
-            </script>
+                      }
+                    Promise.all([
+                      fetch('/api/books/').then(response => response.json()),
+                      fetch('/api/categories/').then(response => response.json())
+                    ])
+                    .then(([booksData, categoriesData]) => {
+                      books = booksData;
+                      categories = categoriesData;
+                      check();
+                      checkBorrow();
+                      checkavailble();
+                    })
+                    .catch(error => console.log('Error fetching data:'));
+                  },
+                  error:function(response){
+                    alert("Failed")
+                  }
+                }
+              );
+            })
+          });
+        }
+      </script>
     </body>
 </html>
