@@ -34,7 +34,7 @@ sessionStorage.setItem("availablebooks",JSON.stringify(books5));
 // sessionStorage.clear();
 
 
-var userType = JSON.parse(sessionStorage.getItem("userType"));
+
 function getavailablebooks(){
     if (userType === "admin") {
         let booksHtml = allbooks.map((book) => {
@@ -116,58 +116,7 @@ function deletebook(button){
         
     }, 500);
 }
-function getnavbar(){
-    var navbar = document.getElementById("navbar");
-    if(userType === "admin"){navbar.innerHTML = `<div class="logoandsearch">
-        <a href="../home_page/home.html" class="LogoIcon" onclick="AdminHomeuser()">
-        <img src="../images/logopng-removebg.png" alt="can't display image">
-        </a>
-        <a href="../home_page/home.html" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
-    </div>
-    <div class="bottomline">
-        <a href="../home_page/home.html" class="quick" title="Admin Homepage"  onclick="AdminHomeuser()" style="
-        color: #ffffff;
-        text-decoration: underline;
-        font-size: 35px;
-        color: burlywood;
-        padding-bottom: 0px;
-        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-        text-underline-offset: 15.25px;">Home</a>
-        <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
-        <a href="../Adimn_Home_page/Select.html" class="quick" title="edit an existing book">Edit Book</a>
-        <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
-        
-        <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
-        <label for="Search" class="srch">Search:</label>
-        <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
-    </div>`;}
-    if(userType === "user"){navbar.innerHTML = `<div class="logoandsearch">
-        <a href="../home_page/home.html" class="LogoIcon" onclick="UserHomeuser()">
-        <img src="../images/logopng-removebg.png" alt="can't display image">
-        </a>
-        <a href="../home_page/home.html" class="Logo" onclick="UserHomeuser()">eBookNest</a>
-    </div>
-    <div class="bottomline">
-        <a href="../home_page/home.html" class="quick" title="Admin Homepage"  onclick="UserHomeuser()">Home</a>
-            
-        <a href="../User_Home_page/availavbleBooks.html" class="quick"style="
-        color: #ffffff;
-        text-decoration: underline;
-        font-size: 35px;
-        color: burlywood;
-        padding-bottom: 0px;
-        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-        text-underline-offset: 15.25px;" title="Available books">Available books</a>
-        <a href="../User_Home_page/borrowedBooks.html" class="quick" title="Borrow books">Borrow books</a>
 
-        
-
-        <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
-        <label for="Search" class="srch">Search:</label>
-        <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
-    </div>`;}
-}
-getnavbar();
 // var booklistborrow1 = document.getElementById("borrowBooks");
 var booklistavailable1 = document.getElementById("availablebooks");
 // function renderborrowBooks(){

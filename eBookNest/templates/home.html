@@ -56,7 +56,7 @@
               <div class="Left"></div>
             </div>
             <div class="see books{{category.id}}" >
-              <a href="{% url 'allbooks' %}" id = "see">
+              <a href="{% url 'Availableallbooks' %}" id = "see">
                 See All
               </a>
             </div>
@@ -139,7 +139,7 @@
             <div class="Left"></div>
           </div>
           <div class="see" id="hide1">
-            <a href="../User_Home_page/availavbleBooks.html">
+            <a href="{% url 'Availableallbooks' %}">
               See All
             </a>
           </div>
@@ -177,7 +177,7 @@
             <div class="Left"></div>
           </div>
           <div class="see" id="hide">
-            <a href="../User_Home_page/borrowedBooks.html">
+            <a href="{% url 'Availableallbooks' %}">
               See All
             </a>
           </div>

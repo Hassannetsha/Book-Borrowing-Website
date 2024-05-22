@@ -15,5 +15,5 @@ urlpatterns = [
     path('Convert/<int:Id>', views.Convert, name='Convert'),
     path('delete-book/<int:book_id>/', views.delete_book, name='delete_book'),
     path('getbooks/', views.getbooks, name='getbooks'),
-    path('allbooks/', views.allbooks, name='allbooks'),
+    path('allbooks/', views.Availableallbooks, name='Availableallbooks'),
 ]

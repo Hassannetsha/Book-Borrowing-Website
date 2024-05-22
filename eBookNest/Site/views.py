@@ -32,7 +32,7 @@ def Convert(request, Id):
         book = get_object_or_404(Book, pk=Id)
         book.Available = not book.Available
         book.save()
-        return JsonResponse({'status': 'Book updated'})
+        return JsonResponse({'status': 'Book updated'}, status=200, content_type='application/json') 
     return JsonResponse({'status': 'Invalid request'}, status=400)
 def delete_book(request, book_id):
     if request.method == "DELETE":
@@ -45,7 +45,7 @@ def getbooks(request):
     books = Book.objects.all()
     Categoryies = Categorys.objects.all()
     return JsonResponse({"books":list(books.values()),
-        "categories":list(Categoryies.values())})
-def allbooks(request):
+        "categories":list(Categoryies.values())}, status=200)
+def Availableallbooks(request):
     books = Book.objects.all()
     return render(request, 'availavbleBooks.html', {'books': books})
