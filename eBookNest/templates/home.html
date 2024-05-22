@@ -21,13 +21,13 @@
       <div id="Admin_page">
         <nav class="navbar" id="navbaradmin">
           <div class="logoandsearch">
-            <a href="../home_page/home.html" class="LogoIcon" onclick="AdminHomeuser()">
-            {% comment %} <img src="../images/logopng-removebg.png" alt="can't display image"> {% endcomment %}
+            <a href="{% url 'home' %}" class="LogoIcon" onclick="AdminHomeuser()">
+            <img src="{% static 'images/logopng-removebg.png' %}" alt="can't display image">
             </a>
-            <a href="../home_page/home.html" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
+            <a href="{% url 'home' %}" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
           </div>
           <div class="bottomline">
-            <a href="../home_page/home.html" class="quick" title="Admin Homepage" style="
+            <a href="{% url 'home' %}" class="quick" title="Admin Homepage" style="
                 color: #ffffff;
                 text-decoration: underline;
                 font-size: 35px;
@@ -44,7 +44,6 @@
             <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
           </div>
         </nav>
-        <!-- <hr style="border: 1px solid burlywood;border-radius: 5px;"> -->
         <div class="img">
           <p class="Welcome">Welcome to eBooknest</p>
         </div>
@@ -213,7 +212,6 @@
             </div>
       <script>
         function details(number){
-          //if(number==1){
             fetch(`/toggleusertype/${number}/`,{
               method: "PATCH",
               headers: {
@@ -225,7 +223,6 @@
               alert("done")
             })
           }
-        //}
         var userType = JSON.parse(sessionStorage.getItem("userType"));
         if (userType === "admin") {
             document.getElementById("Admin_page").style.display = "block";
