@@ -62,3 +62,4 @@ def toggleusertype(request,ID):
 def EditBook(request,Id):
     book = get_object_or_404(Book,pk=Id)
     return render(request,'Edit.html',{'book':book})
+    # return render(request,'Edit.html',{'book':book,"user":user})
