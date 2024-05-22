@@ -1,7 +1,10 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
 from django.urls import reverse
-from .models import Book,Categorys
+import json
+from .models import Book,Categorys,User
+from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
 def index(request):
     return render(request,'main-sign-page.html')
 
@@ -10,7 +13,9 @@ def signinAdmin(request):
 def signUpAdmin(request):
     return render(request,'signup-admin.html')
 def signinUser(request):
-    return render(request,'signin-user.html')
+    users = User.objects.all()
+    
+    return render(request,'signin-user.html',{'users':users})
 def signUpUser(request):
     return render(request,'signup-user.html')
 # def test(request):
@@ -59,7 +64,53 @@ def toggleusertype(request,ID):
     if request.method == "PATCH":
         return JsonResponse({'status': 'user updated'}, status=200, content_type='application/json') 
     return JsonResponse({'status': 'Invalid request'}, status=400)
+@csrf_exempt
+def save_user(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            data = User.objects.create(
+                first_name=data.get('first_name'),
+                last_name='hamda',
+                email=data.get('email'),
+                password=data.get('password'),
+                address=data.get('address'),
+                phone_number=data.get('phone_number'),
+            )
+            data.save()
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    else:
+        return JsonResponse({'status': 'invalid request'}, status=400)
+    
+def save_user(request):
+    print('honda')
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            data = User.objects.create(
+                first_name=data.get('first_name'),
+                last_name='hamda',
+                email=data.get('email'),
+                password=data.get('password'),
+                address=data.get('address'),
+                phone_number=data.get('phone_number'),
+            )
+            data.save()
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    else:
+        return JsonResponse({'status': 'invalid request'}, status=400)   
+                     
+def get_users_json(request):
+    user = User.objects.all()
+    user_json = serializers.serialize('json', user)
+    return JsonResponse(user_json, safe=False)
+
 def EditBook(request,Id):
     book = get_object_or_404(Book,pk=Id)
     return render(request,'Edit.html',{'book':book})
     # return render(request,'Edit.html',{'book':book,"user":user})
+

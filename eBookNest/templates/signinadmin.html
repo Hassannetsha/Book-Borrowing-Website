@@ -56,8 +56,37 @@
         </div>
 
     </div>
-    <!-- <script src="{% static 'js/admin_login.js' % }"></script> -->
-    <script src="{% static 'js/admin_login.js' %}"></script>
+    <script>
+        var pass = document.getElementById('pass')
+        var email = document.getElementById('email')
+        var btn = document.getElementById('signinuserbtn')
+        var para = document.getElementsByClassName('invalidinput')[0]
+        fetch('/loaduser/')
+                .then(response => response.json())
+                .then(data => {
+                    const users = JSON.parse(data); // Parse the JSON string to a JavaScript object
+                    console.log(users);
+                    load(users);
+                })
+                .catch(error => console.error('Error fetching books:', error));
+        function load(users)
+        {
+           
+    
+        btn.addEventListener('click', (event) => { 
+            let found = false;
+                for(user in users){
+                    found = user.field.email==email.value && 
+                    user.field.password == pass.value && !user.field.isUser || found;
+                }if(found){
+                    para.innerHTML=``
+                }else{
+                    para.innerHTML=`*Invalid email or password`;
+                    event.preventDefault();
+                }   
+            }
+            )}
+    </script>
 
 </body>
 
