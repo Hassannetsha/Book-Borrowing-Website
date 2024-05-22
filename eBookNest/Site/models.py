@@ -18,3 +18,13 @@ class Book(models.Model):
         return self.Book_name
 # class usertype(models.Model):
 #     type = models.BooleanField(default=True)
+class User(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=100)
+    address = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=15)
+    isUser = models.BooleanField(default=True)
+    def str(self):
+        return self.email
