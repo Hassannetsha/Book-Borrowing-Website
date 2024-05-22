@@ -28,7 +28,7 @@
       <h2>User SignUp</h2>
       <div class="singup">
         <h3>Please Enter your personal informations</h3>
-        <form target="_blank" >
+        <form>
           <div class="input">
             <label for="Fname">
               First name:
@@ -108,109 +108,135 @@
     var email = document.getElementById("e-mail")
     var number = document.getElementById("phonenumber")
     var btn = document.getElementById("userbtn")
-    function form (PASS,CPASS,EMAIL,NUMBER){
-      this.checkPass = () => {
-          let para = document.getElementsByClassName("invalidinput")[1]
-          if (!(password_regex.test(PASS))) {
-              para.innerText = ((PASS =='' || PASS == null) ? "*Please enter a password" : "*Password doesn't match the pattern")
-              return false
-          }
-          else {
-              para.innerText = ''
-              return true
-          }
-      };
-      this.checkConfirmPass = () => {
-          let para = document.getElementsByClassName("invalidinput")[2]
-          if (CPASS !== PASS) {
-              para.innerText = "*Password doesn't match"
-              return false
-          }
-          else {
-              para.innerText = ''
-              return true
-          }
-      };
-      this.checkEmail = () => {
-    
-          let para = document.getElementsByClassName("invalidinput")[0]
-          if (!(emailRegex.test(EMAIL))) {
-              para.innerText = "*Invalid Email"
-              return false
-          }
-         
-          else {
-              para.innerText = ''
-              return true
-          }
-      };
-      this.checkNum = () => {
-        let para = document.getElementsByClassName("invalidinput")[3]
-        if(!((/[0-9]{11}/)).test(number.value))
-        {
-          para.innerText = "*Invalid Phone Number"
-          return false
-        }
-        else
-        {
-          para.innerText = ""
-          return true
-        }
-      };
-      this.eval = [this.checkPass(),this.checkConfirmPass(),this.checkEmail(),this.checkNum()].includes(false);
-  }
-  
-  
-  btn.addEventListener("click", function (event) {
-    const formValidity = new form(pass.value,cpass.value,email.value,number.value)
-    
-    if (formValidity.eval) {
-        event.preventDefault()
-    }else{
-      const data = {
-        first_name: document.getElementById("Fname").value,
-        last_name: document.getElementById("Lname").value,
-        email: email.value,
-        password: pass.value,
-        address: document.getElementById("address").value,
-        phone_number: number.value,
-    }
-    fetch('/saveuser/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')
-        },
-        body: JSON.stringify(data)
-    })
+    fetch('/loaduser/')
     .then(response => response.json())
     .then(data => {
-        if (data.status) {
-            alert('Sign up successful!');
-            window.location.href = '/SigninUser/';  // Redirect to sign in page
-        } else {
-            alert('Sign up failed: ' + data.error);
-        }
+        const users = JSON.parse(data); // Parse the JSON string to a JavaScript object
+        console.log(users);
+        load(users);
     })
-    .catch(error => {
-        alert('Sign up failed: ' + error);
-    });    
-    }
-  })
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length;i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+    .catch(error => console.error('Error fetching books:', error));
+
+    function load(users){
+      
+      function form (PASS,CPASS,EMAIL,NUMBER){
+        
+        this.checkPass = () => {
+            let para = document.getElementsByClassName("invalidinput")[1]
+            if (!(password_regex.test(PASS))) {
+                para.innerText = ((PASS =='' || PASS == null) ? "*Please enter a password" : "*Password doesn't match the pattern")
+                return false
             }
-        }
+            else {
+                para.innerText = ''
+                return true
+            }
+        };
+        this.checkConfirmPass = () => {
+            let para = document.getElementsByClassName("invalidinput")[2]
+            if (CPASS !== PASS) {
+                para.innerText = "*Password doesn't match"
+                return false
+            }
+            else {
+                para.innerText = ''
+                return true
+            }
+        };
+        this.checkEmail = () => {
+            let found = false;
+          
+            for(let i = 0; i < users.length; i++) {
+                let UEmail = users[i].fields.email;
+                if(UEmail == EMAIL) {
+                    found = true;
+                    break; // Optional: break the loop if a match is found
+                }
+            }
+
+            let para = document.getElementsByClassName("invalidinput")[0]
+            if (!(emailRegex.test(EMAIL))) {
+                para.innerText = "*Invalid Email"
+                return false
+            }
+            else if(found){
+              para.innerText = "*Already in use"
+                return false
+            }
+           
+            else {
+                para.innerText = ''
+                return true
+            }
+        };
+        this.checkNum = () => {
+          let para = document.getElementsByClassName("invalidinput")[3]
+          if(!((/[0-9]{11}/)).test(number.value))
+          {
+            para.innerText = "*Invalid Phone Number"
+            return false
+          }
+          else
+          {
+            para.innerText = ""
+            return true
+          }
+        };
+        this.eval = [this.checkPass(),this.checkConfirmPass(),this.checkEmail(),this.checkNum()].includes(false);
     }
-    return cookieValue;
-}
+    
+    
+    btn.addEventListener("click", function (event) {
+      const formValidity = new form(pass.value,cpass.value,email.value,number.value)
+      
+      if (formValidity.eval) {
+          event.preventDefault()
+      }else{
+        const data = {
+          first_name: document.getElementById("Fname").value,
+          last_name: document.getElementById("Lname").value,
+          email: email.value,
+          password: pass.value,
+          address: document.getElementById("address").value,
+          phone_number: number.value,
+      }
+      fetch('/saveuser/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCookie('csrftoken')
+          },
+          body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.status) {
+              alert('Sign up successful!');
+              window.location.href = '/SigninUser/';  // Redirect to sign in page
+          } else {
+              alert('Sign up failed: ' + data.error);
+          }
+      })
+      .catch(error => {
+          alert('Sign up failed: ' + error);
+      });    
+      }
+    })
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length;i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+    }
     </script>
 </body>
 
