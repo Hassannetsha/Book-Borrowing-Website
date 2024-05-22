@@ -80,7 +80,7 @@
                     </div>
                     <p>{{book.Book_name}}</p>
                     <div class="Edit_Delete_buttns">
-                      <button class="buttns"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
+                      <button class="buttns" onclick = "location.href='{% url 'EditBook' book.id %}'"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
                       <button class="buttns" Category = "{{category}}" onclick="deleteBook({{ book.id }})" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
                     </div>
                   </div>

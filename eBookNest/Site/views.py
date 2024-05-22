@@ -44,7 +44,6 @@ def delete_book(request, book_id):
         book.delete()
         return JsonResponse({'status': 'Book deleted'})
     return JsonResponse({'status': 'Invalid request'}, status=400)
-
 def getbooks(request):
     books = Book.objects.all()
     Categoryies = Categorys.objects.all()
@@ -65,6 +64,7 @@ def toggleusertype(request,ID):
     if request.method == "PATCH":
         return JsonResponse({'status': 'user updated'}, status=200, content_type='application/json') 
     return JsonResponse({'status': 'Invalid request'}, status=400)
+<<<<<<< HEAD
 @csrf_exempt
 def save_user(request):
     if request.method == 'POST':
@@ -109,3 +109,9 @@ def get_users_json(request):
     user = User.objects.all()
     user_json = serializers.serialize('json', user)
     return JsonResponse(user_json, safe=False)
+=======
+def EditBook(request,Id):
+    book = get_object_or_404(Book,pk=Id)
+    return render(request,'Edit.html',{'book':book})
+    # return render(request,'Edit.html',{'book':book,"user":user})
+>>>>>>> 4e9841580caefebc1396c2514cc84c276a8966d7

@@ -12,7 +12,12 @@
 <body>
     <div class="Form">
       <nav class="navbar" id="navbar">
-        
+        {% comment  %}
+        {% if user.isUser %}
+          user
+        {% else %}
+          admin
+        {% endcomment %}
       </nav>
       <hr>
       </div>
@@ -35,6 +40,13 @@
                     </div>
                 </div>
                 <p>{{ book.Book_name }}</p>
+                {% comment %} {% if user.isUser %}
+                <button onclick = "toggleAvailability({{book.id}})">Borrow</button>
+                <div class="Edit_Delete_buttns">
+                      <button class="buttns" onclick = "location.href='{% url 'EditBook' book.id %}'"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
+                      <button class="buttns" Category = "{{category}}" onclick="deleteBook({{ book.id }})" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
+                    </div>
+              {% endif %} {% endcomment %}
                 <button onclick = "toggleAvailability({{book.id}})">Borrow</button>
             </div>
           {% endif %}
@@ -128,45 +140,7 @@
             return response.json();
         })
         .then(data => {
-          /*$(document).ready(function(){
-            $.ajax({
-                type: 'GET',
-                url : "/getbooks/",
-                success: function(response){
-                  var available_div = document.getElementById("availablebooks");
-                    available_div.innerHTML =``;
-                    for(var book in response.books){
-                      if(response.books[book].Available){
-                        available_div.innerHTML += `<div class="card" id="book${ response.books[book].id }">
-                          <div class="flip-card">
-                              <div class="flip-card-inner">
-                                  <div class="flip-card-front">
-                                      <img src="../media/${response.books[book].BookCover}" alt="Book Cover" style="width:300px;height:300px;">
-                                  </div>
-                                  <div class="flip-card-back">
-                                      <h1>${ response.books[book].Book_author }</h1>
-                                      <p>${ response.books[book].description }</p>
-                                      <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
-                                        See More..
-                                    </a>
-                                  </div>
-                              </div>
-                          </div>
-                          <p>${ response.books[book].Book_name }</p>
-                          <button onclick = "toggleAvailability(${response.books[book].id})">Borrow</button>
-                        </div>`
-                      }
-                    }
-                },
-                error:function(response){
-                  alert("Failed")
-                }
-              }
-            );
-            //check();
-            //checkBorrow();
-            //checkavailble();
-          })*/
+          alert("done Borrowed")
         })
         .catch(error => {
             //console.alert('There has been a problem with your fetch operation:');
