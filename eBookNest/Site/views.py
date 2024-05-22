@@ -42,7 +42,10 @@ def delete_book(request, book_id):
     return JsonResponse({'status': 'Invalid request'}, status=400)
 
 def getbooks(request):
-    books = Book.objects.all();
+    books = Book.objects.all()
     Categoryies = Categorys.objects.all()
     return JsonResponse({"books":list(books.values()),
         "categories":list(Categoryies.values())})
+def allbooks(request):
+    books = Book.objects.all()
+    return render(request, 'availavbleBooks.html', {'books': books})
