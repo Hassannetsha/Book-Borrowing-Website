@@ -18,5 +18,7 @@ urlpatterns = [
     path('allbooks/', views.Availableallbooks, name='Availableallbooks'),
     path('selectBook/', views.selectBook, name='selectBook'),
     path('bookdetails/<int:Id>', views.details, name='bookdetails'),
-    path('toggleusertype/<int:Id>',views.toggleusertype,name="toggleusertype")
+    path('toggleusertype/<int:Id>',views.toggleusertype,name="toggleusertype"),
+    path('saveuser/',views.save_user,name="saveuser"),
+    path('loaduser/',views.get_users_json,name="loaduser"),
 ]

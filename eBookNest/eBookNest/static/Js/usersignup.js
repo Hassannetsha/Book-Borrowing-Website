@@ -64,13 +64,31 @@ function form (PASS,CPASS,EMAIL,NUMBER){
     };
     this.eval = [this.checkPass(),this.checkConfirmPass(),this.checkEmail(),this.checkNum()].includes(false);
 }
-btn.addEventListener("click", function (event) {
-    const formValidity = new form(pass.value,cpass.value,email.value,number.value)
-    if (formValidity.eval) {
-        event.preventDefault()
+const data = {
+    first_name: document.getElementById("Fname").value,
+    last_name: document.getElementById("Lname").value,
+    email: email.value,
+    password: pass.value,
+    address: document.getElementById("address").value,
+    phone_number: number.value,
+}
+fetch('/saveuser/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    if (data.success) {
+        alert('Sign up successful!');
+        window.location.href = '/signin/';  // Redirect to sign in page
+    } else {
+        alert('Sign up failed: ' + data.error);
     }
-    else
-    {
-        sessionStorage.setItem(email.value,pass.value)
-    }
+})
+.catch(error => {
+    console.error('Error:', error);
 });
