@@ -55,12 +55,12 @@ def selectBook(request):
 def details(request,Id):
     book = get_object_or_404(Book, pk=Id)
     category = book.Category
-    Usertype = usertype.objects.all()
+    Usertype = get_object_or_404(usertype, pk=1)
     return render(request, 'bookdetails.html', {"book": book, "category": category,"usertype":Usertype})
 def toggleusertype(request,ID):
     if request.method == "PATCH":
         Usertype = usertype.objects.all()
-        if ID==1:
+        if ID == 1:
             Usertype.type = True
         else:
             Usertype.type = False

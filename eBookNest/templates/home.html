@@ -72,7 +72,7 @@
                         <div class="flip-card-back">
                           <h1>{{book.Book_name}}</h1>
                           <p>{{book.description}}</p>
-                          <a href="#" class="see" onclick = "details(1,event,{{book.id}})">
+                          <a href="{% url 'bookdetails' book.id %}" class="see" onclick = "details(1)">
                             See More..
                           </a>
                         </div>
@@ -212,8 +212,7 @@
         </div>
             </div>
       <script>
-        function details(number,event,bookID){
-          event.preventDefault();
+        function details(number){
           //if(number==1){
             fetch(`/toggleusertype/${number}/`,{
               method: "PATCH",
@@ -224,7 +223,6 @@
             .then(response => response.json())
             .then(data => {
               alert("done")
-              {% comment %} window.location.href = "{% url 'bookdetails' bookID %}"; {% endcomment %}
             })
           }
         //}
