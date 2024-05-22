@@ -17,4 +17,4 @@ class Book(models.Model):
     def __str__(self):
         return self.Book_name
 class usertype(models.Model):
-    type = models.CharField(max_length=100)
+    type = models.BooleanField(default=True)

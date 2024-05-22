@@ -57,3 +57,12 @@ def details(request,Id):
     category = book.Category
     Usertype = usertype.objects.all()
     return render(request, 'bookdetails.html', {"book": book, "category": category,"usertype":Usertype})
+def toggleusertype(request,ID):
+    if request.method == "PATCH":
+        Usertype = usertype.objects.all()
+        if ID==1:
+            Usertype.type = True
+        else:
+            Usertype.type = False
+        return JsonResponse({'status': 'user updated'}, status=200, content_type='application/json') 
+    return JsonResponse({'status': 'Invalid request'}, status=400)
