@@ -39,7 +39,6 @@ def delete_book(request, book_id):
         book.delete()
         return JsonResponse({'status': 'Book deleted'})
     return JsonResponse({'status': 'Invalid request'}, status=400)
-
 def getbooks(request):
     books = Book.objects.all()
     Categoryies = Categorys.objects.all()
@@ -60,3 +59,6 @@ def toggleusertype(request,ID):
     if request.method == "PATCH":
         return JsonResponse({'status': 'user updated'}, status=200, content_type='application/json') 
     return JsonResponse({'status': 'Invalid request'}, status=400)
+def editBook(request,bookId):
+    book = get_object_or_404(Book, pk=bookId)
+    return render(request, 'Edit.html', {'books': book})
