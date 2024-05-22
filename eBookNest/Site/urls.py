@@ -21,6 +21,6 @@ urlpatterns = [
 
     path('EditBook/<int:Id>', views.EditBook, name='EditBook'),
     path('toggleusertype/<int:Id>',views.toggleusertype,name="toggleusertype"),
-     path('saveuser/',views.save_user,name="saveuser"),
+    path('saveuser/',views.save_user,name="saveuser"),
     path('loaduser/',views.get_users_json,name="loaduser"),
 ]

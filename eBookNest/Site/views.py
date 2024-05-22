@@ -55,7 +55,7 @@ def Availableallbooks(request):
 def selectBook(request):
     books = Book.objects.all()
     categories = Categorys.objects.all()
-    return render(request, 'Home.html', {'books': books,'categories': categories})
+    return render(request, 'Select.html', {'books': books,'categories': categories})
 def details(request,Id):
     book = get_object_or_404(Book, pk=Id)
     category = book.Category
@@ -113,4 +113,5 @@ def EditBook(request,Id):
     book = get_object_or_404(Book,pk=Id)
     return render(request,'Edit.html',{'book':book})
     # return render(request,'Edit.html',{'book':book,"user":user})
+
 
