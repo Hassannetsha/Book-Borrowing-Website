@@ -1,6 +1,6 @@
 const password_regex = /(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[^A-Za-z0-9]+)(?=.*[0-9]+)(?=.{8,})/
 const emailRegex= /(?=\w+[@]+)(?=.+\.(com$|edu$|info$))/
-const image = "../images/logopng-removebg.png"
+const image = "../static/image/logopng-removebg.png"
 
 
 var divcontainer = document.createElement('div')
