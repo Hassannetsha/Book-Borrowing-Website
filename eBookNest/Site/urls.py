@@ -18,16 +18,9 @@ urlpatterns = [
     path('allbooks/', views.Availableallbooks, name='Availableallbooks'),
     path('selectBook/', views.selectBook, name='selectBook'),
     path('bookdetails/<int:Id>', views.details, name='bookdetails'),
-<<<<<<< HEAD
-    path('toggleusertype/<int:Id>',views.toggleusertype,name="toggleusertype"),
-    path('saveuser/',views.save_user,name="saveuser"),
-    path('loaduser/',views.get_users_json,name="loaduser"),
-=======
+
     path('EditBook/<int:Id>', views.EditBook, name='EditBook'),
     path('toggleusertype/<int:Id>',views.toggleusertype,name="toggleusertype"),
-    
-    
-    
-    # path('editBook/<int:Id>',views.editBook,name="editBook"),
->>>>>>> 4e9841580caefebc1396c2514cc84c276a8966d7
+     path('saveuser/',views.save_user,name="saveuser"),
+    path('loaduser/',views.get_users_json,name="loaduser"),
 ]
