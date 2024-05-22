@@ -16,5 +16,5 @@ class Book(models.Model):
     Available = models.BooleanField(default=True)
     def __str__(self):
         return self.Book_name
-class usertype(models.Model):
-    type = models.BooleanField(default=True)
+# class usertype(models.Model):
+#     type = models.BooleanField(default=True)

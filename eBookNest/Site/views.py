@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
 from django.urls import reverse
-from .models import Book,Categorys,usertype
+from .models import Book,Categorys
 def index(request):
     return render(request,'main-sign-page.html')
 
@@ -21,7 +21,7 @@ def home(request):
     categories = Categorys.objects.all()
     return render(request, 'Home.html', {'books': books,'categories': categories})
 def category_data(request):
-    categories = list(Categorys.objects.values())  # Converts queryset to list of dictionaries
+    categories = list(Categorys.objects.values())
     return JsonResponse(categories, safe=False)
 def book_data(request):
     books = list(Book.objects.values())
@@ -55,14 +55,8 @@ def selectBook(request):
 def details(request,Id):
     book = get_object_or_404(Book, pk=Id)
     category = book.Category
-    Usertype = get_object_or_404(usertype, pk=1)
-    return render(request, 'bookdetails.html', {"book": book, "category": category,"usertype":Usertype})
+    return render(request, 'bookdetails.html', {"book": book, "category": category})
 def toggleusertype(request,ID):
     if request.method == "PATCH":
-        Usertype = usertype.objects.all()
-        if ID == 1:
-            Usertype.type = True
-        else:
-            Usertype.type = False
         return JsonResponse({'status': 'user updated'}, status=200, content_type='application/json') 
     return JsonResponse({'status': 'Invalid request'}, status=400)
