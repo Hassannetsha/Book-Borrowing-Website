@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
 from django.urls import reverse
-from .models import Book,Categorys
+from .models import Book,Categorys,usertype
 def index(request):
     return render(request,'main-sign-page.html')
 
@@ -55,4 +55,5 @@ def selectBook(request):
 def details(request,Id):
     book = get_object_or_404(Book, pk=Id)
     category = book.Category
-    return render(request, 'bookdetails.html', {"book": book, "category": category})
+    Usertype = usertype.objects.all()
+    return render(request, 'bookdetails.html', {"book": book, "category": category,"usertype":Usertype})
