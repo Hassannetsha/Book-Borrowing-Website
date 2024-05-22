@@ -77,7 +77,8 @@
         btn.addEventListener('click', (event) => { 
             let found = false;
                 for(user in users){
-                    found = user.field.email==email.value && user.field.password == pass.value || found;
+                    found = user.field.email==email.value && 
+                    user.field.password == pass.value && user.field.isUser || found;
                 }if(found){
                     para.innerHTML=``
                 }else{
