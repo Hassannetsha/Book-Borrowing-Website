@@ -114,3 +114,4 @@ def EditBook(request,Id):
     return render(request,'Edit.html',{'book':book})
     # return render(request,'Edit.html',{'book':book,"user":user})
 
+

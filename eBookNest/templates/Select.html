@@ -12,7 +12,7 @@
                 background-image: url("{% static 'image/People sitting at bookshelves and reading books in bookstore (2).jpg' %}");
             }
             .img .Welcome{
-                top: 30%;
+                top: 50%;
             }
         </style>
     </head>
@@ -46,72 +46,53 @@
             <p class="Welcome">eBook Nest</p>
         </div>
         <div>
-            <form action="{% url 'EditBook' book.id %}">
-                <div class="moving_div">
-                    <label for="Id" class="Choose">Choose how you want to find your book:</label>
-                    <div class="Select">
-                        <input type="search" placeholder="Enter ID or book name" id="search"  class="field">
-                        <button type="submit" class="buttn_Search" id="buttn_Search" >Select</button>
+            <div class ="mix">
+                {% for category in categories %}
+                    <div class="Books books{{category.id}}" id="Books">
+                    <div class="Rigth"></div>
+                    <a href="">{{category.Category_name}}</a>
+                    <div class="Left"></div>
                     </div>
-                    <div class="Select">
-                        <div class="Radio">
-                            <input type="radio" value="Id" name="edit" id="Id" class="Circle" >
-                            <label for="Id" class="lab">ID</label>
-                        </div>
-                        <div class="Radio">
-                            <input type="radio" value="BookName" name="edit" id="BookName"class="Circle">
-                            <label for="BookName" class="lab">Book Name</label>
-                        </div>
+                    <div class="see books{{category.id}}" >
+                    <a href="{% url 'Availableallbooks' %}" id = "see">
+                        See All
+                    </a>
                     </div>
-                </div>
-                <div class ="mix">
-                    {% for category in categories %}
-                        <div class="Books books{{category.id}}" id="Books">
-                        <div class="Rigth"></div>
-                        <a href="">{{category.Category_name}}</a>
-                        <div class="Left"></div>
-                        </div>
-                        <div class="see books{{category.id}}" >
-                        <a href="{% url 'Availableallbooks' %}" id = "see">
-                            See All
-                        </a>
-                        </div>
-                        <div class="Categoreys" id="{{category.Category_name}}">
-                        {% for book in books %}
-                            {% if category == book.Category %}
-                            <div class="cards" id="book{{book.id}}">
-                                <div class="flip-card">
-                                <div class="flip-card-inner">
-                                    <div class="flip-card-front">
-                                    <img src="{{book.BookCover.url}}" alt="Avatar" style="width:300px;height:300px;">
-                                    </div>
-                                    <div class="flip-card-back">
-                                    <h1>{{book.Book_name}}</h1>
-                                    <p>{{book.description}}</p>
-                                    <a href="{% url 'bookdetails' book.id %}" class="see" onclick = "details(1)">
-                                        See More..
-                                    </a>
-                                    </div>
+                    <div class="Categoreys" id="{{category.Category_name}}">
+                    {% for book in books %}
+                        {% if category == book.Category %}
+                        <div class="cards" id="book{{book.id}}">
+                            <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                <img src="{{book.BookCover.url}}" alt="Avatar" style="width:300px;height:300px;">
                                 </div>
-                                </div>
-                                <p>{{book.Book_name}}</p>
-                                <div class="Edit_Delete_buttns">
-                                    <button class="buttns" onclick = "location.href='{% url 'EditBook' book.id %}'"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
-                                <button class="buttns" Category = "{{category}}" onclick="deleteBook({{ book.id }})" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
+                                <div class="flip-card-back">
+                                <h1>{{book.Book_name}}</h1>
+                                <p>{{book.description}}</p>
+                                <a href="{% url 'bookdetails' book.id %}" class="see" onclick = "details(1)">
+                                    See More..
+                                </a>
                                 </div>
                             </div>
-                            {% endif %}
-                        {%endfor%}
+                            </div>
+                            <p>{{book.Book_name}}</p>
+                            <div class="Edit_Delete_buttns">
+                                <button class="buttns" onclick = "location.href='{% url 'EditBook' book.id %}'"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
+                            </div>
                         </div>
-                    {% endfor %}
-                    <div><br><br><br></div>
-                </div>
-                <div class="Options">
-                    <input type="reset" value="Reset" class="Reset">
-                    <button type="submit" class="butt_Go_back"><a href="{% url 'home' %}" class="Go_back">Go back</a></button>
-                </div>
-                <br><br>
-            </form>
+                        {% endif %}
+                    {%endfor%}
+                    </div>
+                {% endfor %}
+                <div><br><br><br></div>
+            </div>
+            <div class="Options">
+                <input type="reset" value="Reset" class="Reset">
+                <button type="submit" class="butt_Go_back"><a href="{% url 'home' %}" class="Go_back">Go back</a></button>
+            </div>
+            <br><br>
+            
         </div>
         <script>
             function details(number){
@@ -126,46 +107,6 @@
                     alert("done")
                 })
             }
-            var radio = "";
-            var radio1 = document.getElementById("Id");
-            var radio2 = document.getElementById("BookName");
-            radio1.addEventListener("click", function (event) {
-                radio = "Id";
-            });
-            radio2.addEventListener("click",function (event) {
-                radio = "bookname";
-            })
-            var button = document.getElementById("buttn_Search");
-            button.addEventListener("click",function (event){
-                var inputElement = document.getElementById("search");
-                var inputValue = inputElement.value;
-                var onlyIntegers = /^\d+$/;
-                if(radio==="Id"){
-                    if(!onlyIntegers.test(inputValue)){
-                        alert("Please enter a valid Id");
-                        event.preventDefault();
-                    }
-                    else{
-                        
-                        sessionStorage.setItem("redirectid",JSON.stringify(inputElement.value));
-                    }
-                }
-                else if(radio==="bookname"){
-                    var hasPunctuationExceptComma = /[!\"#$%&'()*+\-./:;<=>?@\[\\\]^_`{|}~]/.test(inputValue);
-                    if (hasPunctuationExceptComma) {
-                        alert("Please enter a valid Book Name");
-                        event.preventDefault();
-                    }
-                    else{
-                        
-                        sessionStorage.setItem("redirectBookName",JSON.stringify(inputElement.value));
-                    }
-                }
-                else{
-                    alert("Please enter a valid Book Name");
-                    event.preventDefault();
-                }
-            });
             function getCookie(name) {
                 let cookieValue = null;
                 if (document.cookie && document.cookie !== '') {
@@ -179,62 +120,6 @@
                     }
                 }
                 return cookieValue;
-            }
-            function deleteBook(bookId) {
-                fetch(`/delete-book/${bookId}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken'),
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    $(document).ready(function(){
-                        $.ajax({
-                            type: 'GET',
-                            url : "/getbooks/",
-                            success: function(response){
-                            for (var category in response.categories){
-                                var category_div = document.getElementById(response.categories[category].Category_name);
-                                category_div.innerHTML = ``;
-                            for(var book in response.books){
-                                if(response.books[book].Category_id ==  response.categories[category].id){
-                                    category_div.innerHTML += `<div class="cards" id="book${response.books[book].id}">
-                                    <div class="flip-card">
-                                    <div class="flip-card-inner">
-                                        <div class="flip-card-front">
-                                        <img src="../media/${response.books[book].BookCover}" alt="Avatar" style="width:300px;height:300px;">
-                                        </div>
-                                        <div class="flip-card-back">
-                                        <h1>${response.books[book].Book_name}</h1>
-                                        <p>${response.books[book].description}$</p>
-                                        <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
-                                            See More..
-                                        </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p>${response.books[book].Book_name}</p>
-                                    <div class="Edit_Delete_buttns">
-                                    <button class="buttns"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
-                                    <button class="buttns" Category = "${response.categories[category].Category_name}" onclick="deleteBook(${ response.books[book].id })" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
-                                    </div>
-                                </div>`;
-                                }
-                            }
-                            }
-                        },
-                        error:function(response){
-                            alert("Failed")
-                        }
-                        }
-                    );
-                    //check();
-                    //checkBorrow();
-                    //checkavailble();
-                    })
-                });
-                
             }
         </script>
     </body>
