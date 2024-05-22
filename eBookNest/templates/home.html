@@ -234,7 +234,6 @@
             </div>
             <script>
               var userType = JSON.parse(sessionStorage.getItem("userType"));
-              // !getnavbar();
               if (userType === "admin") {
                   document.getElementById("Admin_page").style.display = "block";
               } else if (userType === "user") {
@@ -249,7 +248,6 @@
                     fetch('/api/categories/').then(response => response.json())
                 ])
                 .then(([booksData, categoriesData]) => {
-                    // Assign the fetched data to the global variables
                     books = booksData;
                     categories = categoriesData;
                     check();
@@ -334,8 +332,6 @@
                       'X-CSRFToken': getCookie('csrftoken'),
                       'Content-Type': 'application/json' // Ensure the content type is set if sending JSON data
                   },
-                  // If you need to send any data, include it in the body
-                  // body: JSON.stringify({ key: 'value' }) // Uncomment if needed
                 })
                 .then(response => {
                     if (!response.ok) {
@@ -351,9 +347,6 @@
                         success: function(response){
                           var available_div = document.getElementById("availablebooks");
                           var not_available_div = document.getElementById("borrowBooks");
-                          //for (var category in response.categories){
-                            //var category_div = document.getElementById(response.categories[category].Category_name);
-                            //category_div.innerHTML = ``;
                             available_div.innerHTML =``;
                             not_available_div.innerHTML =``;
                             for(var book in response.books){
@@ -397,9 +390,6 @@
                                   <button onclick = "toggleAvailability(${response.books[book].id})">Return</button>
                                 </div>`
                               }
-                              //console.log(response.books[book].Category_id)
-                              //console.log(response.categories[category].id)
-                          //}
                             }
                         },
                         error:function(response){
@@ -411,7 +401,6 @@
                     //checkBorrow();
                     //checkavailble();
                   })
-                    // Perform any additional actions with the data if needed
                 })
                 .catch(error => {
                     console.error('There has been a problem with your fetch operation:', error);
@@ -438,8 +427,6 @@
                               var category_div = document.getElementById(response.categories[category].Category_name);
                               category_div.innerHTML = ``;
                               for(var book in response.books){
-                                //console.log(response.books[book].Category_id)
-                                //console.log(response.categories[category].id)
                                 if(response.books[book].Category_id ==  response.categories[category].id){
                                   category_div.innerHTML += `<div class="cards" id="book${response.books[book].id}">
                                     <div class="flip-card">
@@ -478,36 +465,6 @@
                 });
                 
               }
-      
-              
-              
-              {% comment %} $(document).ready(function() {
-                console.log("Document ready");
-            
-                // Use event delegation for dynamic content
-                $(document).on('click', '.delete-button', function(event) {
-                    event.preventDefault();
-                    var bookId = $(this).data('id');
-                    var url = "/ajax/delete/" + bookId + "/";
-                    console.log("Deleting book with ID:", bookId);
-                    $.ajax({
-                      type: 'POST',
-                        url: url,
-                        success: function(response) {
-                            if (response.success) {
-                                console.log("Successfully deleted book with ID:", bookId);
-                                $('#book-' + bookId).remove();
-                            } else {
-                                console.log("Error deleting book with ID:", bookId);
-                                alert('Error deleting book');
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("AJAX Error:", error);
-                        }
-                    });
-                });
-            }); {% endcomment %}
             </script>
     </body>
 </html>
