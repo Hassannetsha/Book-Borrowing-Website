@@ -59,6 +59,6 @@ def toggleusertype(request,ID):
     if request.method == "PATCH":
         return JsonResponse({'status': 'user updated'}, status=200, content_type='application/json') 
     return JsonResponse({'status': 'Invalid request'}, status=400)
-def editBook(request,bookId):
-    book = get_object_or_404(Book, pk=bookId)
-    return render(request, 'Edit.html', {'books': book})
+def EditBook(request,Id):
+    book = get_object_or_404(Book,pk=Id)
+    return render(request,'Edit.html',{'book':book})

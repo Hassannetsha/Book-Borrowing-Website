@@ -18,6 +18,10 @@ urlpatterns = [
     path('allbooks/', views.Availableallbooks, name='Availableallbooks'),
     path('selectBook/', views.selectBook, name='selectBook'),
     path('bookdetails/<int:Id>', views.details, name='bookdetails'),
+    path('EditBook/<int:Id>', views.EditBook, name='EditBook'),
     path('toggleusertype/<int:Id>',views.toggleusertype,name="toggleusertype"),
-    path('editBook/<int:Id>',views.editBook,name="editBook"),
+    
+    
+    
+    # path('editBook/<int:Id>',views.editBook,name="editBook"),
 ]
