@@ -131,18 +131,11 @@ def save_book(request):
             zeftID = 0
             catid = Categorys.objects.filter(Category_name=cat)
             if not catid.count():
-                q = Categorys.objects.get(
-                    Category_name=Categorys.objects.last())
-                if q is None:
-                    q = 1
-                else:
-                    q = q.id + 1
-
                 catid = Categorys.objects.create(
-                    id=q,
                     Category_name=cat
                 )
                 catid.save()
+                zeftID = catid.id
             else:
                 zeftID = catid[0].id
             newBook = Book.objects.create(
