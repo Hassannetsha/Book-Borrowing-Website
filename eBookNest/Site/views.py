@@ -103,8 +103,8 @@ def save_user(request):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     else:
-        return JsonResponse({'status': 'invalid request'}, status=400)   
-                     
+        return JsonResponse({'status': 'invalid request'}, status=400)
+    
 def get_users_json(request):
     user = User.objects.all()
     user_json = serializers.serialize('json', user)
