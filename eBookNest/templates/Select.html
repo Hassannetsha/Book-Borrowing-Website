@@ -70,7 +70,7 @@
                                 <div class="flip-card-back">
                                 <h1>{{book.Book_name}}</h1>
                                 <p>{{book.description}}</p>
-                                <a href="{% url 'bookdetails' book.id %}" class="see" onclick = "details(1)">
+                                <a href="bookdetails/{{book.id}}/{{user.id}}" class="see" onclick = "details(1)">
                                     See More..
                                 </a>
                                 </div>

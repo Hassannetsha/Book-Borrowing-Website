@@ -79,7 +79,7 @@
                         <div class="flip-card-back">
                           <h1>{{book.Book_name}}</h1>
                           <p>{{book.description}}</p>
-                          <a href="{% url 'bookdetails' book.id %}" class="see" onclick = "details(1)">
+                          <a href="{% url 'bookdetails' book.id  user.id %}" class="see">
                             See More..
                           </a>
                         </div>
@@ -163,7 +163,7 @@
                                   <div class="flip-card-back">
                                       <h1>{{ book.Book_author }}</h1>
                                       <p>{{ book.description }}</p>
-                                      <a href="{% url 'bookdetails' book.id %}" class="see">
+                                      <a href="{% url 'bookdetails' book.id  user.id %}" class="see">
                                         See More..
                                     </a>
                                   </div>
@@ -203,7 +203,7 @@
                                   <div class="flip-card-back">
                                       <h1>{{ book.Book_author }}</h1>
                                       <p>{{ book.description }}</p>
-                                      <a href="{% url 'bookdetails' book.id %}" class="see">
+                                      <a href="bookdetails/{{book.id}}/{{user.id}}" class="see" onclick = "details(1)">
                                         See More..
                                     </a>
                                   </div>
@@ -219,26 +219,6 @@
         </div>
             </div>
       <script>
-        function details(number){
-            fetch(`/toggleusertype/${number}/`,{
-              method: "PATCH",
-              headers: {
-                'X-CSRFToken': getCookie('csrftoken'),
-              },
-            })
-            .then(response => response.json())
-            .then(data => {
-              alert("done")
-            })
-          }
-        var userType = JSON.parse(sessionStorage.getItem("userType"));
-        if (userType === "admin") {
-            document.getElementById("Admin_page").style.display = "block";
-        } else if (userType === "user") {
-            document.getElementById("user_page").style.display = "block";
-        } else {
-            alert("Invalid user type in URL!");
-        }
         var categories = [],books = [];
         document.addEventListener("DOMContentLoaded", function() {
           Promise.all([

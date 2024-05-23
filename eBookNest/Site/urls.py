@@ -17,10 +17,10 @@ urlpatterns = [
     path('getbooks/', views.getbooks, name='getbooks'),
     path('allbooks/', views.Availableallbooks, name='Availableallbooks'),
     path('selectBook/', views.selectBook, name='selectBook'),
-    path('bookdetails/<int:Id>', views.details, name='bookdetails'),
-
+    path('Bookdetails/<int:Id>/<int:Id2>', views.Details, name='Bookdetails'),
+    path('bookdetails/<int:bookId>/<int:userId>',views.Bookdetails,name='bookdetails'),
     path('EditBook/<int:Id>', views.EditBook, name='EditBook'),
-    path('toggleusertype/<int:Id>',views.toggleusertype,name="toggleusertype"),
+    # path('toggleusertype/<int:Id>',views.toggleusertype,name="toggleusertype"),
     path('saveuser/',views.save_user,name="saveuser"),
     path('loaduser/',views.get_users_json,name="loaduser"),
 ]
