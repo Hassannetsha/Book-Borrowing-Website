@@ -14,20 +14,28 @@
         .img{
           background-image: url("{% static 'image/People sitting at bookshelves and reading books in bookstore (2).jpg' %}");
         }
-        
+        {% if not user.isUser %}
+          #Admin_page{
+            display: block;
+          }
+          {% else %}
+            #user_page{
+              display: block;
+            }
+        {% endif %}
       </style>
     </head>
     <body>
       <div id="Admin_page">
         <nav class="navbar" id="navbaradmin">
           <div class="logoandsearch">
-            <a href="{% url 'home' %}" class="LogoIcon" onclick="AdminHomeuser()">
+            <a href="{% url 'home' user.id %}" class="LogoIcon" onclick="AdminHomeuser()">
             <img src="{% static 'images/logopng-removebg.png' %}" alt="can't display image">
             </a>
-            <a href="{% url 'home' %}" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
+            <a href="{% url 'home' user.id %}" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
           </div>
           <div class="bottomline">
-            <a href="{% url 'home' %}" class="quick" title="Admin Homepage" style="
+            <a href="{% url 'home' user.id %}" class="quick" title="Admin Homepage" style="
                 color: #ffffff;
                 text-decoration: underline;
                 font-size: 35px;

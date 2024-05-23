@@ -21,10 +21,11 @@ def signUpUser(request):
 # def test(request):
 #     books = Book.objects.all()  # or any other queryset
 #     return render(request, 'test.html', {'books': books})
-def home(request):
+def home(request,Id):
     books = Book.objects.all()  # or any other queryset
     categories = Categorys.objects.all()
-    return render(request, 'home.html', {'books': books,'categories': categories})
+    user = get_object_or_404(User, pk=Id)
+    return render(request, 'Home.html', {'books': books,'categories': categories,"user":user})
 def category_data(request):
     categories = list(Categorys.objects.values())
     return JsonResponse(categories, safe=False)
@@ -66,25 +67,6 @@ def toggleusertype(request,ID):
     return JsonResponse({'status': 'Invalid request'}, status=400)
 @csrf_exempt
 def save_user(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            data = User.objects.create(
-                first_name=data.get('first_name'),
-                last_name=data.get('last_name'),
-                email=data.get('email'),
-                password=data.get('password'),
-                address=data.get('address'),
-                phone_number=data.get('phone_number'),
-            )
-            data.save()
-            return JsonResponse({'status': 'success'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-    else:
-        return JsonResponse({'status': 'invalid request'}, status=400)
-    
-def save_user(request):
     print('honda')
     if request.method == 'POST':
         try:
@@ -101,9 +83,7 @@ def save_user(request):
             data.save()
             return JsonResponse({'status': 'success'})
         except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-    else:
-        return JsonResponse({'status': 'invalid request'}, status=400)
+            return JsonResponse({'status': 'success'})
     
 def get_users_json(request):
     user = User.objects.all()

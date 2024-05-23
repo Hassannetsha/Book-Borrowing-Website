@@ -31,7 +31,7 @@
                 <h1>eBook nest</h1>
                 <h2>User Sign In</h2>
                 <div class="singup">
-                    <form method="post" target="_blank">
+                    <form method="post" id="loginForm">
                         {% csrf_token %}
                         <div class="input">
                             <i class="fa-solid fa-user"></i>
@@ -63,6 +63,7 @@
         var email = document.getElementById('email')
         var btn = document.getElementById('signinuserbtn')
         var para = document.getElementsByClassName('invalidinput')[0]
+        var userId
         fetch('/loaduser/')
                 .then(response => response.json())
                 .then(data => {
@@ -79,15 +80,15 @@
             for(let i = 0; i < users.length; i++) {
                 let UEmail = users[i].fields.email;
                 let Upass = users[i].fields.password;
-                if(UEmail == email.value && Upass == pass.value ) {
+                if(UEmail == email.value && Upass == pass.value&&users[i].fields.isUser ) {
                     found = true;
+                    userId = users[i].pk;
                     break; // Optional: break the loop if a match is found
                 }
             }
             if(found){
                     para.innerHTML=``
-                    console.log("a7a neek")
-                    window.location.href = "{% url 'home' %}";
+                    document.getElementById('loginForm').action = `/home/${userId}`;
                 }else{
                     para.innerHTML=`*Invalid email or password`;
                     event.preventDefault();

@@ -28,7 +28,7 @@
       <h2>User SignUp</h2>
       <div class="singup">
         <h3>Please Enter your personal informations</h3>
-        <form>
+        <form action = "{% url 'SigninUser' %}">
           <div class="input">
             <label for="Fname">
               First name:
@@ -215,12 +215,10 @@
               alert('Sign up successful!');
               window.location.href = '/SigninUser/';
           } else {
-              alert('Sign up failed: ' + data.error);
+              alert('2');
           }
       })
-      .catch(error => {
-          alert('Sign up failed: ' + error);
-      });    
+      location.href = '/SigninUser/';
       }
     })
     function getCookie(name) {
