@@ -52,16 +52,18 @@ def getbooks(request):
         "categories":list(Categoryies.values())}, status=200)
 def Availableallbooks(request,userId):
     books = Book.objects.all()
+    categories = Categorys.objects.all()
     user = get_object_or_404(User, pk=userId)
-    return render(request, 'availavbleBooks.html', {'books': books,"user":user})
+    return render(request, 'availavbleBooks.html', {'books': books,'categories': categories,"user":user})
 def Borrowedbooks(request,userId):
     books = Book.objects.all()
     user = get_object_or_404(User, pk=userId)
     return render(request, 'availavbleBooks.html', {'books': books,"user":user})
-def selectBook(request):
+def selectBook(request,userId):
     books = Book.objects.all()
     categories = Categorys.objects.all()
-    return render(request, 'Select.html', {'books': books,'categories': categories})
+    user = get_object_or_404(User, pk=userId)
+    return render(request, 'Select.html', {'books': books,'categories': categories,"user":user})
 def Details(request, bookId, userId):
     book = get_object_or_404(Book, pk=bookId)
     category = book.Category

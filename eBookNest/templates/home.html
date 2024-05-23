@@ -44,7 +44,7 @@
                 text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
                 text-underline-offset: 15.25px;" onclick="AdminHomeuser()">Home</a>
             <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
-            <a href="{% url 'selectBook' %}" class="quick" title="edit an existing book">Edit Book</a>
+            <a href="{% url 'selectBook' user.id %}" class="quick" title="edit an existing book">Edit Book</a>
             <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
             
             <a href="{% url 'index' %}" class="quick" title="log out">Sign Out</a>
@@ -101,7 +101,7 @@
             </div>
             <br><br>
             <div id = "SELECT" class="SELECT">
-              <a href="{% url 'selectBook' %}" class="Options">Edit Book Details</a>
+              <a href="{% url 'selectBook' user.id %}" class="Options">Edit Book Details</a>
             </div>
             <br><br>
             <div id = "DELETE" class="DELETE">
