@@ -78,32 +78,13 @@ def save_user(request):
                 phone_number=data.get('phone_number'),
             )
             data.save()
+            print("done")
             return JsonResponse({'status': 'success'})
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     else:
         return JsonResponse({'status': 'invalid request'}, status=400)
     
-def save_user(request):
-    print('honda')
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            data = User.objects.create(
-                first_name=data.get('first_name'),
-                last_name='hamda',
-                email=data.get('email'),
-                password=data.get('password'),
-                address=data.get('address'),
-                phone_number=data.get('phone_number'),
-            )
-            data.save()
-            return JsonResponse({'status': 'success'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-    else:
-        return JsonResponse({'status': 'invalid request'}, status=400)   
-                     
 def get_users_json(request):
     user = User.objects.all()
     user_json = serializers.serialize('json', user)

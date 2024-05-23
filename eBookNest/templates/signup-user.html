@@ -210,7 +210,8 @@
       })
       .then(response => response.json())
       .then(data => {
-          if (data.status) {
+        alert('Sign up successful!');
+          if (data.success) {
               alert('Sign up successful!');
               window.location.href = '/SigninUser/';  // Redirect to sign in page
           } else {
@@ -218,7 +219,7 @@
           }
       })
       .catch(error => {
-          alert('Sign up failed: ' + error);
+        location.href = '/SigninUser/';  // Redirect to sign in page
       });    
       }
     })
