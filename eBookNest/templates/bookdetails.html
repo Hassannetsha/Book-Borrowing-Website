@@ -44,14 +44,14 @@
             <a href="../home_page/home.html" class="Logo" onclick="UserHomeuser()">eBookNest</a>
           </div>
           <div class="bottomline">
-              <a href="../home_page/home.html" class="quick" title="User Homepage"  onclick="UserHomeuser()">Home</a>
+              <a href="{% url 'home' user.id %}" class="quick" title="User Homepage"  onclick="UserHomeuser()">Home</a>
                   
-              <a href="../User_Home_page/availavbleBooks.html" class="quick" title="Available books">Available books</a>
-              <a href="../User_Home_page/borrrowedBooks.html" class="quick" title="Borrow books">Borrow books</a>
+              <a href="{% url 'Availableallbooks' user.id %}" class="quick" title="Available books">Available books</a>
+              <a href="{% url 'Borrowedbooks' user.id %}" class="quick" title="Borrow books">Borrow books</a>
       
               
       
-              <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
+              <a href="{% url 'index' %}" class="quick" title="log out">Sign Out</a>
               <label for="Search" class="srch">Search:</label>
               <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
           </div>
@@ -83,7 +83,7 @@
         <div class="heart" name="x" onclick = "deleteBook({{book.id}},{{user.id}})"><i onclick = "deleteBook({{book.id}},{{user.id}})" class="fa fa-trash-o" name="x" style="font-size:40px; padding-left: 21px;" onclick = "deletebook({{book.id}})"></i></div>
         {% else %}
         {% if book.Available %}
-          <button class="b" onclick = "Go_back()">Back</button>
+          <button class="b" onclick = "Go_back({{user.id}})">Back</button>
           <button class="b" onclick = "toggleAvailability({{book.id}},{{user.id}})">Borrow</button>
           <div class="heart" name="x"><i class="fa fa-heart" name="x"id = "fa"  onclick = "changeColor()"></i></div>
           {% else %}
