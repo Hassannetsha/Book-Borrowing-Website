@@ -55,7 +55,7 @@ def Availableallbooks(request):
 def selectBook(request):
     books = Book.objects.all()
     categories = Categorys.objects.all()
-    return render(request, 'Home.html', {'books': books,'categories': categories})
+    return render(request, 'Select.html', {'books': books,'categories': categories})
 def details(request,Id):
     book = get_object_or_404(Book, pk=Id)
     category = book.Category
@@ -71,7 +71,7 @@ def save_user(request):
             data = json.loads(request.body)
             data = User.objects.create(
                 first_name=data.get('first_name'),
-                last_name='hamda',
+                last_name=data.get('last_name'),
                 email=data.get('email'),
                 password=data.get('password'),
                 address=data.get('address'),
@@ -96,14 +96,15 @@ def save_user(request):
                 password=data.get('password'),
                 address=data.get('address'),
                 phone_number=data.get('phone_number'),
+                isUser=data.get('isUser'),
             )
             data.save()
             return JsonResponse({'status': 'success'})
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     else:
-        return JsonResponse({'status': 'invalid request'}, status=400)   
-                     
+        return JsonResponse({'status': 'invalid request'}, status=400)
+    
 def get_users_json(request):
     user = User.objects.all()
     user_json = serializers.serialize('json', user)
@@ -113,4 +114,5 @@ def EditBook(request,Id):
     book = get_object_or_404(Book,pk=Id)
     return render(request,'Edit.html',{'book':book})
     # return render(request,'Edit.html',{'book':book,"user":user})
+
 

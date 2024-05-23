@@ -43,7 +43,7 @@
                             </div>
                             <p class="invalidinput"></p>
                             <div class="wrap">
-                            <button users ="{{users}}" id="signinuserbtn" type="submit" formaction="{% url 'home'%}">
+                            <button users ="{{users}}" id="signinuserbtn" type="submit">
                                 Sign in
                             </button>
                             </div>
@@ -79,8 +79,12 @@
                 for(user in users){
                     found = user.field.email==email.value && 
                     user.field.password == pass.value && user.field.isUser || found;
+                    if (found){
+                        break;
+                    }
                 }if(found){
                     para.innerHTML=``
+                    window.location.href = "{% url 'home' ${user.id} %}";
                 }else{
                     para.innerHTML=`*Invalid email or password`;
                     event.preventDefault();
