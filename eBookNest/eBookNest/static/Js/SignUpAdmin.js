@@ -79,7 +79,7 @@ divSignup.children[1].children[11].innerHTML = `<label for='LibraryID'>\nLibrary
 
 divSignup.children[1].appendChild(document.createElement('div'))
 divSignup.children[1].children[12].className = 'wrap'
-divSignup.children[1].children[12].innerHTML = "<button type='submit' formaction='signinadmin.html'>\nSign up\n</button>"
+divSignup.children[1].children[12].innerHTML = "<button type='submit'>\nSign up\n</button>"
 
 var signup = document.getElementsByClassName("signup")[0]
 var pass = signup.children[1].children[4].children[1]

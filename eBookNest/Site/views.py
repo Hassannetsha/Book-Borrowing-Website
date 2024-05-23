@@ -71,7 +71,7 @@ def save_user(request):
             data = json.loads(request.body)
             data = User.objects.create(
                 first_name=data.get('first_name'),
-                last_name='hamda',
+                last_name=data.get('last_name'),
                 email=data.get('email'),
                 password=data.get('password'),
                 address=data.get('address'),
@@ -96,6 +96,7 @@ def save_user(request):
                 password=data.get('password'),
                 address=data.get('address'),
                 phone_number=data.get('phone_number'),
+                isUser=data.get('isUser'),
             )
             data.save()
             return JsonResponse({'status': 'success'})
