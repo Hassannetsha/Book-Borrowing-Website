@@ -1,27 +1,30 @@
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>e BookNest | Edit books</title>
-      <link rel="icon" type="image/x-icon" href="../images/logopng-removebg.ico">
-        <link rel="stylesheet" href="../Style/Styles.css">
-        <link rel="stylesheet" href="../Style/add.css">
 
-    </head>
-    <body>
-        <div>
-            <nav class="navbar">
-                <div class="logoandsearch">
-                     <a href="../home_page/home.html" class="LogoIcon">
-                <img src="../images/logopng-removebg.png" alt="can't display image">
+<head>
+    {%load static%}
+    <meta charset="utf-8">
+    <title>e BookNest | Edit books</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'image/logopng-removebg.ico'%}">
+    <link rel="stylesheet" href="{% static 'css/Styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/add.css' %}">
+
+</head>
+
+<body>
+    <div>
+        <nav class="navbar">
+            <div class="logoandsearch">
+                <a href="../home_page/home.html" class="LogoIcon">
+                    <img src="{% static 'image/logopng-removebg.png' %}" alt="can't display image">
                 </a>
-                <a href="../home_page/home.html" class="Logo">eBookNest</a>
-                
-                </div>
-               
-                <div class="bottomline">
-                    <a href="../home_page/home.html" class="quick" title="Admin Homepage">Home</a>
+                <a href="../home_page/home.html" class="Logo">eBookNest {{book.Book_name}}</a>
+
+            </div>
+
+            <div class="bottomline">
+                <a href="{% url 'home' 6 %}" class="quick" title="Admin Homepage">Home</a>
                 <a href="add.html" class="quick" title="add a new book">Add Book</a>
-    
+
                 <a href="Edit.html" class="quick" title="edit an existing book" style="
                 color: #ffffff;
 text-decoration: underline;
@@ -30,27 +33,113 @@ color: burlywood;
 padding-bottom: 0px;
 text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 text-underline-offset: 12.5px;">Edit Book</a>
-    
+
                 <a href="delete.html" class="quick" title="remove a book from the list">Delete Book</a>
-    
+
                 <a href="AboutUs.html" class="quick" title="Who are we?">About Us</a>
- 
-    
+
+
                 <a href="../LogIn/main-sign-page.html" class="quick" title="log out">Sign Out</a>
                 <label for="Search" class="srch">Search:</label>
                 <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
-                </div>
-                
-            </nav>
-            <hr style="border: 1px solid burlywood;border-radius: 5px;">
-        </div>
+            </div>
 
-        <div class="edit">
-             <form id="formedit" action="../home_page/home.html">
+        </nav>
+        <hr style="border: 1px solid burlywood;border-radius: 5px;">
+    </div>
 
-            </form>
-        </div>
-           
-    <script src = "../JavaScript/Edit.js"></script>
-    </body>
+    <div class="edit">
+        <form id="formedit" action="../home_page/home.html">
+
+        </form>
+    </div>
+
+    <script>
+
+        class book {
+            constructor(Bookname, Id, author, categoreys, description1, description2, rating, no_pages, BookCover) {
+                this.Bookname = Bookname;
+                this.Id = Id;
+                this.author = author;
+                this.categoreys = categoreys;
+                this.description1 = description1;
+                this.description2 = description2;
+                this.rating = rating;
+                this.no_pages = no_pages;
+                this.BookCover = BookCover;
+            }
+        }
+        document.getElementById("formedit").style.top = `48%`
+        document.getElementById("formedit").innerHTML = `<div class="input">
+<label for="BookName"> Edit book name:</label>
+<input type="text" id="BookName" placeholder="Book's Name">
+</div>
+
+
+
+<br>
+<br>
+<div class="input">
+<label for="author"> Edit book's author:</label>
+<input type="text" id="author" placeholder="Book's author">
+</div>
+
+<br>
+<br>
+<div class="input">
+<label for="BookCategory"> Edit book's category:</label>
+<input type="text" id="BookCategory"  placeholder="Book's category">
+</div>
+
+<br>
+<br>
+<div class="input">
+<label for="BookDescription" > Edit book's description:</label>
+<textarea name="comment--" id="BookDescription" cols="30" rows="10" placeholder="write book description"></textarea> 
+</div>
+
+<br><br>
+<div class="input">
+<label for="BookCover">Put book's cover image: </label>
+<input type="file" id="BookCover">
+</div>
+
+<br>
+<br>
+<p class="invalidinput"></p>
+<div class="box"> <div class="wrap">
+<button type="submit" id="editbtn">
+    Submit
+</button>
+</div>
+<div class="wrap">
+<button type="submit">
+    Reset
+</button>
+</div>
+</div>`
+
+        var editbtn = document.getElementById("editbtn")
+        var para = document.getElementsByClassName("invalidinput")[0]
+
+        editbtn.addEventListener('click', (event) => {
+            for (let i = 0; i < allbooks.length; i++) {
+                if (allbooks[i].Id == bookid) {
+                    console.log(document.getElementById("BookName").value)
+                    allbooks[i].Bookname = document.getElementById("BookName").value//book name
+                    console.log(document.getElementById("author").value)
+                    allbooks[i].author = document.getElementById("author").value// authour
+                    console.log(document.getElementById("BookCategory").value)
+                    allbooks[i].categoreys = document.getElementById("BookCategory").value// category
+                    console.log(document.getElementById("BookDescription").value)
+                    allbooks[i].description1 = document.getElementById("BookDescription").value//description1
+                    console.log(document.getElementById("BookCover").value)
+                    allbooks[i].BookCover = document.getElementById("BookCover").value//bookcover
+                }
+            }
+        })
+        // localStorage.clear();
+    </script>
+</body>
+
 </html

@@ -25,13 +25,16 @@ def home(request,Id):
     books = Book.objects.all()  # or any other queryset
     categories = Categorys.objects.all()
     user = get_object_or_404(User, pk=Id)
-    return render(request, 'Home.html', {'books': books,'categories': categories,"user":user})
+    return render(request, 'home.html', {'books': books,'categories': categories,"user":user})
+
 def category_data(request):
     categories = list(Categorys.objects.values())
     return JsonResponse(categories, safe=False)
+
 def book_data(request):
     books = list(Book.objects.values())
     return JsonResponse(books, safe=False)
+
 def Convert(request, Id):
     if request.method == "PATCH":
         book = get_object_or_404(Book, pk=Id)
@@ -39,41 +42,46 @@ def Convert(request, Id):
         book.save()
         return JsonResponse({'status': 'Book updated'}, status=200, content_type='application/json') 
     return JsonResponse({'status': 'Invalid request'}, status=400)
+
 def delete_book(request, book_id):
     if request.method == "DELETE":
         book = get_object_or_404(Book, id=book_id)
         book.delete()
         return JsonResponse({'status': 'Book deleted'})
     return JsonResponse({'status': 'Invalid request'}, status=400)
+
 def getbooks(request):
     books = Book.objects.all()
     Categoryies = Categorys.objects.all()
     return JsonResponse({"books":list(books.values()),
         "categories":list(Categoryies.values())}, status=200)
+
 def Availableallbooks(request):
     books = Book.objects.all()
     return render(request, 'availavbleBooks.html', {'books': books})
+
 def selectBook(request):
     books = Book.objects.all()
     categories = Categorys.objects.all()
     return render(request, 'Select.html', {'books': books,'categories': categories})
+
 def details(request,Id):
     book = get_object_or_404(Book, pk=Id)
     category = book.Category
     return render(request, 'bookdetails.html', {"book": book, "category": category})
+
 def toggleusertype(request,ID):
     if request.method == "PATCH":
         return JsonResponse({'status': 'user updated'}, status=200, content_type='application/json') 
     return JsonResponse({'status': 'Invalid request'}, status=400)
 @csrf_exempt
 def save_user(request):
-    print('honda')
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
             data = User.objects.create(
                 first_name=data.get('first_name'),
-                last_name='hamda',
+                last_name=data.get('last_name'),
                 email=data.get('email'),
                 password=data.get('password'),
                 address=data.get('address'),
