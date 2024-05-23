@@ -12,16 +12,14 @@
 <body>
   <div class="Form">
     <nav class="navbar" id="navbar">
-
-      {% if user.isUser %}
       <div class="logoandsearch">
         <a href="../home_page/home.html" class="LogoIcon" onclick="UserHomeuser()">
-        <img src="../images/logopng-removebg.png" alt="can't display image">
+          <img src="{% static 'image/logopng-removebg.png' %}" alt="can't display image">
         </a>
         <a href="../home_page/home.html" class="Logo" onclick="UserHomeuser()">eBookNest</a>
     </div>
     <div class="bottomline">
-        <a href="../home_page/home.html" class="quick" title="Admin Homepage"  onclick="UserHomeuser()">Home</a>
+        <a href="{% url 'home' user.id %}" class="quick" title="Admin Homepage"  onclick="UserHomeuser()">Home</a>
             
         <a href="../User_Home_page/availavbleBooks.html" class="quick"style="
         color: #ffffff;
@@ -40,33 +38,31 @@
         <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
     </div>
       
-    </div>
-      
     </nav>
     <hr>
     </div>
     <div class="availablebooks" id="availablebooks">
       {% for book in books %}
-        {% if not book.Available %}
-          <div class="card" id="book{{ book.id }}">
-              <div class="flip-card">
-                  <div class="flip-card-inner">
-                      <div class="flip-card-front">
-                          <img src="{{ book.BookCover.url }}" alt="Book Cover" style="width:300px;height:300px;">
-                      </div>
-                      <div class="flip-card-back">
-                          <h1>{{ book.Book_author }}</h1>
-                          <p>{{ book.description }}</p>
-                          <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
-                            See More..
-                        </a>
-                      </div>
+      {% if not book.Available %}
+      <div class="card" id="book{{ book.id }}">
+          <div class="flip-card">
+              <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                      <img src="{{ book.BookCover.url }}" alt="Book Cover" style="width:300px;height:300px;">
+                  </div>
+                  <div class="flip-card-back">
+                      <h1>{{ book.Book_author }}</h1>
+                      <p>{{ book.description }}</p>
+                      <a href="bookdetails/{{book.id}}/{{user.id}}" class="see" onclick = "details(1)">
+                        See More..
+                    </a>
                   </div>
               </div>
-              <p>{{ book.Book_name }}</p>
-              <button onclick = "toggleAvailability({{book.id}})">Return</button>
           </div>
-        {% endif %}
+          <p>{{ book.Book_name }}</p>
+          <button onclick = "toggleAvailability({{book.id}})">Return</button>
+      </div>
+    {% endif %}
       {% endfor %}
     </div>
       <br>

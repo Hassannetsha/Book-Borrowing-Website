@@ -58,7 +58,7 @@ def Availableallbooks(request,userId):
 def Borrowedbooks(request,userId):
     books = Book.objects.all()
     user = get_object_or_404(User, pk=userId)
-    return render(request, 'availavbleBooks.html', {'books': books,"user":user})
+    return render(request, 'borrowedBooks.html', {'books': books,"user":user})
 def selectBook(request,userId):
     books = Book.objects.all()
     categories = Categorys.objects.all()
