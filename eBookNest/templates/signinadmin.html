@@ -59,7 +59,7 @@
     <script>
         var pass = document.getElementById('pass')
         var email = document.getElementById('email')
-        var btn = document.getElementById('signinuserbtn')
+        var btn = document.getElementById('btn')
         var para = document.getElementsByClassName('invalidinput')[0]
         fetch('/loaduser/')
                 .then(response => response.json())
@@ -78,6 +78,9 @@
                 for(user in users){
                     found = user.field.email==email.value && 
                     user.field.password == pass.value && !user.field.isUser || found;
+                    if (found){
+                        break;
+                    }
                 }if(found){
                     para.innerHTML=``
                 }else{

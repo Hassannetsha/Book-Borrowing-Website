@@ -147,7 +147,7 @@
             let found = false;
           
             for(let i = 0; i < users.length; i++) {
-                let UEmail = users[i].fields.email;
+              let UEmail = users[i].fields.email;
                 if(UEmail == EMAIL) {
                     found = true;
                     break; // Optional: break the loop if a match is found
@@ -197,6 +197,7 @@
           last_name: document.getElementById("Lname").value,
           email: email.value,
           password: pass.value,
+          isUser:1,
           address: document.getElementById("address").value,
           phone_number: number.value,
       }
