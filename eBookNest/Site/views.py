@@ -50,9 +50,14 @@ def getbooks(request):
     Categoryies = Categorys.objects.all()
     return JsonResponse({"books":list(books.values()),
         "categories":list(Categoryies.values())}, status=200)
-def Availableallbooks(request):
+def Availableallbooks(request,userId):
     books = Book.objects.all()
-    return render(request, 'availavbleBooks.html', {'books': books})
+    user = get_object_or_404(User, pk=userId)
+    return render(request, 'availavbleBooks.html', {'books': books,"user":user})
+def Borrowedbooks(request,userId):
+    books = Book.objects.all()
+    user = get_object_or_404(User, pk=userId)
+    return render(request, 'availavbleBooks.html', {'books': books,"user":user})
 def selectBook(request):
     books = Book.objects.all()
     categories = Categorys.objects.all()

@@ -80,7 +80,7 @@
       {% if not user.isUser %}
         <button class="b" onclick = "Go_back({{user.id}})">Back</button>
         <button class="b" onclick = "Go_back({{user.id}})">Edit</button>
-        <div class="heart" name="x" onclick = "deleteBook({{book.id}})"><i onclick = "deleteBook({{book.id}})" class="fa fa-trash-o" name="x" style="font-size:40px; padding-left: 21px;" onclick = "deletebook({{book.id}})"></i></div>
+        <div class="heart" name="x" onclick = "deleteBook({{book.id}},{{user.id}})"><i onclick = "deleteBook({{book.id}},{{user.id}})" class="fa fa-trash-o" name="x" style="font-size:40px; padding-left: 21px;" onclick = "deletebook({{book.id}})"></i></div>
         {% else %}
         {% if book.Available %}
           <button class="b" onclick = "Go_back()">Back</button>
@@ -126,7 +126,7 @@
             return response.json();
         })
         .then(data => {
-          location.href = `home/${userID}/`
+          location.href = `http://127.0.0.1:8000/home/${userID}`
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
