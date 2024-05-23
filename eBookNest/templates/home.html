@@ -44,7 +44,7 @@
                 text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
                 text-underline-offset: 15.25px;" onclick="AdminHomeuser()">Home</a>
             <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
-            <a href="{% url 'selectBook' %}" class="quick" title="edit an existing book">Edit Book</a>
+            <a href="{% url 'selectBook' user.id %}" class="quick" title="edit an existing book">Edit Book</a>
             <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
             
             <a href="{% url 'index' %}" class="quick" title="log out">Sign Out</a>
@@ -63,7 +63,7 @@
               <div class="Left"></div>
             </div>
             <div class="see books{{category.id}}" >
-              <a href="{% url 'Availableallbooks' %}" id = "see">
+              <a href="{% url 'Availableallbooks' user.id %}" id = "see">
                 See All
               </a>
             </div>
@@ -79,7 +79,7 @@
                         <div class="flip-card-back">
                           <h1>{{book.Book_name}}</h1>
                           <p>{{book.description}}</p>
-                          <a href="{% url 'bookdetails' book.id %}" class="see" onclick = "details(1)">
+                          <a href="{% url 'bookdetails' book.id  user.id %}" class="see">
                             See More..
                           </a>
                         </div>
@@ -101,7 +101,7 @@
             </div>
             <br><br>
             <div id = "SELECT" class="SELECT">
-              <a href="{% url 'selectBook' %}" class="Options">Edit Book Details</a>
+              <a href="{% url 'selectBook' user.id %}" class="Options">Edit Book Details</a>
             </div>
             <br><br>
             <div id = "DELETE" class="DELETE">
@@ -146,7 +146,7 @@
             <div class="Left"></div>
           </div>
           <div class="see" id="hide1">
-            <a href="{% url 'Availableallbooks' %}">
+            <a href="{% url 'Availableallbooks' user.id %}" id = "see">
               See All
             </a>
           </div>
@@ -163,7 +163,7 @@
                                   <div class="flip-card-back">
                                       <h1>{{ book.Book_author }}</h1>
                                       <p>{{ book.description }}</p>
-                                      <a href="{% url 'bookdetails' book.id %}" class="see">
+                                      <a href="{% url 'bookdetails' book.id  user.id %}" class="see">
                                         See More..
                                     </a>
                                   </div>
@@ -184,7 +184,7 @@
             <div class="Left"></div>
           </div>
           <div class="see" id="hide">
-            <a href="{% url 'Availableallbooks' %}">
+            <a href="{% url 'Borrowedbooks' user.id %}" id = "see">
               See All
             </a>
           </div>
@@ -203,7 +203,7 @@
                                   <div class="flip-card-back">
                                       <h1>{{ book.Book_author }}</h1>
                                       <p>{{ book.description }}</p>
-                                      <a href="{% url 'bookdetails' book.id %}" class="see">
+                                      <a href="bookdetails/{{book.id}}/{{user.id}}" class="see" onclick = "details(1)">
                                         See More..
                                     </a>
                                   </div>
@@ -219,18 +219,6 @@
         </div>
             </div>
       <script>
-        function details(number){
-            fetch(`/toggleusertype/${number}/`,{
-              method: "PATCH",
-              headers: {
-                'X-CSRFToken': getCookie('csrftoken'),
-              },
-            })
-            .then(response => response.json())
-            .then(data => {
-              alert("done")
-            })
-          }
         var categories = [],books = [];
         document.addEventListener("DOMContentLoaded", function() {
           Promise.all([

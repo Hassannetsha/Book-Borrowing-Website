@@ -55,25 +55,34 @@ def getbooks(request):
     Categoryies = Categorys.objects.all()
     return JsonResponse({"books":list(books.values()),
         "categories":list(Categoryies.values())}, status=200)
-
-def Availableallbooks(request):
-    books = Book.objects.all()
-    return render(request, 'availavbleBooks.html', {'books': books})
-
-def selectBook(request):
+def Availableallbooks(request,userId):
     books = Book.objects.all()
     categories = Categorys.objects.all()
-    return render(request, 'Select.html', {'books': books,'categories': categories})
-
-def details(request,Id):
-    book = get_object_or_404(Book, pk=Id)
+    user = get_object_or_404(User, pk=userId)
+    return render(request, 'availavbleBooks.html', {'books': books,'categories': categories,"user":user})
+def Borrowedbooks(request,userId):
+    books = Book.objects.all()
+    user = get_object_or_404(User, pk=userId)
+    return render(request, 'borrowedBooks.html', {'books': books,"user":user})
+def selectBook(request,userId):
+    books = Book.objects.all()
+    categories = Categorys.objects.all()
+    user = get_object_or_404(User, pk=userId)
+    return render(request, 'Select.html', {'books': books,'categories': categories,"user":user})
+def Details(request, bookId, userId):
+    book = get_object_or_404(Book, pk=bookId)
     category = book.Category
-    return render(request, 'bookdetails.html', {"book": book, "category": category})
-
-def toggleusertype(request,ID):
-    if request.method == "PATCH":
-        return JsonResponse({'status': 'user updated'}, status=200, content_type='application/json') 
-    return JsonResponse({'status': 'Invalid request'}, status=400)
+    user = get_object_or_404(User, pk=userId)
+    return render(request, 'bookdetails.html', {"book": book, "category": category,"user":user})
+def Bookdetails(request, bookId, userId):
+    book = get_object_or_404(Book, pk=bookId )
+    category = book.Category
+    user = get_object_or_404(User, pk=userId)
+    return render(request, 'bookdetails.html', {"book": book, "category": category,"user":user})
+# def toggleusertype(request,ID):
+#     if request.method == "PATCH":
+#         return JsonResponse({'status': 'user updated'}, status=200, content_type='application/json') 
+#     return JsonResponse({'status': 'Invalid request'}, status=400)
 @csrf_exempt
 def save_user(request):
     if request.method == 'POST':

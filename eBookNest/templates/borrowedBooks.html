@@ -12,16 +12,14 @@
 <body>
   <div class="Form">
     <nav class="navbar" id="navbar">
-
-      {% if user.isUser %}
       <div class="logoandsearch">
         <a href="../home_page/home.html" class="LogoIcon" onclick="UserHomeuser()">
-        <img src="../images/logopng-removebg.png" alt="can't display image">
+          <img src="{% static 'image/logopng-removebg.png' %}" alt="can't display image">
         </a>
         <a href="../home_page/home.html" class="Logo" onclick="UserHomeuser()">eBookNest</a>
     </div>
     <div class="bottomline">
-        <a href="../home_page/home.html" class="quick" title="Admin Homepage"  onclick="UserHomeuser()">Home</a>
+        <a href="{% url 'home' user.id %}" class="quick" title="Admin Homepage"  onclick="UserHomeuser()">Home</a>
             
         <a href="../User_Home_page/availavbleBooks.html" class="quick"style="
         color: #ffffff;
@@ -39,57 +37,32 @@
         <label for="Search" class="srch">Search:</label>
         <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
     </div>
-      {% else %}
-      <div class="logoandsearch">
-        <a href="../home_page/home.html" class="LogoIcon" onclick="AdminHomeuser()">
-        <img src="../images/logopng-removebg.png" alt="can't display image">
-        </a>
-        <a href="../home_page/home.html" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
-    </div>
-    <div class="bottomline">
-        <a href="../home_page/home.html" class="quick" title="Admin Homepage"  onclick="AdminHomeuser()" style="
-        color: #ffffff;
-        text-decoration: underline;
-        font-size: 35px;
-        color: burlywood;
-        padding-bottom: 0px;
-        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-        text-underline-offset: 15.25px;">Home</a>
-        <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
-        <a href="../Adimn_Home_page/Select.html" class="quick" title="edit an existing book">Edit Book</a>
-        <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
-        
-        <a href="../html/main-sign-page.html" class="quick" title="log out">Sign Out</a>
-        <label for="Search" class="srch">Search:</label>
-        <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
-    </div>
       
     </nav>
     <hr>
     </div>
     <div class="availablebooks" id="availablebooks">
       {% for book in books %}
-        {% if not book.Available %}
-          <div class="card" id="book{{ book.id }}">
-              <div class="flip-card">
-                  <div class="flip-card-inner">
-                      <div class="flip-card-front">
-                          <img src="{{ book.BookCover.url }}" alt="Book Cover" style="width:300px;height:300px;">
-                      </div>
-                      <div class="flip-card-back">
-                          <h1>{{ book.Book_author }}</h1>
-                          <p>{{ book.description }}</p>
-                          <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
-                            See More..
-                        </a>
-                      </div>
+      {% if not book.Available %}
+      <div class="card" id="book{{ book.id }}">
+          <div class="flip-card">
+              <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                      <img src="{{ book.BookCover.url }}" alt="Book Cover" style="width:300px;height:300px;">
+                  </div>
+                  <div class="flip-card-back">
+                      <h1>{{ book.Book_author }}</h1>
+                      <p>{{ book.description }}</p>
+                      <a href="bookdetails/{{book.id}}/{{user.id}}" class="see" onclick = "details(1)">
+                        See More..
+                    </a>
                   </div>
               </div>
-              <p>{{ book.Book_name }}</p>
-            
-              <button onclick = "toggleAvailability({{book.id}})">Return</button>
           </div>
-        {% endif %}
+          <p>{{ book.Book_name }}</p>
+          <button onclick = "toggleAvailability({{book.id}})">Return</button>
+      </div>
+    {% endif %}
       {% endfor %}
     </div>
       <br>

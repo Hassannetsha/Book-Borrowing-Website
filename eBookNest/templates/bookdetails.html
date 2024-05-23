@@ -78,22 +78,25 @@
     </div>
     <div class="button" id="button">
       {% if not user.isUser %}
-        <button class="b" onclick = "Go_back()">Back</button>
-        <button class="b" onclick = "go_to_Edit()">Edit</button>
-        <div class="heart" name="x"><i class="fa fa-trash-o" name="x" style="font-size:40px; padding-left: 21px;" onclick = `deletebook({{book.id}})`></i></div>
+        <button class="b" onclick = "Go_back({{user.id}})">Back</button>
+        <button class="b" onclick = "location.href='{% url 'EditBook' book.id %}'">Edit</button>
+        <div class="heart" name="x" onclick = "deleteBook({{book.id}},{{user.id}})"><i onclick = "deleteBook({{book.id}},{{user.id}})" class="fa fa-trash-o" name="x" style="font-size:40px; padding-left: 21px;" onclick = "deletebook({{book.id}})"></i></div>
         {% else %}
         {% if book.Available %}
           <button class="b" onclick = "Go_back()">Back</button>
-          <button class="b" onclick = "DeleteavailableBook()">Borrow</button>
+          <button class="b" onclick = "toggleAvailability({{book.id}},{{user.id}})">Borrow</button>
           <div class="heart" name="x"><i class="fa fa-heart" name="x"id = "fa"  onclick = "changeColor()"></i></div>
           {% else %}
-            <button class="b" onclick = "Go_back()">Back</button>
-            <button class="b" onclick = "DeleteBorrowBook()">Return</button>
+            <button class="b" onclick = "Go_back({{user.id}})">Back</button>
+            <button class="b" onclick = "toggleAvailability({{book.id}},{{user.id}})">Return</button>
             <div class="heart" name="x"><i class="fa fa-heart" name="x"id = "fa"  onclick = "changeColor()"></i></div>
         {% endif %}
       {% endif %}
     </div>
     <script>
+      function Go_back(userId){
+        location.href = `http://127.0.0.1:8000/home/${userId}`
+      }
       function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -108,17 +111,40 @@
         }
         return cookieValue;
       }
-      function deletebook(bookId){
-        fetch(`/delete-book/${bookId}/`, {
-          method: 'DELETE',
+      function toggleAvailability(bookId,userID){
+        fetch(`/Convert/${bookId}`, {
+          method: 'PATCH',
           headers: {
               'X-CSRFToken': getCookie('csrftoken'),
+              'Content-Type': 'application/json' // Ensure the content type is set if sending JSON data
           },
-      })
-      .then(response => response.json())
-      .then(data =>{
-        
-      })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+          location.href = `http://127.0.0.1:8000/home/${userID}`
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+            alert('Failed to update availability');
+        });
+
+      }
+      function deleteBook(bookId,userID) {
+        fetch(`/delete-book/${bookId}/`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+          location.href = `http://127.0.0.1:8000/home/${userID}`
+        });
       }
     </script>
 </body>

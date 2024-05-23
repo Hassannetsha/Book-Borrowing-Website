@@ -19,15 +19,15 @@
     <body>
         <nav class="navbar" id="navbar">
             <div class="logoandsearch">
-                <a href="{% url 'home' %}" class="LogoIcon" onclick="AdminHomeuser()">
-                    <img src="{% static 'images/logopng-removebg.png' %}" alt="can't display image">
+                <a href="{% url 'home' user.id %}" class="LogoIcon" onclick="AdminHomeuser()">
+                    <img src="{% static 'image/logopng-removebg.png' %}" alt="can't display image">
                     </a>
-                    <a href="{% url 'home' %}" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
+                    <a href="{% url 'home' user.id %}" class="Logo" onclick="AdminHomeuser()">eBookNest</a>
             </div>
             <div class="bottomline">
-                <a href="{% url 'home' %}" class="quick" title="Admin Homepage">Home</a>
+                <a href="{% url 'home' user.id %}" class="quick" title="Admin Homepage">Home</a>
                 <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
-                <a href="{% url 'selectBook' %}" class="quick" title="edit an existing book" style="
+                <a href="{% url 'selectBook' user.id %}" class="quick" title="edit an existing book" style="
                 color: #ffffff;
                 text-decoration: underline;
                 font-size: 35px;
@@ -54,7 +54,7 @@
                     <div class="Left"></div>
                     </div>
                     <div class="see books{{category.id}}" >
-                    <a href="{% url 'Availableallbooks' %}" id = "see">
+                    <a href="{% url 'Availableallbooks' user.id %}" id = "see">
                         See All
                     </a>
                     </div>
@@ -70,7 +70,7 @@
                                 <div class="flip-card-back">
                                 <h1>{{book.Book_name}}</h1>
                                 <p>{{book.description}}</p>
-                                <a href="{% url 'bookdetails' book.id %}" class="see" onclick = "details(1)">
+                                <a href="bookdetails/{{book.id}}/{{user.id}}" class="see" onclick = "details(1)">
                                     See More..
                                 </a>
                                 </div>
@@ -89,7 +89,7 @@
             </div>
             <div class="Options">
                 <input type="reset" value="Reset" class="Reset">
-                <button type="submit" class="butt_Go_back"><a href="{% url 'home' %}" class="Go_back">Go back</a></button>
+                <button type="submit" class="butt_Go_back"><a href="{% url 'home' user.id %}" class="Go_back">Go back</a></button>
             </div>
             <br><br>
             
