@@ -107,9 +107,91 @@ def get_users_json(request):
     user_json = serializers.serialize('json', user)
     return JsonResponse(user_json, safe=False)
 
-def EditBook(request,Id):
-    book = get_object_or_404(Book,pk=Id)
-    return render(request,'Edit.html',{'book':book})
+def EditBook(request, Id):
+    book = get_object_or_404(Book, pk=Id)
+    category = get_object_or_404(Categorys, pk=book.Category_id)
+    return render(request, 'Edit.html', {'book': book, 'category': category})
     # return render(request,'Edit.html',{'book':book,"user":user})
 
 
+def addBook(request, userId):
+    user = get_object_or_404(User, pk=userId)
+    print(5)
+    return render(request, "add.html", {'user': user})
+
+
+@csrf_exempt
+def save_book(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.POST['str'])
+            if Book.objects.filter(pk=data.get('ID')).count():
+                return JsonResponse({'status': 'failed', 'message': 'Id already exists'})
+            cat = data.get('Category')
+            zeftID = 0
+            catid = Categorys.objects.filter(Category_name=cat)
+            if not catid.count():
+                q = Categorys.objects.get(
+                    Category_name=Categorys.objects.last())
+                if q is None:
+                    q = 1
+                else:
+                    q = q.id + 1
+
+                catid = Categorys.objects.create(
+                    id=q,
+                    Category_name=cat
+                )
+                catid.save()
+            else:
+                zeftID = catid[0].id
+            newBook = Book.objects.create(
+                id=data.get('ID'),
+                Book_name=data.get('Title'),
+                Book_author=data.get('Author'),
+                no_page=data.get('Pages'),
+                BookCover=request.FILES['image'],
+                Category=Categorys.objects.get(pk=zeftID),
+                description=data.get('Description')
+            )
+            newBook.save()
+            return JsonResponse({'status': 'success', 'message': 'Book Added Successfully'})
+        except Exception as e:
+            print(e)
+            return JsonResponse({'status': 'failed', 'message': '*Failed to add book'})
+
+
+def modifyBook(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.POST['str'])
+            cat = data.get('Category')
+            zeftID = 0
+            catid = Categorys.objects.filter(Category_name=cat)
+            if not catid.count():
+                q = Categorys.objects.get(
+                    Category_name=Categorys.objects.last())
+                if q is None:
+                    q = 1
+                else:
+                    q = q.id + 1
+
+                catid = Categorys.objects.create(
+                    id=q,
+                    Category_name=cat
+                )
+                catid.save()
+            else:
+                zeftID = catid[0].id
+            newBook = Book.objects.get(pk=data.get('ID'))
+            newBook.Book_name = data.get('Title')
+            newBook.Book_author = data.get('Author')
+            newBook.no_page = data.get('Pages')
+            newBook.BookCover = request.FILES['image']
+            newBook.Category = Categorys.objects.get(pk=zeftID)
+            newBook.description = data.get('Description')
+            newBook.save()
+            return JsonResponse({'status': 'success', 'message': 'Book edited Successfully'})
+        except Exception as e:
+            print(e)
+            return JsonResponse({'status': 'failed', 'message': '*Failed to edit book'})
