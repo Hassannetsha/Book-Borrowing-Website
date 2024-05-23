@@ -43,7 +43,7 @@
                 padding-bottom: 0px;
                 text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
                 text-underline-offset: 15.25px;" onclick="AdminHomeuser()">Home</a>
-            <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
+            <a href="{% url 'addBook' user.id %}" class="quick" title="add a new book">Add Book</a>
             <a href="{% url 'selectBook' user.id %}" class="quick" title="edit an existing book">Edit Book</a>
             <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
             
@@ -88,7 +88,7 @@
                     <p>{{book.Book_name}}</p>
                     <div class="Edit_Delete_buttns">
                       <button class="buttns" onclick = "location.href='{% url 'EditBook' book.id %}'"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
-                      <button class="buttns" Category = "{{category}}" onclick="deleteBook({{ book.id }})" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
+                      <button class="buttns" Category = "{{category}}" onclick="deleteBook({{ book.id }},{{user.id}})" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
                     </div>
                   </div>
                 {% endif %}
@@ -115,12 +115,11 @@
         <nav class="navbar" id="navbaruser">
           <div class="logoandsearch">
             <a href="../home_page/home.html" class="LogoIcon" onclick="UserHomeuser()">
-            {% comment %} <img src="../images/logopng-removebg.png" alt="can't display image"> {% endcomment %}
-            </a>
+              <img src="{% static 'image/logopng-removebg.png' %}" alt="can't display image"></a>
             <a href="../home_page/home.html" class="Logo" onclick="UserHomeuser()">eBookNest</a>
           </div>
           <div class="bottomline">
-              <a href="../home_page/home.html" class="quick" title="Admin Homepage" style="
+              <a href="{% url 'home' user.id %}" class="quick" title="Admin Homepage" style="
                   color: #ffffff;
                   text-decoration: underline;
                   font-size: 35px;
@@ -129,8 +128,8 @@
                   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
                   text-underline-offset: 15.25px;" onclick="UserHomeuser()">Home</a>
                   
-              <a href="../User_Home_page/availavbleBooks.html" class="quick" title="Available books">Available books</a>
-              <a href="../User_Home_page/availavbleBooks.html" class="quick" title="Borrow books">Borrow books</a>
+              <a href="{% url 'Availableallbooks' user.id %}" class="quick" title="Available books">Available books</a>
+              <a href="{% url 'Borrowedbooks' user.id %}" class="quick" title="Borrow books">Borrow books</a>
               <a href="{% url 'index' %}" class="quick" title="log out">Sign Out</a>
               <label for="Search" class="srch">Search:</label>
               <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
@@ -158,7 +157,7 @@
                           <div class="flip-card">
                               <div class="flip-card-inner">
                                   <div class="flip-card-front">
-                                      <img src="{{ book.BookCover.url }}" alt="Book Cover" style="width:300px;height:300px;">
+                                      <img src="{{ book.BookCover.url}}" alt="Book Cover" style="width:300px;height:300px;">
                                   </div>
                                   <div class="flip-card-back">
                                       <h1>{{ book.Book_author }}</h1>
@@ -170,7 +169,7 @@
                               </div>
                           </div>
                           <p>{{ book.Book_name }}</p>
-                          <button onclick = "toggleAvailability({{book.id}})">Borrow</button>
+                          <button onclick = "toggleAvailability({{book.id}},{{user.id}})">Borrow</button>
                       </div>
                   {% endif %}
               {% endfor %}
@@ -203,14 +202,14 @@
                                   <div class="flip-card-back">
                                       <h1>{{ book.Book_author }}</h1>
                                       <p>{{ book.description }}</p>
-                                      <a href="bookdetails/{{book.id}}/{{user.id}}" class="see" onclick = "details(1)">
+                                      <a href="{% url 'bookdetails' book.id  user.id %}" class="see">
                                         See More..
                                     </a>
                                   </div>
                               </div>
                           </div>
                           <p>{{ book.Book_name }}</p>
-                          <button onclick = "toggleAvailability({{book.id}})">Return</button>
+                          <button onclick = "toggleAvailability({{book.id}},{{user.id}})">Return</button>
                       </div>
                   {% endif %}
               {% endfor %}
@@ -310,7 +309,7 @@
           }
           return cookieValue;
         }
-        function toggleAvailability(bookId){
+        function toggleAvailability(bookId,userId){
           fetch(`/Convert/${bookId}`, {
             method: 'PATCH',
             headers: {
@@ -345,14 +344,14 @@
                                     <div class="flip-card-back">
                                         <h1>${ response.books[book].Book_author }</h1>
                                         <p>${ response.books[book].description }</p>
-                                        <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                        <a href="http://127.0.0.1:8000/bookdetails/${response.books[book].id}/${userId}" class="see">
                                           See More..
                                       </a>
                                     </div>
                                 </div>
                             </div>
                             <p>${ response.books[book].Book_name }</p>
-                            <button onclick = "toggleAvailability(${response.books[book].id})">Borrow</button>
+                            <button onclick = "toggleAvailability(${response.books[book].id},${userId})">Borrow</button>
                           </div>`
                         }
                         else{
@@ -365,14 +364,14 @@
                                     <div class="flip-card-back">
                                         <h1>${ response.books[book].Book_author }</h1>
                                         <p>${ response.books[book].description }</p>
-                                        <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                        <a href="http://127.0.0.1:8000/bookdetails/${response.books[book].id}/${userId}" class="see">
                                           See More..
                                       </a>
                                     </div>
                                 </div>
                             </div>
                             <p>${ response.books[book].Book_name }</p>
-                            <button onclick = "toggleAvailability(${response.books[book].id})">Return</button>
+                            <button onclick = "toggleAvailability(${response.books[book].id},${userId})">Return</button>
                           </div>`
                         }
                       }
@@ -406,7 +405,7 @@
 
         }
         
-        function deleteBook(bookId) {
+        function deleteBook(bookId,userId) {
           fetch(`/delete-book/${bookId}/`, {
               method: 'DELETE',
               headers: {
@@ -434,7 +433,7 @@
                                   <div class="flip-card-back">
                                     <h1>${response.books[book].Book_name}</h1>
                                     <p>${response.books[book].description}$</p>
-                                    <a href="../User_Home_page/bookdetails.html" class="see"  onclick="details(this)">
+                                    <a href="http://127.0.0.1:8000/bookdetails/${response.books[book].id}/${userId}" class="see">
                                       See More..
                                     </a>
                                   </div>
@@ -442,7 +441,7 @@
                               </div>
                               <p>${response.books[book].Book_name}</p>
                               <div class="Edit_Delete_buttns">
-                                <button class="buttns"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
+                                <button class="buttns" onclick = "location.href='http://127.0.0.1:8000/EditBook/${response.books[book].id}'"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
                                 <button class="buttns" Category = "${response.categories[category].Category_name}" onclick="deleteBook(${ response.books[book].id })" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
                               </div>
                             </div>`;
