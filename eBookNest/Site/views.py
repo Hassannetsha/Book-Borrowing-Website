@@ -24,7 +24,7 @@ def signUpUser(request):
 def home(request):
     books = Book.objects.all()  # or any other queryset
     categories = Categorys.objects.all()
-    return render(request, 'Home.html', {'books': books,'categories': categories})
+    return render(request, 'home.html', {'books': books,'categories': categories})
 def category_data(request):
     categories = list(Categorys.objects.values())
     return JsonResponse(categories, safe=False)
