@@ -168,7 +168,7 @@ text-underline-offset: 12.5px;">Add Book</a>
                     .then(res => res.json())
                     .then(js => {
                         if (js.status == 'success') {
-                            window.href.location = `http://127.0.0.1:8000/home/{{user.id}}`
+                            window.href.location = "{% url 'home' user.id %}"
                         }
                         else {
                             event.preventDefault()

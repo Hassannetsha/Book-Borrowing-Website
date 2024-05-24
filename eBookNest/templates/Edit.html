@@ -165,7 +165,7 @@ text-underline-offset: 12.5px;">Edit Book</a>
                             event.preventDefault()
                         }
                         else {
-                            window.href.location = `http://127.0.0.1:8000/home/{{user.id}}`
+                            location.href = `{% url 'home' user.id %}`
                             para.innerText = ''
                         }
                     })

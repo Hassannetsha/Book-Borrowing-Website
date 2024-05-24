@@ -97,7 +97,7 @@
           {% endfor %}
           <div class="middle">
             <div id="ADD" class ="ADD">
-              <a href="../Adimn_Home_page/add.html"id="AddBook" class="Options">Add books</a>
+              <a href="{% url 'addBook' user.id %}"id="AddBook" class="Options">Add books</a>
             </div>
             <br><br>
             <div id = "SELECT" class="SELECT">
@@ -162,7 +162,7 @@
                                   <div class="flip-card-back">
                                       <h1>{{ book.Book_author }}</h1>
                                       <p>{{ book.description }}</p>
-                                      <a href="{% url 'bookdetails' book.id  user.id %}" class="see">
+                                      <a href="{% url 'bookdetails' user.id book.id %}" class="see">
                                         See More..
                                     </a>
                                   </div>
@@ -202,7 +202,7 @@
                                   <div class="flip-card-back">
                                       <h1>{{ book.Book_author }}</h1>
                                       <p>{{ book.description }}</p>
-                                      <a href="{% url 'bookdetails' book.id  user.id %}" class="see">
+                                      <a href="{% url 'bookdetails' user.id book.id%}" class="see">
                                         See More..
                                     </a>
                                   </div>

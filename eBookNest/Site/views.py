@@ -62,7 +62,10 @@ def Convert(request, Id):
 def delete_book(request, book_id):
     if request.method == "DELETE":
         book = get_object_or_404(Book, id=book_id)
+        oldCat = Categorys.objects.filter(Category_name=book.Category)[0]
         book.delete()
+        if not Book.objects.filter(Category=oldCat):
+            Categorys.objects.filter(Category_name=oldCat)[0].delete()
         return JsonResponse({'status': 'Book deleted'})
     return JsonResponse({'status': 'Invalid request'}, status=400)
 
@@ -218,7 +221,6 @@ def modifyBook(request):
             newBook.description = data.get('Description')
             newBook.save()
             if not Book.objects.filter(Category=oldCat[0]):
-                print('SOBRIIIII')
                 Categorys.objects.filter(Category_name=oldCat[0])[0].delete()
             return JsonResponse({'status': 'success', 'message': 'Book edited Successfully'})
         except Exception as e:
