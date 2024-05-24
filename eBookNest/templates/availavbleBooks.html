@@ -15,10 +15,10 @@
   
         {% if user.isUser %}
         <div class="logoandsearch">
-          <a href="../home_page/home.html" class="LogoIcon" onclick="UserHomeuser()">
+          <a href="{% url 'home' user.id %}" class="LogoIcon" onclick="UserHomeuser()">
             <img src="{% static 'image/logopng-removebg.png' %}" alt="can't display image">
           </a>
-          <a href="../home_page/home.html" class="Logo" onclick="UserHomeuser()">eBookNest</a>
+          <a href="{% url 'home' user.id %}" class="Logo" onclick="UserHomeuser()">eBookNest</a>
       </div>
       <div class="bottomline">
           <a href="{% url 'home' user.id %}" class="quick" title="Admin Homepage"  onclick="UserHomeuser()">Home</a>
@@ -57,7 +57,7 @@
           text-underline-offset: 15.25px;">Home</a>
           <a href="../Adimn_Home_page/add.html" class="quick" title="add a new book">Add Book</a>
           <a href="{% url 'selectBook' user.id %}" class="quick" title="edit an existing book">Edit Book</a>
-          <a href="../Adimn_Home_page/delete.html" class="quick" title="remove a book from the list">Delete Book</a>
+          <a href="{% url 'deletePage' user.id %}" class="quick" title="remove a book from the list">Delete Book</a>
           
           <a href="{% url 'index' %}" class="quick" title="log out">Sign Out</a>
           <label for="Search" class="srch">Search:</label>
@@ -87,7 +87,7 @@
           </div>
           <p>{{book.Book_name}}</p>
           <div class="Edit_Delete_buttns">
-            <button class="buttns" onclick = "location.href='{% url 'EditBook' book.id %}'"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
+            <button class="buttns" onclick = "location.href='{% url 'EditBook' user.id book.id %}'"><a style = "color : white; font-family: sans-serif;font-style: normal;">Edit</a></button>
             <button class="buttns" Category = "{{category}}" onclick="deleteBook({{ book.id }})" id = "Delete_btn"><i class="fa fa-trash-o" style="font-size:25px"></i></button>
           </div>
         </div>

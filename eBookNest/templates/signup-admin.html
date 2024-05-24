@@ -207,14 +207,13 @@
             .then(response => response.json())
             .then(data => {
               if (data.status) {
-                alert('Sign up successful!');
                 window.location.href = '/signinAdmin/';  // Redirect to sign in page
               } else {
                 alert('Sign up failed: ' + data.error);
               }
             })
             .catch(error => {
-              
+              console.error(error)
             });
         }
       })

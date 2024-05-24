@@ -14,18 +14,17 @@
     <div>
         <nav class="navbar">
             <div class="logoandsearch">
-                <a href="{% static 'home' {{user.id}}%}" class="LogoIcon">
+                <a href="{% url 'home' user.id %}" class="LogoIcon">
                     <img src="{% static 'image/logopng-removebg.png' %}" alt="can't display image">
                 </a>
-                <a href="../home_page/home.html" class="Logo">eBookNest</a>
-
+                <a href="{% url 'home' user.id %}" class="Logo">eBookNest</a>
             </div>
 
             <div class="bottomline">
                 <a href="{% url 'home' user.id %}" class="quick" title="Admin Homepage">Home</a>
-                <a href="add.html" class="quick" title="add a new book">Add Book</a>
+                <a href="{% url 'addBook' user.id %}" class="quick" title="add a new book">Add Book</a>
 
-                <a href="Edit.html" class="quick" title="edit an existing book" style="
+                <a href="{% url 'selectBook' user.id %}" class="quick" title="edit an existing book" style="
                 color: #ffffff;
 text-decoration: underline;
 font-size: 38px;
@@ -34,12 +33,13 @@ padding-bottom: 0px;
 text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 text-underline-offset: 12.5px;">Edit Book</a>
 
-                <a href="delete.html" class="quick" title="remove a book from the list">Delete Book</a>
+                <a href="{% url 'deletePage' user.id %}" class="quick" title="remove a book from the list">Delete
+                    Book</a>
 
                 <a href="AboutUs.html" class="quick" title="Who are we?">About Us</a>
 
 
-                <a href="../LogIn/main-sign-page.html" class="quick" title="log out">Sign Out</a>
+                <a href="{% url 'index' %}" class="quick" title="log out">Sign Out</a>
                 <label for="Search" class="srch">Search:</label>
                 <input type="text" id="SBar" name="Search Bar" placeholder="Search for a book title...">
             </div>
@@ -49,7 +49,7 @@ text-underline-offset: 12.5px;">Edit Book</a>
     </div>
 
     <div class="edit">
-        <form id="formedit" target="_blank">
+        <form id="formedit">
             <div class="input">
                 <label for="BookName"> Edit book name:</label>
                 <input type="text" id="BookName" placeholder="Book's Name">
@@ -90,7 +90,8 @@ text-underline-offset: 12.5px;">Edit Book</a>
             <br><br>
             <div class="input">
                 <label for="BookCover">Put book's cover image: </label>
-                <input required type="file" id="BookCover" value="C:\\fakepath\\{{book.BookCover}}" accept=".img, .png, .jpg, .jpeg, .webp">
+                <input required type="file" id="BookCover" value="C:\\fakepath\\{{book.BookCover}}"
+                    accept=".img, .png, .jpg, .jpeg, .webp">
             </div>
 
             <br>
@@ -115,7 +116,6 @@ text-underline-offset: 12.5px;">Edit Book</a>
     <script>
 
         document.getElementById("formedit").style.top = `55%`
-        
         let editbtn = document.getElementById("editbtn")
         let para = document.getElementsByClassName("invalidinput")[0]
         document.getElementById(`BookName`).value = "{{book.Book_name}}"
@@ -150,23 +150,31 @@ text-underline-offset: 12.5px;">Edit Book</a>
             const dataa = new FormData();
             dataa.append('json', JSON.stringify(BOOK))
             dataa.append('image', document.getElementById(`BookCover`).files[0])
-            fetch(`/modifyBook/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken')
-                },
-                body: dataa
-            }).then(res => res.json())
-                .then(JS => {
-                    if (JS.status == `failed`) {
-                        para.innerText = JS.message
-                        event.preventDefault()
-                    }
-                    else {
-                        window.href.location = `http://127.0.0.1:8000/home/{{user.id}}`
-                        para.innerText = ''
-                    }
-                })
+            if (BOOK.ID != "" && BOOK.Author != "" && BOOK.Category != "" && BOOK.Pages != "" && BOOK.Cover != "") {
+                fetch(`/modifyBook/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: dataa
+                }).then(res => res.json())
+                    .then(JS => {
+                        if (JS.status == `failed`) {
+                            para.innerText = JS.message
+                            event.preventDefault()
+                        }
+                        else {
+                            location.href = `{% url 'home' user.id %}`
+                            para.innerText = ''
+                        }
+                    })
+                    .catch(error => console.error(error))
+            }
+            else
+            {
+                event.preventDefault()
+                document.getElementsByClassName('invalidinput')[0].innerText = `*Not Enough Data`
+            }
         })
         // localStorage.clear();
     </script>
