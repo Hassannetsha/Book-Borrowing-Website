@@ -13,10 +13,10 @@
   <div class="Form">
     <nav class="navbar" id="navbar">
       <div class="logoandsearch">
-        <a href="../home_page/home.html" class="LogoIcon" onclick="UserHomeuser()">
+        <a href="{% url 'home' user.id %}" class="LogoIcon" onclick="UserHomeuser()">
           <img src="{% static 'image/logopng-removebg.png' %}" alt="can't display image">
         </a>
-        <a href="../home_page/home.html" class="Logo" onclick="UserHomeuser()">eBookNest</a>
+        <a href="{% url 'home' user.id %}" class="Logo" onclick="UserHomeuser()">eBookNest</a>
     </div>
     <div class="bottomline">
         <a href="{% url 'home' user.id %}" class="quick" title="Admin Homepage"  onclick="UserHomeuser()">Home</a>

@@ -212,10 +212,9 @@
       .then(response => response.json())
       .then(data => {
           if (data.status) {
-              alert('Sign up successful!');
               window.location.href = '/SigninUser/';
           } else {
-              alert('2');
+              alert(`Error Signing up`)
           }
       })
       location.href = '/SigninUser/';
