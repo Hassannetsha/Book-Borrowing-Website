@@ -16,33 +16,27 @@
       background-image: url("{% static 'image/People sitting at bookshelves and reading books in bookstore (2).jpg' %}");
     }
 
-      {
-      % if not user.isUser %
-    }
+      {% if not user.isUser %}
 
-    #Admin_page {
-      display: block;
-    }
+          #Admin_page {
+            display: block;
+          }
 
-    #user_page {
-      display: none;
-    }
+          #user_page {
+            display: none;
+          }
 
-      {
-      % else %
-    }
+      {% else %}
 
-    #user_page {
-      display: block;
-    }
+            #user_page {
+              display: block;
+            }
 
-    #Admin_page {
-      display: none;
-    }
+            #Admin_page {
+              display: none;
+            }
 
-      {
-      % endif %
-    }
+      {% endif %}
   </style>
 </head>
 
@@ -515,95 +509,74 @@
       let bookElems;
       let divGhareeba;
       let divGhareeba2;
-      document.getElementById(`user_page`).style.display = `none`
-      console.log(searchA.value)
-      if (searchA.value == "") {
-
-        for (ktab in books) {
-          console.log(`FADY`)
-          categoryElems = document.getElementById(books[ktab].CategoryName)
-          divGhareeba = document.getElementsByClassName(`Books books${books[ktab].Category_id}`)[0]
-          divGhareeba2 = document.getElementsByClassName(`see books${books[ktab].Category_id}`)[0]
-          bookElems = document.getElementById(`book${books[ktab].id}`)
-          console.log(bookElems)
+      for (cat in categories) {
+        categoryElems = document.getElementById(categories[cat].Category_name)
+        divGhareeba = document.getElementsByClassName(`Books books${categories[cat].id}`)[0]
+        divGhareeba2 = document.getElementsByClassName(`see books${categories[cat].id}`)[0]
+        let hide = true
+        if (categories[cat].Category_name.toLowerCase().includes(searchA.value.toLowerCase())) {
           categoryElems.style.display = `flex`
-          bookElems.style.display = `block`
           divGhareeba.style.display = `flex`
           divGhareeba2.style.display = `block`
-          console.log(bookElems)
-
+          for (ktab in books) {
+            bookElems = document.getElementById(`book${books[ktab].id}`)
+            if (books[ktab].CategoryName == categories[cat].Category_name) {
+              categoryElems = document.getElementById(books[ktab].CategoryName)
+              divGhareeba = document.getElementsByClassName(`Books books${books[ktab].Category_id}`)[0]
+              divGhareeba2 = document.getElementsByClassName(`see books${books[ktab].Category_id}`)[0]
+              bookElems = document.getElementById(`book${books[ktab].id}`)
+              if (books[ktab].Book_name.toLowerCase().includes(searchA.value.toLowerCase()) || books[ktab].CategoryName.toLowerCase().includes(searchA.value.toLowerCase()) || books[ktab].Book_author.toLowerCase().includes(searchA.value.toLowerCase())) {
+                hide = false
+                categoryElems.style.display = `flex`
+                bookElems.style.display = `block`
+                divGhareeba.style.display = `flex`
+                divGhareeba2.style.display = `block`
+              }
+              else {
+                bookElems.style.display = `none`
+              }
+            }
+          }
+          hide = false
         }
-      }
-      else {
-        for (cat in categories) {
+        else {
+          for (ktab in books) {
+            if (books[ktab].CategoryName == categories[cat].Category_name) {
+              categoryElems = document.getElementById(books[ktab].CategoryName)
+              divGhareeba = document.getElementsByClassName(`Books books${books[ktab].Category_id}`)[0]
+              divGhareeba2 = document.getElementsByClassName(`see books${books[ktab].Category_id}`)[0]
+              bookElems = document.getElementById(`book${books[ktab].id}`)
+              if (books[ktab].Book_name.toLowerCase().includes(searchA.value.toLowerCase()) || books[ktab].CategoryName.toLowerCase().includes(searchA.value.toLowerCase()) || books[ktab].Book_author.toLowerCase().includes(searchA.value.toLowerCase())) {
+                hide = false
+                categoryElems.style.display = `flex`
+                bookElems.style.display = `block`
+                divGhareeba.style.display = `flex`
+                divGhareeba2.style.display = `block`
+              }
+              else {
+                bookElems.style.display = `none`
+              }
+            }
+          }
+        }
+        if (hide) {
+
           categoryElems = document.getElementById(categories[cat].Category_name)
           divGhareeba = document.getElementsByClassName(`Books books${categories[cat].id}`)[0]
           divGhareeba2 = document.getElementsByClassName(`see books${categories[cat].id}`)[0]
-          let hide = true
-          if (categories[cat].Category_name.toLowerCase().includes(searchA.value.toLowerCase())) {
-            categoryElems.style.display = `flex`
-            divGhareeba.style.display = `flex`
-            divGhareeba2.style.display = `block`
-            for (ktab in books) {
-              bookElems = document.getElementById(`book${books[ktab].id}`)
-              if (books[ktab].CategoryName == categories[cat].Category_name) {
-                categoryElems = document.getElementById(books[ktab].CategoryName)
-                divGhareeba = document.getElementsByClassName(`Books books${books[ktab].Category_id}`)[0]
-                divGhareeba2 = document.getElementsByClassName(`see books${books[ktab].Category_id}`)[0]
-                bookElems = document.getElementById(`book${books[ktab].id}`)
-                if (books[ktab].Book_name.toLowerCase().includes(searchA.value.toLowerCase()) || books[ktab].CategoryName.toLowerCase().includes(searchA.value.toLowerCase()) || books[ktab].Book_author.toLowerCase().includes(searchA.value.toLowerCase())) {
-                  hide = false
-                  categoryElems.style.display = `flex`
-                  bookElems.style.display = `block`
-                  divGhareeba.style.display = `flex`
-                  divGhareeba2.style.display = `block`
-                }
-                else {
-                  bookElems.style.display = `none`
-                }
-              }
-            }
-            hide = false
-          }
-          else {
-            for (ktab in books) {
-              if (books[ktab].CategoryName == categories[cat].Category_name) {
-                categoryElems = document.getElementById(books[ktab].CategoryName)
-                divGhareeba = document.getElementsByClassName(`Books books${books[ktab].Category_id}`)[0]
-                divGhareeba2 = document.getElementsByClassName(`see books${books[ktab].Category_id}`)[0]
-                bookElems = document.getElementById(`book${books[ktab].id}`)
-                if (books[ktab].Book_name.toLowerCase().includes(searchA.value.toLowerCase()) || books[ktab].CategoryName.toLowerCase().includes(searchA.value.toLowerCase()) || books[ktab].Book_author.toLowerCase().includes(searchA.value.toLowerCase())) {
-                  hide = false
-                  categoryElems.style.display = `flex`
-                  bookElems.style.display = `block`
-                  divGhareeba.style.display = `flex`
-                  divGhareeba2.style.display = `block`
-                }
-                else {
-                  bookElems.style.display = `none`
-                }
-              }
-            }
-          }
-          if (hide) {
-
-            categoryElems = document.getElementById(categories[cat].Category_name)
-            divGhareeba = document.getElementsByClassName(`Books books${categories[cat].id}`)[0]
-            divGhareeba2 = document.getElementsByClassName(`see books${categories[cat].id}`)[0]
-            categoryElems.style.display = `none`
-            divGhareeba.style.display = `none`
-            divGhareeba2.style.display = `none`
-          }
+          categoryElems.style.display = `none`
+          divGhareeba.style.display = `none`
+          divGhareeba2.style.display = `none`
         }
       }
+
     })
     searchU.addEventListener(`keyup`, (event) => {
       let bookElems;
       let av = 0, br = 0, i = 0
       for (ktab in books) {
         bookElems = document.getElementById(`bookU${books[ktab].id}`)
-        if (books[ktab].Book_name.toLowerCase().includes(searchU.value.toLowerCase()) || books[ktab].CategoryName.toLowerCase().includes(searchU.value.toLowerCase()) || books[ktab].Book_author.toLowerCase().includes(searchU.value.toLowerCase()))
-        {
+        if (books[ktab].Book_name.toLowerCase().includes(searchU.value.toLowerCase()) || books[ktab].CategoryName.toLowerCase().includes(searchU.value.toLowerCase()) || books[ktab].Book_author.toLowerCase().includes(searchU.value.toLowerCase())) {
           i++
           bookElems.style.display = `block`
           console.log(searchU.value)
@@ -611,29 +584,24 @@
           br += (books[ktab].Available) ? 0 : 1;
           console.log(i)
         }
-        else
-        {
+        else {
           bookElems.style.display = `none`
         }
         console.log(bookElems)
       }
-      if(!av)
-      {
+      if (!av) {
         document.getElementById(`Available`).style.display = `none`
         document.getElementById(`hide1`).style.display = `none`
       }
-      else
-      {
+      else {
         document.getElementById(`Available`).style.display = `flex`
         document.getElementById(`hide1`).style.display = `block`
       }
-      if(!br)
-      {
+      if (!br) {
         document.getElementById(`borrowBooks`).style.display = `none`
         document.getElementById(`hide`).style.display = `none`
       }
-      else
-      {
+      else {
         document.getElementById(`borrowBooks`).style.display = `flex`
         document.getElementById(`hide`).style.display = `block`
       }
