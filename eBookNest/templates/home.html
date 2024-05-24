@@ -16,25 +16,33 @@
       background-image: url("{% static 'image/People sitting at bookshelves and reading books in bookstore (2).jpg' %}");
     }
 
-      {% if not user.isUser %}
+      {
+      % if not user.isUser %
+    }
 
-            #Admin_page {
-              display: block;
-            }
-            #user_page {
-              display: none;
-            }
+    #Admin_page {
+      display: block;
+    }
 
-      {% else %}
+    #user_page {
+      display: none;
+    }
 
-            #user_page {
-              display: block;
-            }
-            #Admin_page {
-              display: none;
-            }
+      {
+      % else %
+    }
 
-      {% endif %}
+    #user_page {
+      display: block;
+    }
+
+    #Admin_page {
+      display: none;
+    }
+
+      {
+      % endif %
+    }
   </style>
 </head>
 
@@ -168,7 +176,7 @@
       <div class="availablebooks" id="availablebooks">
         {% for book in books %}
         {% if book.Available %}
-        <div class="card" id="book{{ book.id }}">
+        <div class="card" id="bookU{{ book.id }}">
           <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
@@ -208,7 +216,7 @@
 
         {% for book in books %}
         {% if not book.Available %}
-        <div class="card" id="book{{ book.id }}">
+        <div class="card" id="bookU{{ book.id }}">
           <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
@@ -234,6 +242,7 @@
   </div>
   <script>
     var categories = [], books = [];
+    let number_of_borrowed, number_of_avail;
     document.addEventListener("DOMContentLoaded", function () {
       Promise.all([
         fetch('/api/books/').then(response => response.json()),
@@ -250,6 +259,14 @@
               if (books[book].Category_id == categories[cat].id) {
                 books[book].CategoryName = categories[cat].Category_name
               }
+            }
+          }
+          for (book in books) {
+            if (books[book].Available) {
+              number_of_avail++;
+            }
+            else {
+              number_of_borrowed++;
             }
           }
         })
@@ -492,6 +509,7 @@
         });
     }
     const searchA = document.getElementById(`SBarA`);
+    const searchU = document.getElementById(`SBarU`);
     searchA.addEventListener('keyup', (event) => {
       let categoryElems;
       let bookElems;
@@ -577,6 +595,47 @@
             divGhareeba2.style.display = `none`
           }
         }
+      }
+    })
+    searchU.addEventListener(`keyup`, (event) => {
+      let bookElems;
+      let av = 0, br = 0, i = 0
+      for (ktab in books) {
+        bookElems = document.getElementById(`bookU${books[ktab].id}`)
+        if (books[ktab].Book_name.toLowerCase().includes(searchU.value.toLowerCase()) || books[ktab].CategoryName.toLowerCase().includes(searchU.value.toLowerCase()) || books[ktab].Book_author.toLowerCase().includes(searchU.value.toLowerCase()))
+        {
+          i++
+          bookElems.style.display = `block`
+          console.log(searchU.value)
+          av += (books[ktab].Available) ? 1 : 0;
+          br += (books[ktab].Available) ? 0 : 1;
+          console.log(i)
+        }
+        else
+        {
+          bookElems.style.display = `none`
+        }
+        console.log(bookElems)
+      }
+      if(!av)
+      {
+        document.getElementById(`Available`).style.display = `none`
+        document.getElementById(`hide1`).style.display = `none`
+      }
+      else
+      {
+        document.getElementById(`Available`).style.display = `flex`
+        document.getElementById(`hide1`).style.display = `block`
+      }
+      if(!br)
+      {
+        document.getElementById(`borrowBooks`).style.display = `none`
+        document.getElementById(`hide`).style.display = `none`
+      }
+      else
+      {
+        document.getElementById(`borrowBooks`).style.display = `flex`
+        document.getElementById(`hide`).style.display = `block`
       }
     })
   </script>
